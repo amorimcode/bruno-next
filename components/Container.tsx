@@ -64,6 +64,11 @@ export default function Container(props: any) {
           <div className="ml-[-0.60rem]">
             <MobileMenu />
             <NavItem href="/" text="Início" />
+            <NavItem href="/about" text="Sobre" />
+            <NavItem
+              href="https://docs.google.com/document/d/12-mNlG6HwKOuiEyOWYGWxu6pA-l2z1Pt/edit?usp=share_link&ouid=102166846732539016691&rtpof=true&sd=true"
+              text="Currículo"
+            />
           </div>
           <button
             aria-label="Toggle Dark Mode"

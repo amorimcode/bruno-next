@@ -26,7 +26,7 @@ export default function Home() {
                 equipe e conversa com cliente.
               </p>
             </div>
-            <div className="w-[80px] sm:w-[400px] relative mb-8 sm:mb-0 mr-auto">
+            <div className="w-[80px] sm:w-[450px] relative mb-8 sm:mb-0 mr-auto">
               <Image
                 alt="Bruno Amorim"
                 height={176}
@@ -38,6 +38,10 @@ export default function Home() {
               />
             </div>
           </div>
+
+          {/* <h3 className="font-bold text-2xl md:text-4xl tracking-tight mb-6 text-black dark:text-white">
+            Posts Principais
+          </h3> */}
         </div>
       </Container>
     </>
