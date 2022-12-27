@@ -66,7 +66,6 @@ export default function About() {
             ágil de software, visando uma base sólida em arquitetura, algoritmos
             e métodos ágeis
           </p>
-          <h2>Headshots</h2>
         </div>
       </div>
     </Container>
