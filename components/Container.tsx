@@ -37,8 +37,8 @@ export default function Container(props: any) {
   const { children, image, ...customMeta } = props;
   const router = useRouter();
   const meta = {
-    title: 'Bruno Amorim – Developer, writer, creator.',
-    description: `Front-end developer, JavaScript enthusiast`,
+    title: 'Bruno Amorim – Desenvolvedor',
+    description: `Front-end developer, JavaScript e React`,
     type: 'website',
     image,
     ...customMeta
