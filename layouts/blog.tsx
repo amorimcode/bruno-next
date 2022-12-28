@@ -1,10 +1,11 @@
-import Image from "next/image";
-import { parseISO, format } from "date-fns";
-import { PropsWithChildren, Suspense } from "react";
+import Image from 'next/image';
+import { parseISO, format } from 'date-fns';
+import { PropsWithChildren, Suspense } from 'react';
 
-import Container from "../components/Container";
-import { Post } from "../lib/types";
-import { urlForImage } from "../lib/sanity";
+import Container from '../components/Container';
+import { Post } from '../lib/types';
+import { urlForImage } from '../lib/sanity';
+import { ptBR } from 'date-fns/locale';
 
 export default function BlogLayout({ children, post }) {
   return (
@@ -30,8 +31,8 @@ export default function BlogLayout({ children, post }) {
               className="rounded-full"
             />
             <p className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-              {"Bruno Amorim / "}
-              {format(parseISO(post.date), "MMMM dd, yyyy")}
+              {'Bruno Amorim / '}
+              {format(parseISO(post.date), 'MMMM dd, yyyy', { locale: ptBR })}
             </p>
           </div>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 min-w-32 md:mt-0">
@@ -44,7 +45,7 @@ export default function BlogLayout({ children, post }) {
             {children}
           </div>
           <div className="mt-8"></div>
-          <div className="text-sm text-gray-700 dark:text-gray-300">
+          {/* <div className="text-sm text-gray-700 dark:text-gray-300">
             <a
               href={`https://mobile.twitter.com/search?q=${encodeURIComponent(
                 `https://leerob.io/blog/${post.slug}`
@@ -62,7 +63,7 @@ export default function BlogLayout({ children, post }) {
             >
               {"Suggest Change"}
             </a>
-          </div>
+          </div> */}
         </Suspense>
       </article>
     </Container>

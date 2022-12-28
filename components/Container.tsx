@@ -34,13 +34,13 @@ export default function Container(props: any) {
   // After mounting, we have access to the theme
   useEffect(() => setMounted(true), []);
 
-  const { children, ...customMeta } = props;
+  const { children, image, ...customMeta } = props;
   const router = useRouter();
   const meta = {
     title: 'Bruno Amorim – Developer, writer, creator.',
     description: `Front-end developer, JavaScript enthusiast`,
-    image: 'https://leerob.io/static/images/lee-banner.png',
     type: 'website',
+    image,
     ...customMeta
   };
 
@@ -52,7 +52,7 @@ export default function Container(props: any) {
         <meta content={meta.description} name="description" />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Bruno Amorim" />
-
+        <meta property="og:image" content={meta.image} />
         {meta.date && (
           <meta property="article:published_time" content={meta.date} />
         )}

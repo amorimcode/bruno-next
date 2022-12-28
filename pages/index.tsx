@@ -46,18 +46,18 @@ export default function Home() {
           </h3>
           <div className="flex gap-6 flex-col md:flex-row">
             <BlogPostCard
-              title="Everything I Know About Style Guides, Design Systems, and Component Libraries"
-              slug="style-guides-component-libraries-design-systems"
+              title="Lançamento do Turbopack no Next.js 13"
+              slug="lancamento-do-turbopack-no-next-js-13"
               gradient="from-[#D8B4FE] to-[#818CF8]"
             />
             <BlogPostCard
-              title="Rust Is The Future of JavaScript Infrastructure"
-              slug="rust"
+              title="Lançamento do Turbopack no Next.js 13"
+              slug="lancamento-do-turbopack-no-next-js-13"
               gradient="from-[#6EE7B7] via-[#3B82F6] to-[#9333EA]"
             />
             <BlogPostCard
-              title="Past, Present, and Future of React State Management"
-              slug="react-state-management"
+              title="Lançamento do Turbopack no Next.js 13"
+              slug="lancamento-do-turbopack-no-next-js-13"
               gradient="from-[#FDE68A] via-[#FCA5A5] to-[#FECACA]"
             />
           </div>
