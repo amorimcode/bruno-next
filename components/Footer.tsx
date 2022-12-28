@@ -1,12 +1,12 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
-const ExternalLink = ({ children }: any) => (
+const ExternalLink = ({ children, href }: any) => (
   <a
     className="text-gray-500 hover:text-gray-600 transition"
     target="_blank"
     rel="noopener noreferrer"
-    href=""
+    href={href}
   >
     {children}
   </a>
@@ -22,55 +22,33 @@ export default function Footer() {
             href="/"
             className="text-gray-500 hover:text-gray-600 transition"
           >
-            Home
+            Início
           </Link>
           <Link
             href="/about"
             className="text-gray-500 hover:text-gray-600 transition"
           >
-            About
+            Sobre
           </Link>
           <Link
-            href="/newsletter"
+            href="/blog"
             className="text-gray-500 hover:text-gray-600 transition"
           >
-            Newsletter
+            Blog
           </Link>
         </div>
         <div className="flex flex-col space-y-4">
-          <ExternalLink href="https://twitter.com/leeerob">
-            Twitter
+          <ExternalLink href="https://github.com/amorimcode">
+            GitHub
           </ExternalLink>
-          <ExternalLink href="https://github.com/leerob">GitHub</ExternalLink>
-          <ExternalLink href="https://www.youtube.com/channel/UCZMli3czZnd1uoc1ShTouQw">
-            YouTube
+          <ExternalLink href="https://www.linkedin.com/in/amorim-bruno/">
+            Linkedin
           </ExternalLink>
         </div>
         <div className="flex flex-col space-y-4">
-          <Link
-            href="/uses"
-            className="text-gray-500 hover:text-gray-600 transition"
-          >
-            Uses
-          </Link>
-          <Link
-            href="/guestbook"
-            className="text-gray-500 hover:text-gray-600 transition"
-          >
-            Guestbook
-          </Link>
-          <Link
-            href="/snippets"
-            className="text-gray-500 hover:text-gray-600 transition"
-          >
-            Snippets
-          </Link>
-          <Link
-            href="/tweets"
-            className="text-gray-500 hover:text-gray-600 transition"
-          >
-            Tweets
-          </Link>
+          <ExternalLink href="https://docs.google.com/document/d/12-mNlG6HwKOuiEyOWYGWxu6pA-l2z1Pt/edit?usp=share_link&ouid=102166846732539016691&rtpof=true&sd=true">
+            Currículo
+          </ExternalLink>
         </div>
       </div>
     </footer>
