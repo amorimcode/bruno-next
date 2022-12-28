@@ -1,9 +1,9 @@
 import Image from 'next/image';
 
-import Container from 'components/Container';
+import Container from '../components/Container';
 import type { PropsWithChildren } from 'react';
-import { Snippet } from 'lib/types';
-import { urlForImage } from 'lib/sanity';
+import { Snippet } from '../lib/types';
+import { urlForImage } from '../lib/sanity';
 
 export default function SnippetLayout({
   children,
