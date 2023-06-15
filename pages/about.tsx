@@ -18,11 +18,11 @@ export default function About() {
             </li>
             <li>
               Website:{" "}
-              <Link href="https://leerob.io">https://brunoamorim.dev/</Link>
+              <Link href="https://brunoamorim.dev/">https://brunoamorim.dev/</Link>
             </li>
             <li>
               LinkedIn:{" "}
-              <a href="https://www.linkedin.com/in/leeerob/">
+              <a href="https://www.linkedin.com/in/amorim-bruno/">
                 https://www.linkedin.com/in/amorim-bruno/
               </a>
             </li>
