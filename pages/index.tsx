@@ -24,7 +24,7 @@ export default function Home() {
                 Desenvolvedor apaixonado por tecnologia, focado em front-end e
                 experiência do usuário, design de interfaces responsivas e
                 escaláveis, com arquitetura robusta. Experiência em
-                desenvolvimento web e mobile (react, react-native), trabalho em
+                desenvolvimento web e mobile (react, react-native), desenvolvimento iOS, trabalho em
                 equipe e conversa com cliente.
               </p>
             </div>
