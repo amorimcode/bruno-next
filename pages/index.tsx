@@ -17,7 +17,7 @@ export default function Home() {
                 Bruno Amorim
               </h1>
               <h2 className="text-gray-700 dark:text-gray-200 mb-4">
-                Desenvolvedor front-end{' '}
+                Desenvolvedor front-end | iOS{' '}
                 <span className="font-semibold">@mblabs</span>
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-16">
