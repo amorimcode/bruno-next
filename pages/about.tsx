@@ -32,10 +32,12 @@ export default function About() {
           <p>Desenvolvedor front-end junior na @mblabs</p>
           <h3>Experiência</h3>
           <h4>
-            Desenvolvedor front-end junior / MB Labs (março 2022 – o momento)
+            Desenvolvedor front-end | iOS Developer / MB Labs (março 2022 – o momento)
           </h4>
           <p>
-            Atualmente trabalhando em um projeto de fintech banking as a
+            Desenvolvimento iOS nativo com UIKit, utilizando arquitetura MVVM.
+
+            Também trabalhando em um projeto de fintech banking as a
             service, fazendo manutenção de código, desenvolvendo novas
             funcionalidades com uma visão de produto relevante, projetando novas
             telas usando figma. Desenvolvimento de aplicações web usando
