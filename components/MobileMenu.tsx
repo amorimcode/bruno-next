@@ -88,7 +88,7 @@ export default function MobileMenu() {
             className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
             style={{ transitionDelay: '150ms' }}
           >
-            <ExternalLink href="https://docs.google.com/document/d/12-mNlG6HwKOuiEyOWYGWxu6pA-l2z1Pt/edit?usp=share_link&ouid=102166846732539016691&rtpof=true&sd=true">
+            <ExternalLink href="https://docs.google.com/document/d/1ytfk3mYalVlSdQmBxfuDNgCVc_b7sFVFLLJVDNZWI74/edit?usp=sharing">
               Currículo
             </ExternalLink>
           </li>

@@ -67,7 +67,7 @@ export default function Container(props: any) {
             <NavItem href="/" text="Início" />
             <NavItem href="/about" text="Sobre" />
             <NavItem
-              href="https://docs.google.com/document/d/1slnBZSCVxSJGU76mUgaP7XelBRCJZdQAwejaGJva0hc/edit?usp=sharing"
+              href="https://docs.google.com/document/d/1ytfk3mYalVlSdQmBxfuDNgCVc_b7sFVFLLJVDNZWI74/edit?usp=sharing"
               text="Currículo"
             />
           </div>

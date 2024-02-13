@@ -46,7 +46,7 @@ export default function Footer() {
           </ExternalLink>
         </div>
         <div className="flex flex-col space-y-4">
-          <ExternalLink href="https://docs.google.com/document/d/12-mNlG6HwKOuiEyOWYGWxu6pA-l2z1Pt/edit?usp=share_link&ouid=102166846732539016691&rtpof=true&sd=true">
+          <ExternalLink href="https://docs.google.com/document/d/1ytfk3mYalVlSdQmBxfuDNgCVc_b7sFVFLLJVDNZWI74/edit?usp=sharing">
             Currículo
           </ExternalLink>
         </div>
