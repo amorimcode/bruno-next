@@ -66,10 +66,10 @@ export default function Container(props: any) {
             <MobileMenu />
             <NavItem href="/" text="Início" />
             <NavItem href="/about" text="Sobre" />
-            <NavItem
+            {/* <NavItem
               href="https://docs.google.com/document/d/1ytfk3mYalVlSdQmBxfuDNgCVc_b7sFVFLLJVDNZWI74/edit?usp=sharing"
               text="Currículo"
-            />
+            /> */}
           </div>
           <button
             aria-label="Toggle Dark Mode"
