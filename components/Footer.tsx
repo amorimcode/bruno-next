@@ -25,16 +25,16 @@ export default function Footer() {
             Início
           </Link>
           <Link
+            href="/projects"
+            className="text-gray-500 hover:text-gray-600 transition"
+          >
+            Projetos
+          </Link>
+          <Link
             href="/about"
             className="text-gray-500 hover:text-gray-600 transition"
           >
             Sobre
-          </Link>
-          <Link
-            href="/blog"
-            className="text-gray-500 hover:text-gray-600 transition"
-          >
-            Blog
           </Link>
         </div>
         <div className="flex flex-col space-y-4">

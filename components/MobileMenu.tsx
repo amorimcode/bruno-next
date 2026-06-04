@@ -72,16 +72,16 @@ export default function MobileMenu() {
             className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
             style={{ transitionDelay: '150ms' }}
           >
-            <Link href="/about" className="flex w-auto pb-4">
-              Sobre
+            <Link href="/projects" className="flex w-auto pb-4">
+              Projetos
             </Link>
           </li>
           <li
             className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
             style={{ transitionDelay: '150ms' }}
           >
-            <Link href="/blog" className="flex w-auto pb-4">
-              Blog
+            <Link href="/about" className="flex w-auto pb-4">
+              Sobre
             </Link>
           </li>
           <li

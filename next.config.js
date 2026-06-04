@@ -5,11 +5,10 @@ module.exports = {
   reactStrictMode: true,
   images: {
     domains: [
-      "i.scdn.co", // Spotify Album Art
-      "pbs.twimg.com", // Twitter Profile Picture
-      "cdn.sanity.io",
-      "github.com",
+      "github.com", // Foto de perfil
     ],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
     fontLoaders: [
