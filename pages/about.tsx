@@ -1,144 +1,158 @@
-import Link from "next/link";
-import Image from "next/image";
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
-import Container from "../components/Container";
+import Container from '../components/Container';
+import ui from '../lib/i18n';
+import { pickLocale } from '../lib/types';
+
+const EMAIL = 'bruno.amorim032@gmail.com';
 
 export default function About() {
+  const locale = pickLocale(useRouter().locale);
+  const about = ui.about;
+
   return (
-    <Container title="Sobre – Bruno Amorim">
-      <div className="flex flex-col justify-center items-start max-w-2xl mx-auto mb-16 w-full">
-        <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
-          Sobre mim
-        </h1>
-        <div className="mb-8 prose dark:prose-dark leading-6">
-          <h2>Contato</h2>
-          <ul>
-            <li>
-              Email: <a href="mailto:bruno.amorim032@gmail.com">bruno.amorim032@gmail.com</a>
-            </li>
-            <li>
-              Cel: (19) 99112-3574
-            </li>
-            <li>
-              GitHub: <a href="https://github.com/amorimcode">@amorimcode</a>
-            </li>
-            <li>
-              Website:{" "}
-              <Link href="https://brunoamorim.dev/">https://brunoamorim.dev/</Link>
-            </li>
-            <li>
-              LinkedIn:{" "}
-              <a href="https://www.linkedin.com/in/amorim-bruno/">
-                https://www.linkedin.com/in/amorim-bruno/
-              </a>
-            </li>
-          </ul>
-          
-          <h2>Sobre</h2>
-          <p>
-            Desenvolvedor com 5 anos de experiência profissional em projetos de aplicativos mobile e web de grande escala, 
-            utilizando React, React Native, TypeScript, Swift, NodeJS e Golang. Especialista em levar aplicações do zero 
-            à publicação nas lojas App Store e Play Store, com foco em alta performance e experiência do usuário (UX). 
-            Experiência em arquiteturas modernas, otimização de aplicativos para iOS e integração com APIs e serviços de backend.
-          </p>
+    <Container
+      title={`${about.title[locale]} — Bruno Amorim`}
+      description={about.lede[locale]}
+    >
+      <section className="mx-auto w-full max-w-wrap px-6 pb-24 pt-16 sm:pt-24">
+        <div className="grid gap-12 lg:grid-cols-12">
+          {/* Story */}
+          <div className="lg:col-span-7">
+            <h1 className="rise font-display text-4xl tracking-tight sm:text-6xl">
+              {about.title[locale]}
+            </h1>
+            <p
+              className="rise mt-5 font-display text-xl italic text-muted sm:text-2xl"
+              style={{ animationDelay: '90ms' }}
+            >
+              {about.lede[locale]}
+            </p>
+            <div
+              className="rise mt-10 space-y-6 text-base leading-8 text-ink sm:leading-9"
+              style={{ animationDelay: '180ms' }}
+            >
+              {about.story.map((paragraph, i) => (
+                <p key={i}>{paragraph[locale]}</p>
+              ))}
+            </div>
 
-          <h2>Experiência</h2>
-          <h3>
-            Senior Software Engineer / B.uni (Janeiro 2025 – Atualmente)
-          </h3>
-          <p>
-            Responsável pelo App e Internet Banking do banco digital B.uni, focado em estudantes. 
-            Tecnologias: React Native, React JS, Typescript, Redux.
-          </p>
+            {/* Experience */}
+            <h2 className="mt-20 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+              {ui.sections.experience[locale]}
+            </h2>
+            <ol className="mt-6">
+              {ui.experience.map((job) => (
+                <li
+                  key={job.company}
+                  className="grid gap-1.5 border-t border-line py-6 last:border-b sm:grid-cols-12 sm:gap-6"
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted sm:col-span-4 sm:pt-1">
+                    {job.period[locale]}
+                  </span>
+                  <div className="sm:col-span-8">
+                    <h3 className="font-display text-lg tracking-tight">
+                      {job.company}
+                      <span className="text-muted"> — {job.role[locale]}</span>
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-7 text-muted">
+                      {job.summary[locale]}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
 
-          <h3>
-            Desenvolvedor Front-end Pleno / MaisMei (Abril 2024 – Janeiro 2025)
-          </h3>
-          <p>
-            Trabalho dando manutenção e desenvolvendo novas funcionalidades no app MaisMei com serviços para contas PJ. 
-            Tecnologias: Swift, SwiftUI, React Native, TypeScript, Expo, MobX, Go Lang, ReactJS.
-          </p>
+            {/* Education */}
+            <h2 className="mt-20 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+              {about.education[locale]}
+            </h2>
+            <ul className="mt-6 space-y-6">
+              {about.educationItems.map((item, i) => (
+                <li key={i}>
+                  <h3 className="font-display text-lg tracking-tight">
+                    {item.title[locale]}
+                  </h3>
+                  <p className="mt-1.5 text-sm leading-7 text-muted">
+                    {item.detail[locale]}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <h3>
-            Desenvolvedor Front-end / MB Labs (Março 2022 – Março 2024)
-          </h3>
-          <p>
-            Trabalhei no projeto Bankeiro, white label bancário com +40 clientes, desenvolvendo novas features e dando 
-            manutenção aos projetos de grandes clientes (PaGol, Localiza, Syngenta, entre outros). Responsável técnico 
-            por avaliar pull requests do time de front-end e mobile, definir arquitetura e padrões do projeto e 
-            criar/gerenciar as lojas dos aplicativos. Através do Jira, eram definidas e refinadas tarefas. Todo o processo 
-            de implementação de novas funcionalidades era realizado através de Git Flow e Code Review, e deploy utilizando 
-            fluxos CI/CD utilizando BitBucket e serviços AWS. Tecnologias: NextJS, React.js, React Native, TypeScript, 
-            Redux, NodeJS, Jest, Firebase, Axios, HTML/CSS/JS, Swift, UI Kit, Swift UI, Gradle, Fastlane.
-          </p>
+          {/* Sidebar */}
+          <aside className="lg:col-span-4 lg:col-start-9">
+            <div className="space-y-10 lg:sticky lg:top-24">
+              <div className="rise overflow-hidden rounded-3xl border border-line">
+                <Image
+                  src="https://github.com/amorimcode.png"
+                  alt="Bruno Amorim"
+                  width={480}
+                  height={480}
+                  priority
+                  className="w-full"
+                />
+                <p className="border-t border-line bg-surface px-5 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                  {ui.hero.location[locale]}
+                </p>
+              </div>
 
-          <h3>
-            Estagiário em Desenvolvimento de Software / Energia Automação (Agosto 2021 – Março 2022)
-          </h3>
-          <p>
-            Responsável por criar e manter Dataventus, Software para gerenciamento inteligente de complexos eólicos. 
-            Responsável pela manutenção da aplicação WEB e implantação do novo aplicativo Android e iOS. Python, Django, 
-            HTML/CSS/JS, Pandas, React Native, Git, Jira e BitBucket.
-          </p>
+              <div>
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+                  {about.toolbox[locale]}
+                </h2>
+                <dl className="mt-4 space-y-4">
+                  {about.toolboxGroups.map((group, i) => (
+                    <div key={i} className="border-t border-line pt-4">
+                      <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">
+                        {group.label[locale]}
+                      </dt>
+                      <dd className="mt-1.5 text-sm leading-7 text-muted">
+                        {group.items}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
 
-          <h2>Formação Acadêmica</h2>
-          <h3>
-            Bacharelado em Engenharia de Software -{" "}
-            <Link href="https://www.puc-campinas.edu.br/graduacao/engenharia-de-software/">
-              PUC-Campinas
-            </Link>
-          </h3>
-          <p>
-            Graduado em Junho de 2024. Coeficiente de Rendimento Final: 9. 
-            TCC: NitroSpray, ERP para gerenciamento de processos de produção de fábricas de equipamentos médicos.
-          </p>
-
-          <h3>Curso de Inglês Avançado - UpTime (Janeiro 2015 – Junho 2024)</h3>
-          <p>Inglês fluente.</p>
-
-          <h2>Projetos Destacados</h2>
-          <h3>
-            PaGol - Gol Linhas Aéreas (Março 2022 – Abril 2024)
-          </h3>
-          <p>
-            Participei do desenvolvimento do aplicativo da conta digital PaGol por intermédio da MB Labs. 
-            Tecnologias: Swift, UIKit, React Native, TypeScript.{" "}
-            <a href="https://www.pagol.com.br/">https://www.pagol.com.br/</a>
-          </p>
-
-          <h3>
-            IEQ MVA - Igreja do Evangelho Quadrangular (Junho 2023 – Atualmente)
-          </h3>
-          <p>
-            Aplicativo desenvolvido do 0 dedicado a ser uma extensão da mídia da igreja e ajudar no gerenciamento de 
-            demandas internas. Todo App foi desenvolvido por mim além de coletar requisitos com o cliente, design no 
-            Figma, configuração de ambiente cloud na Azure e publicação dos apps nas lojas. Tecnologias: React Native, 
-            Expo, TypeScript, JavaScript, NodeJS, NestJS.
-          </p>
-
-          <h2>Tecnologias</h2>
-          <h3>Back-end</h3>
-          <p>Node.js, NestJS, Go Lang</p>
-          
-          <h3>Mobile</h3>
-          <p>Swift, UIKit, SwiftUI, React Native</p>
-          
-          <h3>Front-end</h3>
-          <p>React, NextJS, TypeScript, TailwindCSS, LESS, SASS, MaterialUI, Antd, Bootstrap, Vue.js</p>
-          
-          <h3>Design</h3>
-          <p>Figma</p>
-          
-          <h3>Ferramentas</h3>
-          <p>Gradle, Fastlane, GitFlow, Jira, BitBucket</p>
-          
-          <h3>Arquiteturas</h3>
-          <p>MVC, MVVM</p>
-          
-          <h3>Testes</h3>
-          <p>XCTest, Jest, react-testing-library</p>
+              <div>
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+                  {about.contact[locale]}
+                </h2>
+                <ul className="mt-4 space-y-2.5 text-sm leading-6">
+                  <li>
+                    <a href={`mailto:${EMAIL}`} className="und text-ink">
+                      {EMAIL}
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.linkedin.com/in/amorim-bruno/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="und text-ink"
+                    >
+                      linkedin.com/in/amorim-bruno ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/amorimcode"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="und text-ink"
+                    >
+                      github.com/amorimcode ↗
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </aside>
         </div>
-      </div>
+      </section>
     </Container>
   );
 }

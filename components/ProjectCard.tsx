@@ -1,67 +1,55 @@
-import Image from 'next/image';
-import { Project } from '../lib/types';
+import Link from 'next/link';
+import { LocalizedProject } from '../lib/types';
+import { Showcase } from './Shots';
 
-export default function ProjectCard({ project }: { project: Project }) {
-  const Wrapper: any = project.href ? 'a' : 'div';
-  const wrapperProps = project.href
-    ? { href: project.href, target: '_blank', rel: 'noopener noreferrer' }
-    : {};
+type Props = {
+  project: LocalizedProject;
+  index: number;
+  readCaseLabel: string;
+  priority?: boolean;
+};
+
+export default function ProjectCard({ project, index, readCaseLabel, priority }: Props) {
+  const number = String(index + 1).padStart(2, '0');
+  const flip = index % 2 === 1;
 
   return (
-    <Wrapper
-      {...wrapperProps}
-      className="group flex flex-col overflow-hidden bg-white border border-gray-200 rounded-2xl shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5 dark:bg-gray-800/60 dark:border-gray-700"
+    <Link
+      href={`/projects/${project.slug}`}
+      className="group grid items-center gap-6 md:grid-cols-12 md:gap-10"
     >
-      <div className="relative w-full aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800">
-        <Image
-          alt={project.title}
-          src={project.image}
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-        />
+      <div
+        className={`overflow-hidden rounded-3xl border border-line md:col-span-7 ${
+          flip ? 'md:order-2' : ''
+        }`}
+      >
+        <Showcase project={project} priority={priority} />
       </div>
-      <div className="flex flex-col flex-1 p-5">
-        <div className="flex items-center justify-between gap-2">
-          <h3 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">
-            {project.title}
-          </h3>
-          {project.href && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="w-5 h-5 text-gray-400 transition-colors group-hover:text-gray-700 dark:group-hover:text-gray-200"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 17L17 7M17 7H8M17 7v9"
-              />
-            </svg>
-          )}
-        </div>
-        {project.company && (
-          <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
-            {project.company} · {project.period}
-          </p>
-        )}
-        <p className="mt-3 text-sm leading-6 text-gray-600 dark:text-gray-400">
-          {project.description}
+
+      <div className={`md:col-span-5 ${flip ? 'md:order-1 md:text-right' : ''}`}>
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+          <span className="text-accent">{number}</span> · {project.company}
         </p>
-        <div className="flex flex-wrap gap-2 mt-4 pt-1">
+        <h3 className="mt-3 font-display text-3xl tracking-tight transition-colors group-hover:text-accent sm:text-4xl">
+          {project.title}
+        </h3>
+        <p className="mt-2 font-display text-lg italic text-muted">
+          {project.tagline}
+        </p>
+        <p className="mt-4 text-sm leading-7 text-muted">{project.summary}</p>
+        <ul
+          className={`mt-5 flex flex-wrap gap-x-4 gap-y-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted ${
+            flip ? 'md:justify-end' : ''
+          }`}
+        >
           {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-2.5 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-full dark:bg-gray-700/60 dark:text-gray-300"
-            >
-              {tag}
-            </span>
+            <li key={tag}>{tag}</li>
           ))}
-        </div>
+        </ul>
+        <span className="und mt-6 inline-block font-mono text-[11px] uppercase tracking-[0.22em] text-ink">
+          {readCaseLabel} →
+        </span>
       </div>
-    </Wrapper>
+    </Link>
   );
 }

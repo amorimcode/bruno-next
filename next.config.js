@@ -3,6 +3,10 @@
  */
 module.exports = {
   reactStrictMode: true,
+  i18n: {
+    locales: ["en", "pt"],
+    defaultLocale: "en",
+  },
   images: {
     domains: [
       "github.com", // Foto de perfil
