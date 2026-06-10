@@ -3,6 +3,16 @@ import { LocalizedProject } from '../lib/types';
 
 const DEFAULT_ASPECT = '392 / 696';
 
+/* 40 tiles = 40 marcas white-label; paleta fixa para render determinístico */
+const TILE_PALETTE = [
+  '#e2574c', '#3f6bd6', '#3aa07a', '#e3a13c', '#7a5cd6',
+  '#cf5f8a', '#2f8fa6', '#c8763a', '#5b8f3e', '#4c5d77'
+];
+const GRID_TILES = Array.from({ length: 40 }, (_, i) => ({
+  color: TILE_PALETTE[(i * 7 + Math.floor(i / 8) * 3) % TILE_PALETTE.length],
+  opacity: 0.35 + ((i * 5 + Math.floor(i / 8)) % 4) * 0.13
+}));
+
 type ShotProps = {
   src: string;
   alt: string;
@@ -130,24 +140,48 @@ export function Showcase({
         />
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 p-8">
+          {project.coverStyle === 'grid' && (
+            <>
+              <div
+                aria-hidden
+                className="absolute inset-x-[7%] top-1/2 grid -translate-y-1/2 grid-cols-8 gap-[2.4%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              >
+                {GRID_TILES.map((tile, i) => (
+                  <div
+                    key={i}
+                    className="aspect-square rounded-[22%]"
+                    style={{ background: tile.color, opacity: tile.opacity }}
+                  />
+                ))}
+              </div>
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'radial-gradient(65% 65% at 50% 50%, rgba(10,8,6,0.88) 0%, rgba(10,8,6,0.55) 55%, rgba(10,8,6,0.15) 100%)'
+                }}
+              />
+            </>
+          )}
           {icon && (
             <Image
               src={icon}
               alt=""
               width={72}
               height={72}
-              className="rounded-2xl shadow-lg ring-1 ring-white/20"
+              className="relative rounded-2xl shadow-lg ring-1 ring-white/20"
             />
           )}
           <span
-            className="text-center font-display text-4xl italic tracking-tight sm:text-5xl"
+            className="relative text-center font-display text-4xl italic tracking-tight sm:text-5xl"
             style={{ color: theme.fg }}
           >
             {title}
           </span>
           <span
             aria-hidden
-            className="font-mono text-[10px] uppercase tracking-[0.3em] opacity-60"
+            className="relative font-mono text-[10px] uppercase tracking-[0.3em] opacity-60"
             style={{ color: theme.fg }}
           >
             {project.platforms.join(' · ')}

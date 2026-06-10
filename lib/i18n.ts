@@ -19,8 +19,8 @@ const ui = {
     titleEm: { en: 'that live in people’s pockets', pt: 'que moram no bolso das pessoas' },
     titleB: { en: '.', pt: '.' },
     lede: {
-      en: 'I’m Bruno Amorim, a software engineer from Campinas, Brazil. Over the last five years I’ve shipped products end to end: an airline’s digital account, a white-label platform behind 40+ banks, a student bank — and, after hours, my own products: my church’s app and a SaaS for gas stations, designed and built entirely by me.',
-      pt: 'Sou Bruno Amorim, engenheiro de software em Campinas. Nos últimos cinco anos coloquei produtos no ar de ponta a ponta: a conta digital de uma companhia aérea, um white-label por trás de 40+ bancos, o banco dos universitários — e, fora do expediente, meus próprios produtos: o app da minha igreja e um SaaS para postos de combustíveis, desenhados e construídos inteiramente por mim.'
+      en: 'I’m Bruno Amorim, a software engineer from Campinas, Brazil. Over the last five years I’ve shipped products end to end: an airline’s digital account, a white-label platform behind 40+ banks, a student bank — and, after hours, my own products: igreja.studio, a white-label for churches, and QWIP, a SaaS for gas stations, designed and built entirely by me.',
+      pt: 'Sou Bruno Amorim, engenheiro de software em Campinas. Nos últimos cinco anos coloquei produtos no ar de ponta a ponta: a conta digital de uma companhia aérea, um white-label por trás de 40+ bancos, o banco dos universitários — e, fora do expediente, meus próprios produtos: o igreja.studio, white-label para igrejas, e o QWIP, SaaS para postos de combustíveis, desenhados e construídos inteiramente por mim.'
     },
     location: { en: 'Campinas — SP · Brazil', pt: 'Campinas — SP · Brasil' },
     stats: [
@@ -31,10 +31,15 @@ const ui = {
     ]
   },
   sections: {
-    selectedWork: { en: 'Selected work', pt: 'Projetos em destaque' },
-    selectedWorkHint: {
-      en: 'Case studies, not screenshots — what was built, and which decisions were mine.',
-      pt: 'Cases, não prints — o que foi construído e quais decisões foram minhas.'
+    ownProducts: { en: 'Own products', pt: 'Produtos próprios' },
+    ownProductsHint: {
+      en: 'Built after hours, owned end to end — design, code, infra and the store listing. Every decision here is mine.',
+      pt: 'Construídos fora do expediente, meus de ponta a ponta — design, código, infra e ficha na loja. Cada decisão aqui é minha.'
+    },
+    companyWork: { en: 'Company work', pt: 'Em empresas' },
+    companyWorkHint: {
+      en: 'What I built inside product teams — from a 40-brand white-label to digital banks in production.',
+      pt: 'O que construí dentro de times de produto — de um white-label com 40 marcas a bancos digitais em produção.'
     },
     allProjects: { en: 'All projects', pt: 'Todos os projetos' },
     readCase: { en: 'Read the case', pt: 'Ler o case' },
@@ -156,8 +161,8 @@ const ui = {
         pt: 'Depois veio o MaisMei — iOS nativo e React Native servindo microempreendedores — e hoje sou o engenheiro sênior responsável pelo app e pelo internet banking do b.Uni, banco digital para universitários.'
       },
       {
-        en: 'In parallel, I run the project that best shows how I think: my church’s app, IEQ MVA, where I did everything — requirements, Figma, Expo app, NestJS API, Azure, both stores. No handoffs, no one to blame: every choice in it is mine.',
-        pt: 'Em paralelo, mantenho o projeto que melhor mostra como eu penso: o app da minha igreja, IEQ MVA, onde fiz tudo — requisitos, Figma, app em Expo, API em NestJS, Azure, as duas lojas. Sem handoff, sem ninguém pra culpar: cada escolha ali é minha.'
+        en: 'In parallel, I run the products that best show how I think: igreja.studio, my white-label platform for churches — whose flagship, IEQ MVA, I took from requirements to both stores — and QWIP, my financial SaaS for gas stations. No handoffs, no one to blame: every choice in them is mine.',
+        pt: 'Em paralelo, mantenho os produtos que melhor mostram como eu penso: o igreja.studio, meu white-label para igrejas — cujo carro-chefe, o IEQ MVA, levei do requisito às duas lojas — e o QWIP, meu SaaS financeiro para postos de combustíveis. Sem handoff, sem ninguém pra culpar: cada escolha ali é minha.'
       },
       {
         en: 'I graduated in Software Engineering at PUC-Campinas with a 9/10 GPA, I speak fluent English, and I have a soft spot for the details nobody asks for but everybody feels.',

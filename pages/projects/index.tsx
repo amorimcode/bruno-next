@@ -8,10 +8,11 @@ import projects, { lab } from '../../lib/projects';
 import { LocalizedProject, localizeProject, pickLocale } from '../../lib/types';
 
 type Props = {
-  all: LocalizedProject[];
+  personal: LocalizedProject[];
+  company: LocalizedProject[];
 };
 
-export default function Projects({ all }: Props) {
+export default function Projects({ personal, company }: Props) {
   const locale = pickLocale(useRouter().locale);
 
   return (
@@ -31,16 +32,43 @@ export default function Projects({ all }: Props) {
         </p>
       </section>
 
-      <section className="mx-auto w-full max-w-wrap space-y-20 px-6 sm:space-y-28">
-        {all.map((project, index) => (
-          <ProjectCard
-            key={project.slug}
-            project={project}
-            index={index}
-            readCaseLabel={ui.sections.readCase[locale]}
-            priority={index === 0}
-          />
-        ))}
+      <section className="mx-auto w-full max-w-wrap px-6">
+        <h2 className="border-b border-line pb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+          {ui.sections.ownProducts[locale]}
+        </h2>
+        <p className="mt-5 max-w-md text-sm leading-6 text-muted">
+          {ui.sections.ownProductsHint[locale]}
+        </p>
+        <div className="mt-14 space-y-20 sm:space-y-28">
+          {personal.map((project, index) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              index={index}
+              readCaseLabel={ui.sections.readCase[locale]}
+              priority={index === 0}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto mt-24 w-full max-w-wrap px-6 sm:mt-32">
+        <h2 className="border-b border-line pb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+          {ui.sections.companyWork[locale]}
+        </h2>
+        <p className="mt-5 max-w-md text-sm leading-6 text-muted">
+          {ui.sections.companyWorkHint[locale]}
+        </p>
+        <div className="mt-14 space-y-20 sm:space-y-28">
+          {company.map((project, index) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              index={index}
+              readCaseLabel={ui.sections.readCase[locale]}
+            />
+          ))}
+        </div>
       </section>
 
       {/* Lab */}
@@ -84,7 +112,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
   const resolved = pickLocale(locale);
   return {
     props: {
-      all: projects.map((p) => localizeProject(p, resolved))
+      personal: projects
+        .filter((p) => p.kind === 'personal')
+        .map((p) => localizeProject(p, resolved)),
+      company: projects
+        .filter((p) => p.kind === 'company')
+        .map((p) => localizeProject(p, resolved))
     }
   };
 };

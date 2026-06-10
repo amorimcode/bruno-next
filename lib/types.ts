@@ -28,6 +28,10 @@ export type ProjectLink = {
 export type Project = {
   slug: string;
   title: string;
+  /** 'personal' = produto próprio; 'company' = trabalho em empresa */
+  kind: 'personal' | 'company';
+  /** 'grid' = cover tipográfico sobre grade de tiles coloridos (white-label) */
+  coverStyle?: 'grid';
   tagline: L;
   company: string;
   role: L;

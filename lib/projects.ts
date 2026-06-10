@@ -3,6 +3,7 @@ import { LabProject, Project } from './types';
 const projects: Project[] = [
   {
     slug: 'pagol',
+    kind: 'company',
     title: 'PaGol',
     tagline: {
       en: 'The digital account that turns balance into miles — and miles into travel.',
@@ -111,6 +112,8 @@ const projects: Project[] = [
   },
   {
     slug: 'bankeiro',
+    kind: 'company',
+    coverStyle: 'grid',
     title: 'Bankeiro',
     tagline: {
       en: 'One codebase. Forty-plus banks.',
@@ -179,6 +182,7 @@ const projects: Project[] = [
   },
   {
     slug: 'buni',
+    kind: 'company',
     title: 'b.Uni',
     tagline: {
       en: 'The digital bank that fits a student’s life.',
@@ -257,12 +261,13 @@ const projects: Project[] = [
   },
   {
     slug: 'ieq-mva',
+    kind: 'personal',
     title: 'IEQ MVA',
     tagline: {
-      en: 'An entire church inside one app — designed, built and shipped by one person.',
-      pt: 'Uma igreja inteira dentro de um app — projetado, construído e publicado por uma pessoa.'
+      en: 'A whole church in one app — the flagship of igreja.studio, my white-label for churches.',
+      pt: 'Uma igreja inteira num app — o carro-chefe do igreja.studio, meu white-label para igrejas.'
     },
-    company: 'Igreja do Evangelho Quadrangular · Vista Alegre',
+    company: 'igreja.studio · own product',
     role: {
       en: 'Everything — requirements, design, app, API, cloud and stores',
       pt: 'Tudo — requisitos, design, app, API, cloud e lojas'
@@ -270,12 +275,12 @@ const projects: Project[] = [
     period: { en: 'Jun 2023 – Present', pt: 'Jun 2023 – Atual' },
     platforms: ['iOS', 'Android'],
     summary: {
-      en: 'The project where no decision belonged to anyone else: I gathered requirements with the church, designed every screen in Figma, built the app with Expo and the API with NestJS, set up the Azure infrastructure and shipped to both stores.',
-      pt: 'O projeto em que nenhuma decisão foi de outra pessoa: levantei requisitos com a igreja, desenhei cada tela no Figma, construí o app em Expo e a API em NestJS, subi a infra na Azure e publiquei nas duas lojas.'
+      en: 'IEQ MVA is the first church running on igreja.studio, the white-label platform I built for churches. No decision here belonged to anyone else: requirements with the church, every screen in Figma, Expo app, NestJS API, Azure infrastructure and both stores.',
+      pt: 'O IEQ MVA é a primeira igreja rodando no igreja.studio, o white-label que construí para igrejas. Nenhuma decisão aqui foi de outra pessoa: requisitos com a igreja, cada tela no Figma, app em Expo, API em NestJS, infra na Azure e as duas lojas.'
     },
     context: {
-      en: 'The Foursquare Church of Jardim Vista Alegre needed two things that rarely come together: a digital presence for the community (services, announcements, Bible, music) and an internal management tool (members, visitors, contributions, pastoral scheduling). Instead of an off-the-shelf app, the church asked me to build something tailor-made.',
-      pt: 'A IEQ do Jardim Vista Alegre precisava de duas coisas que raramente vêm juntas: presença digital para a comunidade (cultos, avisos, Bíblia, músicas) e ferramenta interna de gestão (membros, visitantes, contribuições, agendamento pastoral). Em vez de um app de prateleira, a igreja me procurou para construir algo sob medida.'
+      en: 'The Foursquare Church of Jardim Vista Alegre needed two things that rarely come together: a digital presence for the community (services, announcements, Bible, music) and an internal management tool (members, visitors, contributions, work schedules, Sunday school). Instead of an off-the-shelf app, I built it as the flagship of igreja.studio — my own white-label platform, designed so the same product can serve other churches under their own brand.',
+      pt: 'A IEQ do Jardim Vista Alegre precisava de duas coisas que raramente vêm juntas: presença digital para a comunidade (cultos, avisos, Bíblia, músicas) e ferramenta interna de gestão (membros, visitantes, contribuições, escalas, escola dominical). Em vez de um app de prateleira, construí o produto como carro-chefe do igreja.studio — meu próprio white-label, desenhado para que o mesmo produto atenda outras igrejas com suas próprias marcas.'
     },
     decisions: [
       {
@@ -300,12 +305,12 @@ const projects: Project[] = [
       },
       {
         title: {
-          en: 'A modular NestJS API, built to grow',
-          pt: 'API NestJS modular, pensada para crescer'
+          en: 'A white-label, not a one-off',
+          pt: 'Um white-label, não um app único'
         },
         body: {
-          en: 'Members, schedule, contributions and notifications became isolated NestJS modules running on Azure. When the church asks for a new area, it is born as a module — without touching what already works.',
-          pt: 'Membros, agenda, contribuições e notificações viraram módulos isolados no NestJS, rodando na Azure. Quando a igreja pede uma área nova, ela nasce como módulo — sem mexer no que já funciona.'
+          en: 'I applied the lesson from years on a banking white-label to my own product: IEQ MVA runs on igreja.studio, where members, schedules, contributions and notifications are isolated NestJS modules on Azure, and each church is a tenant with its own brand. The next church onboards by configuration, not by rewrite.',
+          pt: 'Apliquei ao meu produto a lição de anos num white-label bancário: o IEQ MVA roda no igreja.studio, onde membros, escalas, contribuições e notificações são módulos NestJS isolados na Azure, e cada igreja é um tenant com a própria marca. A próxima igreja entra por configuração, não por rewrite.'
         }
       },
       {
@@ -320,8 +325,8 @@ const projects: Project[] = [
       }
     ],
     outcome: {
-      en: 'Live on the App Store and Google Play, in continuous use by the community: multi-version Bible, pastoral scheduling, member and contribution management.',
-      pt: 'Publicado na App Store e no Google Play, em uso contínuo pela comunidade: Bíblia em múltiplas versões, agendamento com o pastor, gestão de membros e contribuições.'
+      en: 'Live on the App Store and Google Play, in continuous use by the community — multi-version Bible, work schedules, Sunday school, contributions via Pix — and a platform ready to onboard more churches under their own brands.',
+      pt: 'Publicado na App Store e no Google Play, em uso contínuo pela comunidade — Bíblia em múltiplas versões, escalas, escola dominical, contribuições via Pix — e uma plataforma pronta para receber outras igrejas com suas próprias marcas.'
     },
     icon: '/projects/shots/ieq-mva-icon.png',
     screens: [
@@ -394,6 +399,7 @@ const projects: Project[] = [
   },
   {
     slug: 'qwip',
+    kind: 'personal',
     title: 'QWIP',
     tagline: {
       en: 'A whole gas station operation, readable from a phone.',
@@ -465,38 +471,38 @@ const projects: Project[] = [
       {
         src: '/projects/shots/qwip-1.png',
         alt: {
-          en: 'QWIP — home with the reports an owner opens every morning',
-          pt: 'QWIP — home com os relatórios que o dono abre toda manhã'
+          en: 'QWIP — the whole gas station in your pocket: reports home',
+          pt: 'QWIP — todo o posto no seu bolso: home de relatórios'
         },
-        kind: 'raw',
-        aspect: '1206/2622'
+        kind: 'banner',
+        aspect: '1080/2337'
       },
       {
         src: '/projects/shots/qwip-2.png',
         alt: {
-          en: 'QWIP — smart management for your gas station: sign in',
-          pt: 'QWIP — gestão inteligente para o seu posto: login'
+          en: 'QWIP — all the finances in one report: financial inventory by fuel',
+          pt: 'QWIP — todo o financeiro num relatório: inventário por combustível'
         },
-        kind: 'raw',
-        aspect: '1206/2622'
+        kind: 'banner',
+        aspect: '1080/2337'
       },
       {
         src: '/projects/shots/qwip-3.png',
         alt: {
-          en: 'QWIP — financial inventory by fuel type: liters, tickets, averages',
-          pt: 'QWIP — inventário financeiro por combustível: litros, tickets, médias'
+          en: 'QWIP — multiple stations, one account: admin with station switching',
+          pt: 'QWIP — vários postos, uma só conta: admin com troca de posto'
         },
-        kind: 'raw',
-        aspect: '1206/2622'
+        kind: 'banner',
+        aspect: '1080/2337'
       },
       {
         src: '/projects/shots/qwip-4.png',
         alt: {
-          en: 'QWIP — admin account with station switching',
-          pt: 'QWIP — conta de administrador com troca de posto'
+          en: 'QWIP — smart management for your gas station: sign in',
+          pt: 'QWIP — gestão inteligente para o seu posto: login'
         },
-        kind: 'raw',
-        aspect: '1206/2622'
+        kind: 'banner',
+        aspect: '1080/2337'
       }
     ],
     theme: {
@@ -510,6 +516,7 @@ const projects: Project[] = [
   },
   {
     slug: 'maismei',
+    kind: 'company',
     title: 'MaisMei',
     tagline: {
       en: 'Brazilian small-business bureaucracy, solved in one app.',
@@ -574,6 +581,7 @@ const projects: Project[] = [
   },
   {
     slug: 'nitrospray',
+    kind: 'personal',
     title: 'NitroSpray',
     tagline: {
       en: 'A factory-floor ERP — from process mapping to deploy.',
