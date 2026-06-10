@@ -9,18 +9,18 @@ const ui = {
   meta: {
     title: { en: 'Bruno Amorim — Senior Software Engineer', pt: 'Bruno Amorim — Senior Software Engineer' },
     description: {
-      en: 'Senior software engineer building fintech apps end to end — React Native, Swift and React, from Figma to the App Store.',
-      pt: 'Engenheiro de software sênior construindo apps de fintech de ponta a ponta — React Native, Swift e React, do Figma à App Store.'
+      en: 'Senior software engineer building mobile and web apps end to end — React Native, Swift and React, from Figma to the App Store.',
+      pt: 'Engenheiro de software sênior construindo apps mobile e web de ponta a ponta — React Native, Swift e React, do Figma à App Store.'
     }
   },
   hero: {
     eyebrow: { en: 'Senior Software Engineer · Mobile & Front-end', pt: 'Senior Software Engineer · Mobile & Front-end' },
-    titleA: { en: 'I build the banking apps', pt: 'Eu construo os apps de banco' },
+    titleA: { en: 'I build the apps', pt: 'Eu construo os apps' },
     titleEm: { en: 'that live in people’s pockets', pt: 'que moram no bolso das pessoas' },
     titleB: { en: '.', pt: '.' },
     lede: {
-      en: 'I’m Bruno Amorim, a software engineer from Campinas, Brazil. Over the last five years I’ve shipped fintech end to end: an airline’s digital account, a white-label platform behind 40+ banks, a student bank — and, after hours, my own products: my church’s app and a SaaS for gas stations, designed and built entirely by me.',
-      pt: 'Sou Bruno Amorim, engenheiro de software em Campinas. Nos últimos cinco anos coloquei fintech no ar de ponta a ponta: a conta digital de uma companhia aérea, um white-label por trás de 40+ bancos, o banco dos universitários — e, fora do expediente, meus próprios produtos: o app da minha igreja e um SaaS para postos de combustíveis, desenhados e construídos inteiramente por mim.'
+      en: 'I’m Bruno Amorim, a software engineer from Campinas, Brazil. Over the last five years I’ve shipped products end to end: an airline’s digital account, a white-label platform behind 40+ banks, a student bank — and, after hours, my own products: my church’s app and a SaaS for gas stations, designed and built entirely by me.',
+      pt: 'Sou Bruno Amorim, engenheiro de software em Campinas. Nos últimos cinco anos coloquei produtos no ar de ponta a ponta: a conta digital de uma companhia aérea, um white-label por trás de 40+ bancos, o banco dos universitários — e, fora do expediente, meus próprios produtos: o app da minha igreja e um SaaS para postos de combustíveis, desenhados e construídos inteiramente por mim.'
     },
     location: { en: 'Campinas — SP · Brazil', pt: 'Campinas — SP · Brasil' },
     stats: [
@@ -58,8 +58,8 @@ const ui = {
     {
       title: { en: 'Performance is UX', pt: 'Performance é UX' },
       body: {
-        en: 'A bank that stutters is a bank you don’t trust. I profile before I guess, and I optimize for the entry-level Android in someone’s pocket, not for the simulator on my Mac.',
-        pt: 'Banco que engasga é banco em que você não confia. Eu meço antes de chutar, e otimizo para o Android de entrada no bolso de alguém — não para o simulador no meu Mac.'
+        en: 'An app that stutters is an app you don’t trust. I profile before I guess, and I optimize for the entry-level Android in someone’s pocket, not for the simulator on my Mac.',
+        pt: 'App que engasga é app em que você não confia. Eu meço antes de chutar, e otimizo para o Android de entrada no bolso de alguém — não para o simulador no meu Mac.'
       }
     },
     {
