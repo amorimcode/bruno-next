@@ -443,6 +443,16 @@ const projects: Project[] = [
       },
       {
         title: {
+          en: 'Native SwiftUI where the iOS app earns it',
+          pt: 'SwiftUI nativo onde o app iOS pede'
+        },
+        body: {
+          en: 'The iOS app is Expo, but part of it is written natively in SwiftUI — the screens where a native feel and platform-perfect rendering matter more than cross-platform reuse. I reach for the native layer deliberately, not by default, and bridge it back into the Expo app.',
+          pt: 'O app iOS é Expo, mas parte dele é escrita nativamente em SwiftUI — as telas em que o toque nativo e a renderização certinha da plataforma importam mais que reaproveitar entre plataformas. Vou para a camada nativa de propósito, não por padrão, e faço a ponte de volta para o app Expo.'
+        }
+      },
+      {
+        title: {
           en: 'Designed for numbers to be read, not decoded',
           pt: 'Desenhado para números serem lidos, não decifrados'
         },
@@ -510,7 +520,7 @@ const projects: Project[] = [
       fg: '#ffffff',
       glow: '#93c5fd'
     },
-    tags: ['Expo', 'React Native', 'Next.js', 'NestJS', 'PostgreSQL', 'TypeScript'],
+    tags: ['Expo', 'React Native', 'SwiftUI', 'Next.js', 'NestJS', 'PostgreSQL', 'TypeScript'],
     links: [{ label: 'App Store', href: 'https://apps.apple.com/br/app/qwip/id6769966667' }],
     featured: true
   },
