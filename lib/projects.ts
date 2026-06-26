@@ -2,6 +2,104 @@ import { LabProject, Project } from './types';
 
 const projects: Project[] = [
   {
+    slug: 'dont-idle',
+    kind: 'personal',
+    title: "Don't Idle",
+    tagline: {
+      en: 'A native macOS app that keeps your Mac — and your status — awake.',
+      pt: 'Um app nativo de macOS que mantém o Mac — e o seu status — sempre ativo.'
+    },
+    company: "Don't Idle · own product",
+    role: {
+      en: 'Designer & engineer — app, landing page, signing & notarization',
+      pt: 'Designer & engenheiro — app, landing page, assinatura & notarização'
+    },
+    period: { en: '2026', pt: '2026' },
+    platforms: ['macOS'],
+    summary: {
+      en: "A menu-bar utility that nudges the pointer when you step away, so your Mac stays awake and your chat status stays active — on a schedule, and easy on the battery. Built in SwiftUI and shipped as a notarized Developer ID app with a self-update flow and three languages.",
+      pt: 'Um utilitário na barra de menus que move levemente o cursor quando você se afasta, mantendo o Mac acordado e o status do chat ativo — com horário definido e sem gastar bateria. Feito em SwiftUI e distribuído como app Developer ID notarizado, com auto-update e três idiomas.'
+    },
+    context: {
+      en: "Step away for a few minutes and your Mac dims while your Slack or Teams dot turns yellow. Don't Idle reads real input-idle time and, past a threshold you choose, posts a tiny mouse movement that returns in place — enough to read as active everywhere. It runs only during the hours and weekdays you set, and uses an adaptive single-timer engine instead of busy polling, so it barely touches the battery.",
+      pt: 'Você se afasta alguns minutos e o Mac escurece enquanto a bolinha do Slack ou Teams fica amarela. O Don’t Idle lê o tempo real de inatividade e, passado um limite que você escolhe, faz um pequeno movimento do cursor que volta ao lugar — o bastante para aparecer como ativo em todo lugar. Só funciona nos horários e dias que você define e usa um motor adaptativo de um único timer em vez de ficar verificando à toa, então quase não consome bateria.'
+    },
+    decisions: [
+      {
+        title: {
+          en: 'Real input events, not a fake cursor warp',
+          pt: 'Eventos de input reais, não um cursor falso'
+        },
+        body: {
+          en: "The nudge posts a genuine CGEvent mouse move to the HID tap, which resets macOS idle time and keeps chat presence active. That requires Accessibility, so onboarding refuses to finish until the permission is actually granted.",
+          pt: 'O movimento posta um CGEvent real de mouse no HID tap, o que reseta o tempo ocioso do macOS e mantém a presença no chat ativa. Isso exige Acessibilidade, então o onboarding só conclui depois que a permissão é de fato concedida.'
+        }
+      },
+      {
+        title: {
+          en: 'Battery-first: adaptive timer, no polling',
+          pt: 'Bateria em primeiro lugar: timer adaptativo, sem polling'
+        },
+        body: {
+          en: 'Instead of checking every second, the engine schedules a single wake-up at the next decision point and sleeps completely when paused or outside the active window — with timer leeway so the CPU can coalesce wake-ups.',
+          pt: 'Em vez de verificar a cada segundo, o motor agenda um único wake-up no próximo ponto de decisão e dorme por completo quando pausado ou fora da janela ativa — com folga no timer para o CPU agrupar os despertares.'
+        }
+      },
+      {
+        title: {
+          en: 'Shipped like a real product',
+          pt: 'Distribuído como um produto de verdade'
+        },
+        body: {
+          en: 'Developer ID signing plus Apple notarization (stapled, hardened runtime, universal binary) so it opens with no Gatekeeper warning — and a custom self-update flow that downloads, swaps the app bundle and relaunches, validated end to end.',
+          pt: 'Assinatura Developer ID com notarização da Apple (stapled, hardened runtime, binário universal) para abrir sem aviso do Gatekeeper — e um auto-update próprio que baixa, troca o bundle e reabre o app, validado de ponta a ponta.'
+        }
+      }
+    ],
+    outcome: {
+      en: 'Live with a notarized, auto-updating download and a marketing landing page on Vercel. SwiftUI app with animated onboarding, full settings, and English / Português / Español localization.',
+      pt: 'No ar com download notarizado e auto-atualizável e uma landing page na Vercel. App em SwiftUI com onboarding animado, ajustes completos e localização em inglês / português / espanhol.'
+    },
+    icon: '/projects/shots/dont-idle-icon.png',
+    screens: [
+      {
+        src: '/projects/shots/dont-idle-1.png',
+        alt: {
+          en: "Don't Idle — animated first-launch onboarding",
+          pt: 'Don’t Idle — onboarding animado de primeira execução'
+        },
+        kind: 'banner',
+        aspect: '1360/1032'
+      },
+      {
+        src: '/projects/shots/dont-idle-2.png',
+        alt: {
+          en: "Don't Idle — menu-bar popover with live status",
+          pt: 'Don’t Idle — popover da barra de menus com status ao vivo'
+        },
+        kind: 'banner',
+        aspect: '728/940'
+      },
+      {
+        src: '/projects/shots/dont-idle-3.png',
+        alt: {
+          en: "Don't Idle — settings window",
+          pt: 'Don’t Idle — janela de ajustes'
+        },
+        kind: 'banner',
+        aspect: '1040/1076'
+      }
+    ],
+    theme: {
+      bg: 'linear-gradient(140deg, #1f1f23 0%, #0a0a0c 100%)',
+      fg: '#f4f4f5',
+      glow: '#9ca3af'
+    },
+    tags: ['Swift', 'SwiftUI', 'AppKit', 'macOS', 'Developer ID', 'Next.js'],
+    links: [{ label: 'Website', href: 'https://dont-idle.vercel.app' }],
+    featured: true
+  },
+  {
     slug: 'pagol',
     kind: 'company',
     title: 'PaGol',
