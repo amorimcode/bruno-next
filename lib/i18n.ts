@@ -30,6 +30,15 @@ const ui = {
       { value: '3', label: { en: 'platforms: iOS, Android & web', pt: 'plataformas: iOS, Android e web' } }
     ]
   },
+  playground: {
+    eyebrow: { en: 'Real-time 3D — WebGL', pt: '3D em tempo real — WebGL' },
+    title: { en: 'Grab. Spin. Explore.', pt: 'Pega. Gira. Explora.' },
+    lede: {
+      en: 'The apps I ship, rendered live in 3D. Every device below is real work in production — drag each one to look at it from any angle.',
+      pt: 'Os apps que eu publico, renderizados em 3D ao vivo. Cada aparelho abaixo é trabalho real em produção — arraste cada um para vê-lo de qualquer ângulo.'
+    },
+    hint: { en: 'drag the devices', pt: 'arraste os aparelhos' }
+  },
   sections: {
     ownProducts: { en: 'Own products', pt: 'Produtos próprios' },
     ownProductsHint: {

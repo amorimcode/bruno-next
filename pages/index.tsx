@@ -1,7 +1,13 @@
 import { GetStaticProps } from 'next';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
+const Showcase3D = dynamic(() => import('../components/Showcase3D'), {
+  ssr: false,
+  loading: () => null
+});
 
 import Container from '../components/Container';
 import ProjectCard from '../components/ProjectCard';
@@ -86,6 +92,30 @@ export default function Home({ personal, company }: Props) {
             </div>
           ))}
         </dl>
+      </section>
+
+      {/* 3D playground — dispositivos arrastáveis */}
+      <section className="relative overflow-hidden border-b border-line">
+        <div className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
+          <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+            {ui.playground.eyebrow[locale]}
+          </p>
+          <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-display text-3xl tracking-tight sm:text-5xl">
+              {ui.playground.title[locale]}
+            </h2>
+            <p className="max-w-sm text-sm leading-6 text-muted">
+              {ui.playground.lede[locale]}
+            </p>
+          </div>
+        </div>
+
+        <div className="relative mx-auto h-[420px] w-full max-w-wrap cursor-grab active:cursor-grabbing sm:h-[560px]">
+          <Showcase3D />
+          <span className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-line bg-surface/80 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted backdrop-blur">
+            ↻ {ui.playground.hint[locale]}
+          </span>
+        </div>
       </section>
 
       {/* Own products */}
