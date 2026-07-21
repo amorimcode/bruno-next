@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import ui from '../lib/i18n';
@@ -25,6 +26,13 @@ export default function Footer() {
         >
           {EMAIL}
         </a>
+
+        <Link
+          href="/schedule"
+          className="mt-8 flex w-fit items-center gap-2 rounded-full border border-line px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition-colors hover:border-accent hover:text-accent"
+        >
+          {ui.footer.book[locale]} <span aria-hidden="true">→</span>
+        </Link>
 
         <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 font-mono text-[11px] uppercase tracking-[0.18em]">
           {links.map((link) => (

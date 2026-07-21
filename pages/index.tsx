@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const Showcase3D = dynamic(() => import('../components/Showcase3D'), {
+const Console3D = dynamic(() => import('../components/Console3D'), {
   ssr: false,
   loading: () => null
 });
@@ -49,6 +49,21 @@ export default function Home({ personal, company }: Props) {
             >
               {ui.hero.lede[locale]}
             </p>
+
+            <div
+              className="rise mt-10 flex flex-wrap items-center gap-6"
+              style={{ animationDelay: '260ms' }}
+            >
+              <Link
+                href="/schedule"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-bg transition-opacity hover:opacity-90"
+              >
+                {ui.footer.book[locale]} <span aria-hidden="true">→</span>
+              </Link>
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+                {ui.schedule.window[locale]}
+              </span>
+            </div>
           </div>
 
           <figure
@@ -94,7 +109,7 @@ export default function Home({ personal, company }: Props) {
         </dl>
       </section>
 
-      {/* 3D playground — dispositivos arrastáveis */}
+      {/* Playground 3D: unidade de estúdio com botões que giram de verdade */}
       <section className="relative overflow-hidden border-b border-line">
         <div className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
           <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
@@ -110,10 +125,10 @@ export default function Home({ personal, company }: Props) {
           </div>
         </div>
 
-        <div className="relative mx-auto h-[420px] w-full max-w-wrap cursor-grab active:cursor-grabbing sm:h-[560px]">
-          <Showcase3D />
+        <div className="relative mx-auto h-[420px] w-full max-w-wrap sm:h-[560px]">
+          <Console3D />
           <span className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-line bg-surface/80 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted backdrop-blur">
-            ↻ {ui.playground.hint[locale]}
+            ↕ {ui.playground.hint[locale]}
           </span>
         </div>
       </section>

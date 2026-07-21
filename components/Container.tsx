@@ -146,7 +146,12 @@ export default function Container({ children, ...customMeta }: ContainerProps) {
           <nav className="flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.18em] sm:gap-6">
             <NavItem href="/" text={ui.nav.home[locale]} className="hidden sm:inline" />
             <NavItem href="/projects" text={ui.nav.projects[locale]} />
-            <NavItem href="/about" text={ui.nav.about[locale]} />
+            <NavItem
+              href="/about"
+              text={ui.nav.about[locale]}
+              className="hidden sm:inline"
+            />
+            <NavItem href="/schedule" text={ui.nav.schedule[locale]} />
             <LangSwitch />
             <ThemeToggle label={ui.nav.toggleTheme[locale]} />
           </nav>

@@ -3,6 +3,7 @@ const ui = {
     home: { en: 'Home', pt: 'Início' },
     projects: { en: 'Work', pt: 'Projetos' },
     about: { en: 'About', pt: 'Sobre' },
+    schedule: { en: 'Schedule', pt: 'Agendar' },
     toggleTheme: { en: 'Toggle dark mode', pt: 'Alternar modo escuro' },
     skip: { en: 'Skip to content', pt: 'Pular para o conteúdo' }
   },
@@ -31,13 +32,13 @@ const ui = {
     ]
   },
   playground: {
-    eyebrow: { en: 'Real-time 3D — WebGL', pt: '3D em tempo real — WebGL' },
-    title: { en: 'Grab. Spin. Explore.', pt: 'Pega. Gira. Explora.' },
+    eyebrow: { en: 'Real-time 3D · WebGL', pt: '3D em tempo real · WebGL' },
+    title: { en: 'Turn the knobs.', pt: 'Gire os botões.' },
     lede: {
-      en: 'The apps I ship, rendered live in 3D. Every device below is real work in production — drag each one to look at it from any angle.',
-      pt: 'Os apps que eu publico, renderizados em 3D ao vivo. Cada aparelho abaixo é trabalho real em produção — arraste cada um para vê-lo de qualquer ângulo.'
+      en: 'How I split my time, as a piece of studio hardware. Nothing here is a downloaded model: the case, the knobs and every marking on the panel are drawn in code. Drag a knob up or down.',
+      pt: 'Como eu divido meu tempo, em forma de equipamento de estúdio. Nada aqui é modelo baixado: a carcaça, os botões e cada marcação do painel são desenhados em código. Arraste um botão para cima ou para baixo.'
     },
-    hint: { en: 'drag the devices', pt: 'arraste os aparelhos' }
+    hint: { en: 'drag the knobs', pt: 'arraste os botões' }
   },
   sections: {
     ownProducts: { en: 'Own products', pt: 'Produtos próprios' },
@@ -203,8 +204,82 @@ const ui = {
     ],
     contact: { en: 'Contact', pt: 'Contato' }
   },
+  schedule: {
+    metaTitle: {
+      en: 'Book a call · Bruno Amorim',
+      pt: 'Agendar uma conversa · Bruno Amorim'
+    },
+    eyebrow: { en: 'Book a call · 30 minutes', pt: 'Agende uma conversa · 30 minutos' },
+    titleA: { en: 'Pick a time', pt: 'Escolha um horário' },
+    titleEm: { en: 'that’s already free', pt: 'que já está livre' },
+    titleB: { en: '.', pt: '.' },
+    lede: {
+      en: 'These slots come straight from my calendar, so whatever you see here is genuinely open. Pick one and the invite lands in both inboxes with a Google Meet link, no email ping-pong first.',
+      pt: 'Estes horários vêm direto da minha agenda, então o que aparece aqui está mesmo livre. Escolha um e o convite chega nas duas caixas de entrada com link do Google Meet, sem trocar email antes.'
+    },
+    window: {
+      en: 'Weekdays, 1pm to 6pm (Brasília time)',
+      pt: 'Dias úteis, das 13h às 18h (horário de Brasília)'
+    },
+    loading: { en: 'Reading my calendar…', pt: 'Lendo minha agenda…' },
+    pickDay: { en: 'Pick a day', pt: 'Escolha o dia' },
+    pickTime: { en: 'Pick a time', pt: 'Escolha o horário' },
+    noSlots: {
+      en: 'Nothing free in the next few weeks. Send me an email and we’ll find a way.',
+      pt: 'Nada livre nas próximas semanas. Me manda um email que a gente dá um jeito.'
+    },
+    noSlotsForDay: { en: 'No times left on this day.', pt: 'Nenhum horário sobrando nesse dia.' },
+    yourTimezone: {
+      en: 'Times shown in your timezone',
+      pt: 'Horários no seu fuso'
+    },
+    inSaoPaulo: { en: 'in Campinas', pt: 'em Campinas' },
+    form: {
+      title: { en: 'Who’s coming?', pt: 'Quem vem?' },
+      name: { en: 'Your name', pt: 'Seu nome' },
+      email: { en: 'Your email', pt: 'Seu email' },
+      emailHint: {
+        en: 'The calendar invite goes to this address.',
+        pt: 'O convite do calendário vai para este endereço.'
+      },
+      topic: { en: 'What do you want to talk about?', pt: 'Sobre o que você quer conversar?' },
+      topicHint: { en: 'Optional, but it helps me prepare.', pt: 'Opcional, mas me ajuda a chegar preparado.' },
+      submit: { en: 'Confirm booking', pt: 'Confirmar agendamento' },
+      sending: { en: 'Booking…', pt: 'Agendando…' },
+      back: { en: 'Change time', pt: 'Trocar horário' }
+    },
+    confirmed: {
+      title: { en: 'You’re on my calendar.', pt: 'Você está na minha agenda.' },
+      body: {
+        en: 'The invite is already in your inbox. Accept it and the event syncs to your own calendar.',
+        pt: 'O convite já está na sua caixa de entrada. Aceite e o evento entra na sua agenda também.'
+      },
+      meet: { en: 'Join with Google Meet', pt: 'Entrar pelo Google Meet' },
+      home: { en: 'Back to the site', pt: 'Voltar para o site' }
+    },
+    errors: {
+      taken: {
+        en: 'Someone grabbed that slot while you were typing. Pick another one.',
+        pt: 'Alguém pegou esse horário enquanto você digitava. Escolha outro.'
+      },
+      invalid: {
+        en: 'Check your name and email, something didn’t go through.',
+        pt: 'Confira nome e email, alguma coisa não passou.'
+      },
+      rate: {
+        en: 'Too many attempts. Wait a bit and try again.',
+        pt: 'Tentativas demais. Espere um pouco e tente de novo.'
+      },
+      generic: {
+        en: 'The calendar didn’t answer. Try again in a moment, or just email me.',
+        pt: 'A agenda não respondeu. Tente de novo daqui a pouco, ou me mande um email.'
+      },
+      retry: { en: 'Try again', pt: 'Tentar de novo' }
+    }
+  },
   footer: {
     cta: { en: 'Have something to build?', pt: 'Tem algo para construir?' },
+    book: { en: 'Book a call', pt: 'Agendar conversa' },
     note: {
       en: 'Hand-built with Next.js — no template, every pixel on purpose.',
       pt: 'Feito à mão com Next.js — sem template, cada pixel de propósito.'
