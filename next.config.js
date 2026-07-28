@@ -8,9 +8,8 @@ module.exports = {
     defaultLocale: "en",
   },
   images: {
-    domains: [
-      "github.com", // Foto de perfil
-    ],
+    // Todas as imagens são locais: a foto de perfil saiu do avatar do GitHub
+    // para public/bruno.jpg, então nenhum domínio remoto precisa ser liberado.
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },

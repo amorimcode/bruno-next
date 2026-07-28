@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import ui from '../lib/i18n';
 import { pickLocale } from '../lib/types';
 
-const EMAIL = 'bruno.amorim032@gmail.com';
+const EMAIL = 'me@brunoamorim.dev';
 
 const links = [
   { label: 'GitHub', href: 'https://github.com/amorimcode' },

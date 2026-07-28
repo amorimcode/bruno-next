@@ -73,10 +73,10 @@ export default function Home({ personal, company }: Props) {
             <div className="rotate-2 transition-transform duration-500 ease-out hover:rotate-0">
               <div className="overflow-hidden rounded-3xl border border-line bg-surface shadow-2xl">
                 <Image
-                  src="https://github.com/amorimcode.png"
+                  src="/bruno.jpg"
                   alt="Bruno Amorim"
-                  width={460}
-                  height={460}
+                  width={920}
+                  height={920}
                   priority
                   className="aspect-square w-full object-cover"
                 />
@@ -110,7 +110,7 @@ export default function Home({ personal, company }: Props) {
       </section>
 
       {/* Playground 3D: unidade de estúdio com botões que giram de verdade */}
-      <section className="relative overflow-hidden border-b border-line">
+      <section id="playground" className="relative overflow-hidden border-b border-line">
         <div className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
           <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
             {ui.playground.eyebrow[locale]}

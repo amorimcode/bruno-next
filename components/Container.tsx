@@ -107,6 +107,15 @@ type ContainerProps = {
   description?: string;
 };
 
+/**
+ * og:image precisa de URL absoluta para os scrapers das redes. Na Vercel a
+ * própria plataforma injeta a URL do deploy; NEXT_PUBLIC_SITE_URL sobrescreve
+ * quando o domínio próprio estiver ligado.
+ */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : '');
+
 export default function Container({ children, ...customMeta }: ContainerProps) {
   const router = useRouter();
   const locale = pickLocale(router.locale);
@@ -127,7 +136,7 @@ export default function Container({ children, ...customMeta }: ContainerProps) {
         <meta property="og:site_name" content="Bruno Amorim" />
         <meta property="og:title" content={meta.title} />
         <meta property="og:description" content={meta.description} />
-        <meta property="og:image" content="https://github.com/amorimcode.png" />
+        <meta property="og:image" content={`${SITE_URL}/bruno.jpg`} />
         <meta property="og:locale" content={locale === 'pt' ? 'pt_BR' : 'en_US'} />
       </Head>
 

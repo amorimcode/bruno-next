@@ -5,7 +5,7 @@ import Container from '../components/Container';
 import ui from '../lib/i18n';
 import { pickLocale } from '../lib/types';
 
-const EMAIL = 'bruno.amorim032@gmail.com';
+const EMAIL = 'me@brunoamorim.dev';
 
 export default function About() {
   const locale = pickLocale(useRouter().locale);
@@ -87,10 +87,10 @@ export default function About() {
             <div className="space-y-10 lg:sticky lg:top-24">
               <div className="rise overflow-hidden rounded-3xl border border-line">
                 <Image
-                  src="https://github.com/amorimcode.png"
+                  src="/bruno.jpg"
                   alt="Bruno Amorim"
-                  width={480}
-                  height={480}
+                  width={920}
+                  height={920}
                   priority
                   className="w-full"
                 />
