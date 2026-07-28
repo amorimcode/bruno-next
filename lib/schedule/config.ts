@@ -15,6 +15,17 @@ export const DAY_START_HOUR = 13;
 /** Fim da janela. O último bloco termina exatamente nessa hora. */
 export const DAY_END_HOUR = 18;
 
+/**
+ * Exceções ao fim da janela, por dia da semana (mesmo padrão de `WORK_DAYS`).
+ * Sexta fecha às 16h, então o último bloco do dia começa 15h30.
+ */
+const DAY_END_HOUR_BY_WEEKDAY: Record<number, number> = { 5: 16 };
+
+/** Fim da janela naquele dia da semana, já com a exceção aplicada. */
+export function dayEndHour(weekday: number): number {
+  return DAY_END_HOUR_BY_WEEKDAY[weekday] ?? DAY_END_HOUR;
+}
+
 /** Duração de cada bloco, em minutos. */
 export const SLOT_MINUTES = 30;
 

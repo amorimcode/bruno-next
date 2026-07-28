@@ -218,8 +218,8 @@ const ui = {
       pt: 'Estes horários vêm direto da minha agenda, então o que aparece aqui está mesmo livre. Escolha um e o convite chega nas duas caixas de entrada com link do Google Meet, sem trocar email antes.'
     },
     window: {
-      en: 'Weekdays, 1pm to 6pm (Brasília time)',
-      pt: 'Dias úteis, das 13h às 18h (horário de Brasília)'
+      en: 'Weekdays, 1pm to 6pm · Fridays until 4pm (Brasília time)',
+      pt: 'Dias úteis, das 13h às 18h · sextas até 16h (horário de Brasília)'
     },
     loading: { en: 'Reading my calendar…', pt: 'Lendo minha agenda…' },
     pickDay: { en: 'Pick a day', pt: 'Escolha o dia' },

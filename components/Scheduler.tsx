@@ -57,6 +57,146 @@ function dayParts(dayKey: string, locale: Locale) {
   };
 }
 
+const BAR = 'rounded bg-line';
+
+/**
+ * Barra do esqueleto que ocupa exatamente o espaço do texto que vai entrar no
+ * lugar dela. O texto real vai junto, invisível: é ele que dita a altura, então
+ * a caixa acompanha sozinha quando a frase quebra em mais linhas num telefone.
+ */
+function GhostText({
+  children,
+  className = '',
+  width = 'w-full'
+}: {
+  children: React.ReactNode;
+  className?: string;
+  width?: string;
+}) {
+  return (
+    <span className={`relative ${className}`}>
+      <span className="invisible">{children}</span>
+      <span className={`${BAR} absolute inset-y-[15%] left-0 ${width}`} />
+    </span>
+  );
+}
+
+/**
+ * Espelha a grade real enquanto a agenda carrega. Não é enfeite: sem isso a
+ * página troca uma linha de texto por dois blocos altos e tudo abaixo salta.
+ * A estrutura é a mesma do conteúdo final, incluindo as classes que definem
+ * espaçamento, para a troca não mexer em altura nenhuma.
+ */
+function SchedulerSkeleton({
+  t,
+  locale,
+  visitorZone
+}: {
+  t: typeof ui.schedule;
+  locale: Locale;
+  /** Mesmo texto da linha real: com o fuso junto, ela quebra igual no celular. */
+  visitorZone: string | null;
+}) {
+  return (
+    // Aria-hidden porque caixa vazia não é informação: quem usa leitor de tela
+    // ouve o live region de "lendo a agenda" e depois o resultado.
+    <div className="grid gap-16 lg:grid-cols-12 lg:gap-12" aria-hidden="true">
+      <div className="min-w-0 animate-pulse lg:col-span-7">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+          {t.pickDay[locale]}
+        </h2>
+
+        <div className="mt-5 flex gap-3 overflow-hidden pb-2">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex shrink-0 flex-col items-center rounded-2xl border border-line px-4 py-3"
+            >
+              <span className={`${BAR} h-3.5 w-7`} />
+              <span className={`${BAR} mt-1 h-6 w-9`} />
+              <span className={`${BAR} mt-1 h-3.5 w-6`} />
+            </div>
+          ))}
+        </div>
+
+        <h2 className="mt-12 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+          {t.pickTime[locale]}
+        </h2>
+        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.16em]">
+          <GhostText width="w-64">
+            {t.yourTimezone[locale]}
+            {visitorZone ? ` · ${visitorZone.replace(/_/g, ' ')}` : ''}
+          </GhostText>
+        </p>
+
+        <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-center rounded-xl border border-line px-2 py-3"
+            >
+              <span className={`${BAR} h-4 w-14`} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="animate-pulse lg:col-span-5">
+        <div className="rounded-3xl border border-line bg-surface p-8">
+          <h2 className="font-display text-2xl tracking-tight">
+            <GhostText width="w-3/4">{t.form.title[locale]}</GhostText>
+          </h2>
+          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em]">
+            <GhostText width="w-1/2">{t.pickTime[locale]}</GhostText>
+          </p>
+
+          <div className="mt-8 space-y-6">
+            <div>
+              <GhostText
+                className="font-mono text-[10px] uppercase tracking-[0.2em]"
+                width="w-20"
+              >
+                {t.form.name[locale]}
+              </GhostText>
+              <span className={`${BAR} mt-2 block h-[46px] w-full`} />
+            </div>
+
+            <div>
+              <GhostText
+                className="font-mono text-[10px] uppercase tracking-[0.2em]"
+                width="w-20"
+              >
+                {t.form.email[locale]}
+              </GhostText>
+              <span className={`${BAR} mt-2 block h-[46px] w-full`} />
+              <p className="mt-2 text-xs leading-5">
+                <GhostText width="w-4/5">{t.form.emailHint[locale]}</GhostText>
+              </p>
+            </div>
+
+            <div>
+              <GhostText
+                className="font-mono text-[10px] uppercase tracking-[0.2em]"
+                width="w-24"
+              >
+                {t.form.topic[locale]}
+              </GhostText>
+              {/* 86px do textarea mais os 7px que o baseline dele reserva por
+                  ser inline-block. Medido, não chutado. */}
+              <span className={`${BAR} mt-2 block h-[93px] w-full`} />
+              <p className="mt-2 text-xs leading-5">
+                <GhostText width="w-2/3">{t.form.topicHint[locale]}</GhostText>
+              </p>
+            </div>
+
+            <span className={`${BAR} block h-[44.5px] w-full rounded-full`} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Scheduler() {
   const locale = pickLocale(useRouter().locale);
   const t = ui.schedule;
@@ -212,10 +352,14 @@ export default function Scheduler() {
   return (
     <section className="mx-auto w-full max-w-wrap px-6 pb-28">
       <div className="border-t border-line pt-12">
+        {/* Só o texto muda de estado aqui: o leitor de tela ouve "lendo a
+            agenda" e depois o resultado, sem varrer o esqueleto. */}
+        <p className="sr-only" role="status" aria-live="polite">
+          {status === 'loading' ? t.loading[locale] : ''}
+        </p>
+
         {status === 'loading' && (
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-            {t.loading[locale]}
-          </p>
+          <SchedulerSkeleton t={t} locale={locale} visitorZone={visitorZone} />
         )}
 
         {status === 'failed' && (
@@ -240,7 +384,7 @@ export default function Scheduler() {
         )}
 
         {status !== 'loading' && status !== 'failed' && days.length > 0 && (
-          <div className="grid gap-16 lg:grid-cols-12 lg:gap-12">
+          <div className="fade-in grid gap-16 lg:grid-cols-12 lg:gap-12">
             {/* Passo 1 e 2: dia e horário.
                 `min-w-0` é obrigatório: sem ele a track do grid herda
                 `min-width: auto`, a faixa de dias rolável estica a coluna e a

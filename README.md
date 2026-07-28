@@ -25,7 +25,7 @@ Sem as variáveis do Google configuradas o site inteiro funciona normalmente; s�
 
 A página lê a disponibilidade real da agenda via `freeBusy` e cria o evento com convite e sala do Google Meet. Não há banco de dados: a agenda do Google é a fonte de verdade.
 
-As regras de horário ficam todas em [`lib/schedule/config.ts`](lib/schedule/config.ts): dias úteis, das 13h às 18h no horário de Brasília, blocos de 30 minutos, 30 dias de horizonte e 2 horas de antecedência mínima.
+As regras de horário ficam todas em [`lib/schedule/config.ts`](lib/schedule/config.ts): dias úteis, das 13h às 18h no horário de Brasília, blocos de 30 minutos, 30 dias de horizonte e 2 horas de antecedência mínima. Sexta fecha mais cedo, às 16h, pela exceção em `DAY_END_HOUR_BY_WEEKDAY`.
 
 ### Configuração
 
@@ -34,7 +34,9 @@ A conta é Gmail pessoal, então não dá para usar service account (isso exige 
 1. No [Google Cloud Console](https://console.cloud.google.com/), crie um projeto e habilite a **Google Calendar API**.
 2. Configure a tela de consentimento OAuth como **External** e clique em **Publish app**.
    Enquanto o app ficar em modo *Testing* o refresh token expira em 7 dias e a página para de funcionar sozinha. Publicado, ele não expira por tempo.
+   Os escopos usados são dois, e os dois são necessários: `calendar.events` para criar o evento e `calendar.freebusy` para ler a ocupação. O `freeBusy` não aceita `calendar.events`, então só com ele a página de horários responde 403.
 3. Crie uma credencial **OAuth client ID** do tipo *Web application* com a redirect URI `http://localhost:4455/oauth2callback`.
+   Ela serve só para o consentimento local: em produção o servidor troca o refresh token por access token direto, sem redirect. O domínio do site não entra aqui.
 4. Copie `.env.local.example` para `.env.local` e preencha `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET`.
 5. Rode o script abaixo e aceite o consentimento. Ele grava o `GOOGLE_REFRESH_TOKEN` no `.env.local` sem imprimir o valor no terminal.
 

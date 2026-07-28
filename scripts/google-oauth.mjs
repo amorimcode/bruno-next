@@ -18,7 +18,13 @@ import { resolve } from 'node:path';
 const ENV_PATH = resolve(process.cwd(), '.env.local');
 const PORT = 4455;
 const REDIRECT_URI = `http://localhost:${PORT}/oauth2callback`;
-const SCOPE = 'https://www.googleapis.com/auth/calendar.events';
+// Dois escopos porque as duas chamadas pedem coisas diferentes: `events` cria o
+// evento, e `freebusy` lê a ocupação da agenda em /api/schedule/availability.
+// `calendar.events` sozinho faz o freeBusy responder 403.
+const SCOPE = [
+  'https://www.googleapis.com/auth/calendar.events',
+  'https://www.googleapis.com/auth/calendar.freebusy'
+].join(' ');
 
 function readEnvFile() {
   try {

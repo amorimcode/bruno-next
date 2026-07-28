@@ -5,8 +5,8 @@
  * quebra a agenda.
  */
 import {
-  DAY_END_HOUR,
   DAY_START_HOUR,
+  dayEndHour,
   HORIZON_DAYS,
   MIN_NOTICE_MINUTES,
   SLOT_MINUTES,
@@ -128,10 +128,11 @@ export function upcomingDayKeys(now: Date = new Date()): string[] {
 
 /** Grade completa de um dia, antes de descontar o que já está ocupado. */
 export function slotsForDay(dayKey: string): Slot[] {
-  if (!WORK_DAYS.includes(weekdayForDayKey(dayKey))) return [];
+  const weekday = weekdayForDayKey(dayKey);
+  if (!WORK_DAYS.includes(weekday)) return [];
 
   const [year, month, day] = parseDayKey(dayKey);
-  const windowMinutes = (DAY_END_HOUR - DAY_START_HOUR) * 60;
+  const windowMinutes = (dayEndHour(weekday) - DAY_START_HOUR) * 60;
   const slots: Slot[] = [];
 
   for (
