@@ -209,6 +209,71 @@ const projects: Project[] = [
     featured: true
   },
   {
+    slug: 'maismei',
+    kind: 'company',
+    title: 'MaisMei',
+    tagline: {
+      en: 'Brazilian small-business bureaucracy, solved in one app.',
+      pt: 'A burocracia do MEI resolvida num app.'
+    },
+    company: 'MaisMei',
+    role: {
+      en: 'Front-end Developer — iOS & React Native',
+      pt: 'Desenvolvedor Front-end Pleno — iOS & React Native'
+    },
+    period: { en: 'Apr 2024 – Jan 2025', pt: 'Abr 2024 – Jan 2025' },
+    platforms: ['iOS', 'Android'],
+    summary: {
+      en: 'Financial services for Brazilian micro-entrepreneurs (MEI): company registration, tax slips (DAS/DASN) and business account management. I worked across native iOS (Swift/SwiftUI) and React Native.',
+      pt: 'App de serviços financeiros para microempreendedores: abertura de MEI, guias DAS/DASN e gestão da conta PJ. Atuei unindo desenvolvimento nativo iOS (Swift/SwiftUI) e React Native.'
+    },
+    context: {
+      en: 'Millions of Brazilian micro-entrepreneurs face the same routine: issue a tax slip, declare revenue, keep the company compliant. MaisMei condenses all of it into a single app. I joined the team to evolve the product on both platforms, moving between native iOS code and the React Native base as each feature demanded.',
+      pt: 'Milhões de MEIs brasileiros enfrentam a mesma rotina: emitir guia, declarar faturamento, manter o CNPJ regular. O MaisMei condensa isso num app só. Entrei no time para evoluir o produto nas duas plataformas, transitando entre o código nativo iOS e a base React Native conforme a feature pedia.'
+    },
+    decisions: [
+      {
+        title: {
+          en: 'SwiftUI where the iOS experience deserved to be native',
+          pt: 'SwiftUI onde a experiência iOS pedia ser nativa'
+        },
+        body: {
+          en: 'Not everything should cross the bridge. System-feeling flows — settings screens, Apple ecosystem interactions — got dedicated SwiftUI implementations, while the rest of the product stayed in RN.',
+          pt: 'Nem tudo precisa passar pela bridge. Fluxos com cara de sistema — telas de ajuste, interações com o ecossistema Apple — ganharam implementações SwiftUI dedicadas, mantendo o resto do produto em RN.'
+        }
+      },
+      {
+        title: {
+          en: 'State discipline with MobX in tax-critical flows',
+          pt: 'Disciplina de estado com MobX em fluxo fiscal'
+        },
+        body: {
+          en: 'An issued slip, a submitted declaration, a paid installment: tax states tolerate no ambiguity. I worked the state layer so every document had an explicit lifecycle, from draft to confirmation.',
+          pt: 'Guia emitida, declaração enviada, parcela paga: estados fiscais não toleram ambiguidade. Trabalhei a camada de estado para que cada documento tivesse ciclo de vida explícito, do rascunho à confirmação.'
+        }
+      }
+    ],
+    outcome: {
+      en: 'New features delivered to production for a nationwide base of micro-entrepreneurs, with the app active on both stores.',
+      pt: 'Funcionalidades novas entregues em produção para uma base nacional de microempreendedores, com o app ativo nas duas lojas.'
+    },
+    icon: '/projects/shots/maismei-icon.png',
+    screens: [],
+    theme: {
+      bg: 'linear-gradient(135deg, #3f63de 0%, #2746a8 100%)',
+      fg: '#e2f58b',
+      glow: '#e2f58b'
+    },
+    tags: ['Swift', 'SwiftUI', 'React Native', 'MobX', 'Go'],
+    links: [
+      {
+        label: 'App Store',
+        href: 'https://apps.apple.com/br/app/mais-mei-abrir-mei-dasn-das/id1437671032'
+      }
+    ],
+    featured: false
+  },
+  {
     slug: 'bankeiro',
     kind: 'company',
     coverStyle: 'grid',
@@ -624,71 +689,6 @@ const projects: Project[] = [
     tags: ['Expo', 'React Native', 'SwiftUI', 'Next.js', 'NestJS', 'PostgreSQL', 'TypeScript'],
     links: [{ label: 'App Store', href: 'https://apps.apple.com/br/app/qwip/id6769966667' }],
     featured: true
-  },
-  {
-    slug: 'maismei',
-    kind: 'company',
-    title: 'MaisMei',
-    tagline: {
-      en: 'Brazilian small-business bureaucracy, solved in one app.',
-      pt: 'A burocracia do MEI resolvida num app.'
-    },
-    company: 'MaisMei',
-    role: {
-      en: 'Front-end Developer — iOS & React Native',
-      pt: 'Desenvolvedor Front-end Pleno — iOS & React Native'
-    },
-    period: { en: 'Apr 2024 – Jan 2025', pt: 'Abr 2024 – Jan 2025' },
-    platforms: ['iOS', 'Android'],
-    summary: {
-      en: 'Financial services for Brazilian micro-entrepreneurs (MEI): company registration, tax slips (DAS/DASN) and business account management. I worked across native iOS (Swift/SwiftUI) and React Native.',
-      pt: 'App de serviços financeiros para microempreendedores: abertura de MEI, guias DAS/DASN e gestão da conta PJ. Atuei unindo desenvolvimento nativo iOS (Swift/SwiftUI) e React Native.'
-    },
-    context: {
-      en: 'Millions of Brazilian micro-entrepreneurs face the same routine: issue a tax slip, declare revenue, keep the company compliant. MaisMei condenses all of it into a single app. I joined the team to evolve the product on both platforms, moving between native iOS code and the React Native base as each feature demanded.',
-      pt: 'Milhões de MEIs brasileiros enfrentam a mesma rotina: emitir guia, declarar faturamento, manter o CNPJ regular. O MaisMei condensa isso num app só. Entrei no time para evoluir o produto nas duas plataformas, transitando entre o código nativo iOS e a base React Native conforme a feature pedia.'
-    },
-    decisions: [
-      {
-        title: {
-          en: 'SwiftUI where the iOS experience deserved to be native',
-          pt: 'SwiftUI onde a experiência iOS pedia ser nativa'
-        },
-        body: {
-          en: 'Not everything should cross the bridge. System-feeling flows — settings screens, Apple ecosystem interactions — got dedicated SwiftUI implementations, while the rest of the product stayed in RN.',
-          pt: 'Nem tudo precisa passar pela bridge. Fluxos com cara de sistema — telas de ajuste, interações com o ecossistema Apple — ganharam implementações SwiftUI dedicadas, mantendo o resto do produto em RN.'
-        }
-      },
-      {
-        title: {
-          en: 'State discipline with MobX in tax-critical flows',
-          pt: 'Disciplina de estado com MobX em fluxo fiscal'
-        },
-        body: {
-          en: 'An issued slip, a submitted declaration, a paid installment: tax states tolerate no ambiguity. I worked the state layer so every document had an explicit lifecycle, from draft to confirmation.',
-          pt: 'Guia emitida, declaração enviada, parcela paga: estados fiscais não toleram ambiguidade. Trabalhei a camada de estado para que cada documento tivesse ciclo de vida explícito, do rascunho à confirmação.'
-        }
-      }
-    ],
-    outcome: {
-      en: 'New features delivered to production for a nationwide base of micro-entrepreneurs, with the app active on both stores.',
-      pt: 'Funcionalidades novas entregues em produção para uma base nacional de microempreendedores, com o app ativo nas duas lojas.'
-    },
-    icon: '/projects/shots/maismei-icon.png',
-    screens: [],
-    theme: {
-      bg: 'linear-gradient(135deg, #3f63de 0%, #2746a8 100%)',
-      fg: '#e2f58b',
-      glow: '#e2f58b'
-    },
-    tags: ['Swift', 'SwiftUI', 'React Native', 'MobX', 'Go'],
-    links: [
-      {
-        label: 'App Store',
-        href: 'https://apps.apple.com/br/app/mais-mei-abrir-mei-dasn-das/id1437671032'
-      }
-    ],
-    featured: false
   },
   {
     slug: 'nitrospray',

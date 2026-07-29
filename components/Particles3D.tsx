@@ -20,8 +20,14 @@ import { cssVar, useDarkMode } from '../lib/theme';
  * React a cada quadro.
  */
 
-/** Largura da palavra no mundo 3D; a altura sai da proporção do canvas. */
-const WORLD_W = 5.2;
+/**
+ * Largura da palavra no mundo 3D; a altura sai da proporção do canvas. É o
+ * número que decide o tamanho da peça na faixa: em 5.2 a palavra ocupava um
+ * quinto da altura e boiava no vazio, com cara de legenda perdida. Aqui ela
+ * chega perto da largura da coluna e passa a ler como título — o `Fit` encolhe
+ * o conjunto quando a janela é estreita demais para isso.
+ */
+const WORLD_W = 8.6;
 /** Resolução do canvas onde a palavra é rasterizada antes de virar pontos. */
 const TEX_W = 1024;
 const TEX_H = 320;
@@ -62,18 +68,18 @@ const VERTEX = /* glsl */ `
     pos += aDrift * flight * uScatter;
 
     // Respiração de repouso — sem isto a palavra formada parece uma imagem.
-    pos.x += sin(uTime * 0.6 + aSeed * 21.0) * 0.014;
-    pos.y += cos(uTime * 0.5 + aSeed * 17.0) * 0.014;
+    pos.x += sin(uTime * 0.6 + aSeed * 21.0) * 0.023;
+    pos.y += cos(uTime * 0.5 + aSeed * 17.0) * 0.023;
 
     // Entrada: a primeira palavra se junta a partir da mesma nuvem que ela usa
     // para viajar.
-    vec3 chaos = pos + aDrift * 2.6 + vec3(0.0, 0.0, aSeed * 0.8);
+    vec3 chaos = pos + aDrift * 2.6 + vec3(0.0, 0.0, aSeed * 1.3);
     pos = mix(chaos, pos, uIntro);
 
     // O ponteiro afasta a poeira; o clique dá um empurrão curto e maior.
     vec2 away = pos.xy - uPointer;
     float dist = length(away);
-    float influence = exp(-dist * dist * 1.7);
+    float influence = exp(-dist * dist * 0.62);
     pos.xy += normalize(away + vec2(0.0001)) * influence * (uPush + uBurst);
 
     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
@@ -86,7 +92,7 @@ const VERTEX = /* glsl */ `
     vFlight = max(flight, influence * 0.85);
     vFade = uIntro;
     // Uma minoria fixa nasce na cor de acento; o resto acende só enquanto voa.
-    vColor = mix(uInk, uAccent, clamp(step(aSeed, 0.16) + vFlight, 0.0, 1.0));
+    vColor = mix(uInk, uAccent, clamp(step(aSeed, 0.2) + vFlight, 0.0, 1.0));
   }
 `;
 
@@ -166,7 +172,7 @@ function sampleWord(word: string, count: number) {
 
     positions[i * 3] = (x / TEX_W - 0.5) * WORLD_W;
     positions[i * 3 + 1] = -(y / TEX_H - 0.5) * WORLD_H;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 0.16;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 0.26;
   }
 
   return positions;
@@ -201,12 +207,12 @@ function Field({
     () => ({
       uProgress: { value: 0 },
       uTime: { value: 0 },
-      uSize: { value: 0.03 },
+      uSize: { value: 0.05 },
       uScale: { value: 600 },
       uPointer: { value: new THREE.Vector2(99, 99) },
       uPush: { value: 0 },
       uBurst: { value: 0 },
-      uScatter: { value: 0.62 },
+      uScatter: { value: 1.02 },
       uIntro: { value: 0 },
       uInk: { value: new THREE.Color() },
       uAccent: { value: new THREE.Color() }
@@ -222,10 +228,10 @@ function Field({
     for (let i = 0; i < count; i += 1) {
       seed[i] = Math.random();
       const angle = Math.random() * Math.PI * 2;
-      const radius = 0.4 + Math.random() * 0.8;
+      const radius = 0.66 + Math.random() * 1.32;
       drift[i * 3] = Math.cos(angle) * radius;
       drift[i * 3 + 1] = Math.sin(angle) * radius * 0.55;
-      drift[i * 3 + 2] = (Math.random() - 0.5) * 0.9;
+      drift[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
     }
     return {
       seed: new THREE.BufferAttribute(seed, 1),
@@ -349,12 +355,12 @@ function Field({
     if (reducedMotion()) return;
     gsap
       .timeline()
-      .to(uniforms.uBurst, { value: 0.85, duration: 0.16, ease: 'power2.out' })
+      .to(uniforms.uBurst, { value: 1.4, duration: 0.16, ease: 'power2.out' })
       .to(uniforms.uBurst, { value: 0, duration: 1.4, ease: 'elastic.out(1, 0.45)' });
   });
 
   // Em telas estreitas a palavra encostaria nas bordas; o grupo encolhe junto.
-  const fit = Math.min(1, viewport.width / 6.4);
+  const fit = Math.min(1, viewport.width / 10.3);
 
   useFrame((state, delta) => {
     uniforms.uTime.value = state.clock.elapsedTime;
@@ -372,7 +378,7 @@ function Field({
     uniforms.uPointer.value.lerp(pointer.current, 1 - Math.exp(-9 * delta));
     uniforms.uPush.value = THREE.MathUtils.damp(
       uniforms.uPush.value,
-      hovering.current ? 0.42 : 0,
+      hovering.current ? 0.69 : 0,
       6,
       delta
     );
@@ -427,7 +433,7 @@ export default function Particles3D({
   const host = useRef<HTMLDivElement>(null);
   const scroll = useRef(0.5);
   const [visible, setVisible] = useState(true);
-  const [count, setCount] = useState(7000);
+  const [count, setCount] = useState(9000);
 
   // Fora da tela a cena não desenha — a página rola sem disputar GPU com a
   // outra cena 3D desta mesma home.
@@ -449,7 +455,7 @@ export default function Particles3D({
   useEffect(() => {
     // Celular tem menos preenchimento de tela sobrando; menos poeira mantém a
     // silhueta legível e o quadro barato.
-    setCount(window.innerWidth < 640 ? 4200 : 7000);
+    setCount(window.innerWidth < 640 ? 5200 : 9000);
   }, []);
 
   // A posição da seção na rolagem é o único elo que o GSAP mantém com a cena:
