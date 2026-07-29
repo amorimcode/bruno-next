@@ -3,25 +3,51 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const Console3D = dynamic(() => import('../components/Console3D'), {
   ssr: false,
   loading: () => null
 });
 
+const Particles3D = dynamic(() => import('../components/Particles3D'), {
+  ssr: false,
+  loading: () => null
+});
+
+import AppSwarm, { SwarmApp } from '../components/AppSwarm';
 import Container from '../components/Container';
+import Counter from '../components/Counter';
+import Headline from '../components/Headline';
+import Magnetic from '../components/Magnetic';
 import ProjectCard from '../components/ProjectCard';
+import Reveal from '../components/Reveal';
 import ui from '../lib/i18n';
-import projects from '../lib/projects';
+import projects, { shippedApps } from '../lib/projects';
 import { LocalizedProject, localizeProject, pickLocale } from '../lib/types';
 
 type Props = {
   personal: LocalizedProject[];
   company: LocalizedProject[];
+  apps: SwarmApp[];
 };
 
-export default function Home({ personal, company }: Props) {
+/**
+ * “I build the apps” / “Eu construo os apps” — as duas versões terminam na mesma
+ * palavra, e é dela que os ícones saltam. Separar pelo último espaço evita ter
+ * que quebrar a frase em três campos no dicionário.
+ */
+function splitLastWord(sentence: string) {
+  const cut = sentence.lastIndexOf(' ');
+  if (cut < 0) return { lead: '', word: sentence };
+  return { lead: sentence.slice(0, cut), word: sentence.slice(cut + 1) };
+}
+
+export default function Home({ personal, company, apps }: Props) {
   const locale = pickLocale(useRouter().locale);
+  const { lead, word } = splitLastWord(ui.hero.titleA[locale]);
+  /** Etapa do ciclo que está formada na nuvem de partículas. */
+  const [step, setStep] = useState(0);
 
   return (
     <Container>
@@ -29,46 +55,70 @@ export default function Home({ personal, company }: Props) {
       <section className="mx-auto w-full max-w-wrap px-6 pb-20 pt-16 sm:pt-24">
         <div className="grid items-center gap-12 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <p
-              className="rise font-mono text-[11px] uppercase tracking-[0.26em] text-accent"
-              style={{ animationDelay: '0ms' }}
-            >
-              {ui.hero.eyebrow[locale]}
-            </p>
-            <h1
-              className="rise mt-6 font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
-              style={{ animationDelay: '90ms' }}
-            >
-              {ui.hero.titleA[locale]}{' '}
-              <em className="text-accent">{ui.hero.titleEm[locale]}</em>
-              {ui.hero.titleB[locale]}
-            </h1>
-            <p
-              className="rise mt-8 max-w-2xl text-base leading-8 text-muted sm:text-lg sm:leading-9"
-              style={{ animationDelay: '180ms' }}
+            {/* O título sobe linha a linha; as demais peças do herói entram
+                logo atrás, escalonadas pelo delay. */}
+            <AppSwarm apps={apps}>
+              <div data-swarm-dim>
+                <Reveal
+                  as="p"
+                  y={14}
+                  className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent"
+                >
+                  {ui.hero.eyebrow[locale]}
+                </Reveal>
+              </div>
+              <Headline
+                as="h1"
+                delay={0.12}
+                className="mt-6 font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
+              >
+                {lead}{' '}
+                <span
+                  data-apps-anchor
+                  className="cursor-default underline decoration-accent/40 decoration-dotted decoration-2 underline-offset-[0.16em] transition-colors hover:text-accent"
+                >
+                  {word}
+                </span>{' '}
+                {/* O ponto final entra dentro do <em> de propósito: o SplitText
+                    transforma cada palavra num bloco próprio para medir as
+                    linhas, e solto ele viraria uma palavra sozinha — em tela
+                    estreita, caía numa linha só para ele. */}
+                <em className="text-accent">{`${ui.hero.titleEm[locale]}${ui.hero.titleB[locale]}`}</em>
+              </Headline>
+            </AppSwarm>
+            <Reveal
+              as="p"
+              delay={0.34}
+              y={18}
+              className="mt-8 max-w-2xl text-base leading-8 text-muted sm:text-lg sm:leading-9"
             >
               {ui.hero.lede[locale]}
-            </p>
+            </Reveal>
 
-            <div
-              className="rise mt-10 flex flex-wrap items-center gap-6"
-              style={{ animationDelay: '260ms' }}
+            <Reveal
+              delay={0.46}
+              y={18}
+              className="mt-10 flex flex-wrap items-center gap-6"
             >
-              <Link
-                href="/schedule"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-bg transition-opacity hover:opacity-90"
-              >
-                {ui.footer.book[locale]} <span aria-hidden="true">→</span>
-              </Link>
+              <Magnetic>
+                <Link
+                  href="/schedule"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-bg transition-opacity hover:opacity-90"
+                >
+                  {ui.footer.book[locale]} <span aria-hidden="true">→</span>
+                </Link>
+              </Magnetic>
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
                 {ui.schedule.window[locale]}
               </span>
-            </div>
+            </Reveal>
           </div>
 
-          <figure
-            className="rise mx-auto w-60 sm:w-72 lg:col-span-4 lg:w-full"
-            style={{ animationDelay: '240ms' }}
+          <Reveal
+            as="figure"
+            delay={0.28}
+            y={26}
+            className="mx-auto w-60 sm:w-72 lg:col-span-4 lg:w-full"
           >
             <div className="rotate-2 transition-transform duration-500 ease-out hover:rotate-0">
               <div className="overflow-hidden rounded-3xl border border-line bg-surface shadow-2xl">
@@ -86,13 +136,17 @@ export default function Home({ personal, company }: Props) {
                 <span>{ui.hero.location[locale]}</span>
               </figcaption>
             </div>
-          </figure>
+          </Reveal>
         </div>
       </section>
 
       {/* Stats */}
       <section className="border-y border-line">
-        <dl className="mx-auto grid w-full max-w-wrap grid-cols-2 divide-line px-6 sm:grid-cols-4 sm:divide-x">
+        <Reveal
+          as="dl"
+          stagger={0.08}
+          className="mx-auto grid w-full max-w-wrap grid-cols-2 divide-line px-6 sm:grid-cols-4 sm:divide-x"
+        >
           {ui.hero.stats.map((stat, i) => (
             <div
               key={stat.value + i}
@@ -102,26 +156,91 @@ export default function Home({ personal, company }: Props) {
                 {stat.label[locale]}
               </dt>
               <dd className="order-1 font-display text-4xl tracking-tight text-accent sm:text-5xl">
-                {stat.value}
+                <Counter value={stat.value} />
               </dd>
             </div>
           ))}
-        </dl>
+        </Reveal>
+      </section>
+
+      {/* Partículas: as quatro palavras do ofício, desenhadas em código e
+          levadas de uma à outra pelo GSAP */}
+      <section className="relative overflow-hidden border-b border-line">
+        <div className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
+          <Reveal
+            as="p"
+            y={14}
+            className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent"
+          >
+            {ui.particles.eyebrow[locale]}
+          </Reveal>
+          <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
+            <Headline
+              onScroll
+              className="font-display text-3xl tracking-tight sm:text-5xl"
+            >
+              {ui.particles.title[locale]}
+            </Headline>
+            <Reveal as="p" y={16} className="max-w-sm text-sm leading-6 text-muted">
+              {ui.particles.lede[locale]}
+            </Reveal>
+          </div>
+        </div>
+
+        <div className="relative mx-auto h-[340px] w-full max-w-wrap sm:h-[440px]">
+          <Particles3D words={ui.particles.words[locale]} onStep={setStep} />
+        </div>
+
+        {/* O ciclo escrito por extenso, com a etapa que está formada em
+            destaque. É o que dá contexto a uma palavra solta de poeira — e é
+            também como quem usa leitor de tela ou chega sem WebGL lê a mesma
+            ideia. */}
+        <ol className="mx-auto flex w-full max-w-wrap flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 pb-16 font-mono text-[11px] uppercase tracking-[0.22em] sm:pb-20">
+          {ui.particles.words[locale].map((label, index) => (
+            <li
+              key={label}
+              aria-current={index === step ? 'step' : undefined}
+              className={`flex items-baseline gap-2 transition-colors duration-700 ${
+                index === step ? 'text-accent' : 'text-muted'
+              }`}
+            >
+              <span className="text-[10px] opacity-60">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              {label}
+              {index < ui.particles.words[locale].length - 1 && (
+                <span aria-hidden className="ml-6 text-line">
+                  →
+                </span>
+              )}
+            </li>
+          ))}
+          <li aria-hidden className="text-line">
+            ↺
+          </li>
+        </ol>
       </section>
 
       {/* Playground 3D: unidade de estúdio com botões que giram de verdade */}
       <section id="playground" className="relative overflow-hidden border-b border-line">
         <div className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
-          <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+          <Reveal
+            as="p"
+            y={14}
+            className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent"
+          >
             {ui.playground.eyebrow[locale]}
-          </p>
+          </Reveal>
           <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-display text-3xl tracking-tight sm:text-5xl">
+            <Headline
+              onScroll
+              className="font-display text-3xl tracking-tight sm:text-5xl"
+            >
               {ui.playground.title[locale]}
-            </h2>
-            <p className="max-w-sm text-sm leading-6 text-muted">
+            </Headline>
+            <Reveal as="p" y={16} className="max-w-sm text-sm leading-6 text-muted">
               {ui.playground.lede[locale]}
-            </p>
+            </Reveal>
           </div>
         </div>
 
@@ -136,12 +255,15 @@ export default function Home({ personal, company }: Props) {
       {/* Own products */}
       <section className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display text-3xl tracking-tight sm:text-5xl">
+          <Headline
+            onScroll
+            className="font-display text-3xl tracking-tight sm:text-5xl"
+          >
             {ui.sections.ownProducts[locale]}
-          </h2>
-          <p className="max-w-sm text-sm leading-6 text-muted">
+          </Headline>
+          <Reveal as="p" y={16} className="max-w-sm text-sm leading-6 text-muted">
             {ui.sections.ownProductsHint[locale]}
-          </p>
+          </Reveal>
         </div>
 
         <div className="mt-14 space-y-20 sm:mt-20 sm:space-y-28">
@@ -160,12 +282,15 @@ export default function Home({ personal, company }: Props) {
       {/* Company work */}
       <section className="mx-auto w-full max-w-wrap px-6 pt-24 sm:pt-32">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display text-3xl tracking-tight sm:text-5xl">
+          <Headline
+            onScroll
+            className="font-display text-3xl tracking-tight sm:text-5xl"
+          >
             {ui.sections.companyWork[locale]}
-          </h2>
-          <p className="max-w-sm text-sm leading-6 text-muted">
+          </Headline>
+          <Reveal as="p" y={16} className="max-w-sm text-sm leading-6 text-muted">
             {ui.sections.companyWorkHint[locale]}
-          </p>
+          </Reveal>
         </div>
 
         <div className="mt-14 space-y-20 sm:mt-20 sm:space-y-28">
@@ -179,22 +304,30 @@ export default function Home({ personal, company }: Props) {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <Link
-            href="/projects"
-            className="und font-mono text-[11px] uppercase tracking-[0.22em] text-ink"
-          >
-            {ui.sections.allProjects[locale]} →
-          </Link>
-        </div>
+        <Reveal className="mt-16 text-center" y={16}>
+          <Magnetic>
+            <Link
+              href="/projects"
+              className="und font-mono text-[11px] uppercase tracking-[0.22em] text-ink"
+            >
+              {ui.sections.allProjects[locale]} →
+            </Link>
+          </Magnetic>
+        </Reveal>
       </section>
 
       {/* Principles — taste made explicit */}
       <section className="mx-auto w-full max-w-wrap px-6 pt-24 sm:pt-32">
-        <h2 className="font-display text-3xl tracking-tight sm:text-5xl">
+        <Headline
+          onScroll
+          className="font-display text-3xl tracking-tight sm:text-5xl"
+        >
           {ui.sections.principles[locale]}
-        </h2>
-        <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2">
+        </Headline>
+        <Reveal
+          stagger={0.1}
+          className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2"
+        >
           {ui.principles.map((principle, i) => (
             <div key={i} className="bg-surface p-8 sm:p-10">
               <span className="font-mono text-[11px] tracking-[0.22em] text-accent">
@@ -208,23 +341,28 @@ export default function Home({ personal, company }: Props) {
               </p>
             </div>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* Experience */}
       <section className="mx-auto w-full max-w-wrap px-6 py-24 sm:py-32">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display text-3xl tracking-tight sm:text-5xl">
-            {ui.sections.experience[locale]}
-          </h2>
-          <Link
-            href="/about"
-            className="und font-mono text-[11px] uppercase tracking-[0.22em] text-muted hover:text-ink"
+          <Headline
+            onScroll
+            className="font-display text-3xl tracking-tight sm:text-5xl"
           >
-            {ui.sections.fullStory[locale]} →
-          </Link>
+            {ui.sections.experience[locale]}
+          </Headline>
+          <Reveal as="p" y={14}>
+            <Link
+              href="/about"
+              className="und font-mono text-[11px] uppercase tracking-[0.22em] text-muted hover:text-ink"
+            >
+              {ui.sections.fullStory[locale]} →
+            </Link>
+          </Reveal>
         </div>
-        <ol className="mt-12">
+        <Reveal as="ol" stagger={0.09} className="mt-12">
           {ui.experience.map((job, i) => (
             <li
               key={job.company}
@@ -244,7 +382,7 @@ export default function Home({ personal, company }: Props) {
               </div>
             </li>
           ))}
-        </ol>
+        </Reveal>
       </section>
     </Container>
   );
@@ -260,7 +398,10 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => {
         .map((p) => localizeProject(p, resolved)),
       company: featured
         .filter((p) => p.kind === 'company')
-        .map((p) => localizeProject(p, resolved))
+        .map((p) => localizeProject(p, resolved)),
+      // Só o ícone e o nome: o resto de `projects` não precisa viajar até o
+      // cliente para o leque do título funcionar.
+      apps: shippedApps
     }
   };
 };

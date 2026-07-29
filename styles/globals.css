@@ -97,10 +97,33 @@ body {
   animation: fade-in 0.35s ease-out both;
 }
 
+/* Entrada por rolagem (componente Reveal).
+   O estado inicial mora aqui, e não num gsap.set na montagem: assim o bloco já
+   chega escondido no HTML do servidor e ninguém vê o conteúdo aparecer inteiro
+   antes de sumir para animar. O <noscript> do _document devolve tudo à vista. */
+[data-reveal],
+[data-reveal-children] > * {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 24px), 0);
+}
+
+/* Linha do SplitText. A máscara recebe overflow: clip, e sem esta folga o
+   rabinho do “g” e do “p” fica cortado enquanto a linha sobe. */
+.sline-mask {
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rise,
   .fade-in {
     animation: none;
+  }
+
+  [data-reveal],
+  [data-reveal-children] > * {
+    opacity: 1;
+    transform: none;
   }
 
   .animate-pulse {

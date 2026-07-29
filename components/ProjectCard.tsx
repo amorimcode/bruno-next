@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { LocalizedProject } from '../lib/types';
+import Parallax from './Parallax';
+import Reveal from './Reveal';
 import { Showcase } from './Shots';
 
 type Props = {
@@ -18,15 +20,24 @@ export default function ProjectCard({ project, index, readCaseLabel, priority }:
       href={`/projects/${project.slug}`}
       className="group grid items-center gap-6 md:grid-cols-12 md:gap-10"
     >
-      <div
+      <Reveal
+        y={32}
         className={`overflow-hidden rounded-3xl border border-line md:col-span-7 ${
           flip ? 'md:order-2' : ''
         }`}
       >
-        <Showcase project={project} priority={priority} />
-      </div>
+        {/* A arte corre um pouco mais devagar que a página: é o que dá
+            profundidade à lista sem mexer no enquadramento de cada projeto. */}
+        <Parallax amount={6} scale={1.14}>
+          <Showcase project={project} priority={priority} />
+        </Parallax>
+      </Reveal>
 
-      <div className={`md:col-span-5 ${flip ? 'md:order-1 md:text-right' : ''}`}>
+      <Reveal
+        stagger={0.07}
+        y={22}
+        className={`md:col-span-5 ${flip ? 'md:order-1 md:text-right' : ''}`}
+      >
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
           <span className="text-accent">{number}</span> · {project.company}
         </p>
@@ -49,7 +60,7 @@ export default function ProjectCard({ project, index, readCaseLabel, priority }:
         <span className="und mt-6 inline-block font-mono text-[11px] uppercase tracking-[0.22em] text-ink">
           {readCaseLabel} →
         </span>
-      </div>
+      </Reveal>
     </Link>
   );
 }

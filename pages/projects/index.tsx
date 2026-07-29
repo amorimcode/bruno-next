@@ -2,7 +2,9 @@ import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
 import Container from '../../components/Container';
+import Headline from '../../components/Headline';
 import ProjectCard from '../../components/ProjectCard';
+import Reveal from '../../components/Reveal';
 import ui from '../../lib/i18n';
 import projects, { lab } from '../../lib/projects';
 import { LocalizedProject, localizeProject, pickLocale } from '../../lib/types';
@@ -21,24 +23,33 @@ export default function Projects({ personal, company }: Props) {
       description={ui.projectsPage.lede[locale]}
     >
       <section className="mx-auto w-full max-w-wrap px-6 pb-20 pt-16 sm:pt-24">
-        <h1 className="rise font-display text-4xl tracking-tight sm:text-6xl">
+        <Headline
+          as="h1"
+          className="font-display text-4xl tracking-tight sm:text-6xl"
+        >
           {ui.projectsPage.title[locale]}
-        </h1>
-        <p
-          className="rise mt-6 max-w-2xl text-base leading-8 text-muted sm:text-lg sm:leading-9"
-          style={{ animationDelay: '90ms' }}
+        </Headline>
+        <Reveal
+          as="p"
+          delay={0.22}
+          y={18}
+          className="mt-6 max-w-2xl text-base leading-8 text-muted sm:text-lg sm:leading-9"
         >
           {ui.projectsPage.lede[locale]}
-        </p>
+        </Reveal>
       </section>
 
       <section className="mx-auto w-full max-w-wrap px-6">
-        <h2 className="border-b border-line pb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+        <Reveal
+          as="h2"
+          y={14}
+          className="border-b border-line pb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent"
+        >
           {ui.sections.ownProducts[locale]}
-        </h2>
-        <p className="mt-5 max-w-md text-sm leading-6 text-muted">
+        </Reveal>
+        <Reveal as="p" y={14} delay={0.08} className="mt-5 max-w-md text-sm leading-6 text-muted">
           {ui.sections.ownProductsHint[locale]}
-        </p>
+        </Reveal>
         <div className="mt-14 space-y-20 sm:space-y-28">
           {personal.map((project, index) => (
             <ProjectCard
@@ -53,12 +64,16 @@ export default function Projects({ personal, company }: Props) {
       </section>
 
       <section className="mx-auto mt-24 w-full max-w-wrap px-6 sm:mt-32">
-        <h2 className="border-b border-line pb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+        <Reveal
+          as="h2"
+          y={14}
+          className="border-b border-line pb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent"
+        >
           {ui.sections.companyWork[locale]}
-        </h2>
-        <p className="mt-5 max-w-md text-sm leading-6 text-muted">
+        </Reveal>
+        <Reveal as="p" y={14} delay={0.08} className="mt-5 max-w-md text-sm leading-6 text-muted">
           {ui.sections.companyWorkHint[locale]}
-        </p>
+        </Reveal>
         <div className="mt-14 space-y-20 sm:space-y-28">
           {company.map((project, index) => (
             <ProjectCard
@@ -74,14 +89,20 @@ export default function Projects({ personal, company }: Props) {
       {/* Lab */}
       <section className="mx-auto w-full max-w-wrap px-6 py-24 sm:py-32">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display text-3xl tracking-tight sm:text-5xl">
+          <Headline
+            onScroll
+            className="font-display text-3xl tracking-tight sm:text-5xl"
+          >
             {ui.sections.lab[locale]}
-          </h2>
-          <p className="max-w-sm text-sm leading-6 text-muted">
+          </Headline>
+          <Reveal as="p" y={16} className="max-w-sm text-sm leading-6 text-muted">
             {ui.sections.labHint[locale]}
-          </p>
+          </Reveal>
         </div>
-        <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal
+          stagger={0.07}
+          className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3"
+        >
           {lab.map((repo) => (
             <a
               key={repo.name}
@@ -102,7 +123,7 @@ export default function Projects({ personal, company }: Props) {
               </p>
             </a>
           ))}
-        </div>
+        </Reveal>
       </section>
     </Container>
   );

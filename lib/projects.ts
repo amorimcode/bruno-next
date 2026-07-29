@@ -1,4 +1,4 @@
-import { LabProject, Project } from './types';
+import { LabProject, Project, ShippedApp } from './types';
 
 const projects: Project[] = [
   {
@@ -575,6 +575,9 @@ const projects: Project[] = [
       pt: 'No ar na App Store e na web, atendendo grupos de postos reais em produção com relatórios e indicadores financeiros diários.'
     },
     icon: '/projects/shots/qwip-icon.png',
+    // O arquivo é o logotipo em fundo transparente, com o texto em tinta
+    // escura: sem a placa branca ele some no tema escuro.
+    iconPlate: '#ffffff',
     screens: [
       {
         src: '/projects/shots/qwip-1.png',
@@ -803,6 +806,32 @@ export const lab: LabProject[] = [
     href: 'https://github.com/amorimcode/bot-whatsapp',
     tags: ['Python']
   }
+];
+
+/**
+ * Apps que foram para a loja mas não têm case escrito aqui — trabalho feito
+ * dentro de time de produto, onde o que dá para mostrar é o ícone.
+ */
+const shippedElsewhere: ShippedApp[] = [
+  { icon: '/projects/shots/nomad-icon.png', title: 'Nomad' },
+  // O app da Localiza no Bankeiro — o próprio ícone traz o “powered by bs2”.
+  { icon: '/projects/shots/localiza-icon.png', title: 'Eqip Localiza' }
+];
+
+/**
+ * O que alimenta o leque de ícones do título na home: primeiro os produtos com
+ * case próprio, na ordem em que aparecem na página, depois os demais. Sai daqui
+ * e não de `projects` para que um app sem case também caiba.
+ */
+export const shippedApps: ShippedApp[] = [
+  ...projects
+    .filter((project) => Boolean(project.icon))
+    .map((project) => ({
+      icon: project.icon as string,
+      title: project.title,
+      ...(project.iconPlate ? { plate: project.iconPlate } : {})
+    })),
+  ...shippedElsewhere
 ];
 
 export default projects;

@@ -5,10 +5,46 @@ Construído com [Next.js](https://nextjs.org/), TypeScript e [Tailwind CSS](http
 
 ## Páginas
 
-- **Início** — apresentação, links sociais (LinkedIn, GitHub, e-mail) e projetos em destaque.
+- **Início** — apresentação, links sociais (LinkedIn, GitHub, e-mail), projetos em destaque e as duas cenas WebGL.
 - **Projetos** — projetos mobile e web com imagem, descrição e stack de cada um.
 - **Sobre** — experiência profissional, formação e tecnologias.
 - **Agendar** — página `/schedule`, onde qualquer pessoa reserva um horário direto na minha agenda do Google.
+
+## Movimento e 3D
+
+O movimento do site é todo GSAP, concentrado em poucos componentes reutilizáveis:
+[`Reveal`](components/Reveal.tsx) (entrada por rolagem), [`Headline`](components/Headline.tsx)
+(título que sobe linha a linha, com SplitText), [`Counter`](components/Counter.tsx),
+[`Parallax`](components/Parallax.tsx), [`Magnetic`](components/Magnetic.tsx) e
+[`ScrollProgress`](components/ScrollProgress.tsx). Os plugins são registrados num
+lugar só, em [`lib/gsap.ts`](lib/gsap.ts).
+
+O estado inicial dos blocos que entram por rolagem mora no CSS (`[data-reveal]`), e não
+num `gsap.set` na montagem: assim o conteúdo já chega escondido no HTML do servidor, sem
+piscar. Quem não executa JavaScript recebe tudo à vista pelo `<noscript>` do `_document`.
+Quem pede `prefers-reduced-motion` recebe o estado final direto, sem transição.
+
+No herói, a palavra “apps” do título carrega os apps de verdade:
+[`AppSwarm`](components/AppSwarm.tsx) ancora uma camada de ícones na palavra e os
+lança numa fileira acima dela no hover — em tela de toque eles aparecem sozinhos, uma
+vez, e voltam a aparecer no toque. A lista sai de `shippedApps`, em
+[`lib/projects.ts`](lib/projects.ts): primeiro os produtos que têm case aqui, depois os
+apps publicados dentro de time de produto, que existem só como ícone. Para incluir mais
+um, basta o arquivo em `public/projects/shots/` e uma linha em `shippedElsewhere`. A camada é irmã do título, e não filha: as linhas do
+SplitText viram máscaras com `overflow: clip` e cortariam qualquer coisa que saísse da
+palavra.
+
+Duas cenas WebGL, ambas sem nenhum arquivo de modelo ou textura:
+
+- [`Console3D`](components/Console3D.tsx) — a unidade de estúdio com botões que giram de
+  verdade. O painel inteiro é desenhado num canvas 2D em tempo de execução.
+- [`Particles3D`](components/Particles3D.tsx) — as quatro palavras do ofício em sete mil
+  partículas. Cada palavra é rasterizada na fonte do site, os pixels com tinta viram
+  pontos, e o GSAP leva a nuvem de uma palavra à seguinte — a travessia acontece toda no
+  vertex shader.
+
+Nas duas, o ScrollTrigger só escreve o progresso da seção num ref e o loop do R3F decide
+o que fazer com ele: a rolagem não passa pelo estado do React.
 
 ## Rodando localmente
 
@@ -61,7 +97,7 @@ O formulário tem honeypot, limite de tamanho nos campos e um freio por IP. A de
 
 ## Stack
 
-Next.js · React · TypeScript · Tailwind CSS · next-themes
+Next.js · React · TypeScript · Tailwind CSS · next-themes · GSAP (ScrollTrigger, SplitText) · three.js / react-three-fiber
 
 ## Deploy
 

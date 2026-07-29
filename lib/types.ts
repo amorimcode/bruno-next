@@ -42,6 +42,12 @@ export type Project = {
   decisions: Decision[];
   outcome: L;
   icon?: string;
+  /**
+   * Cor da placa atrás do ícone. Só é necessária quando o arquivo é um
+   * logotipo de fundo transparente: tinta escura sobre página escura some.
+   * Ícone de app de verdade já traz o próprio fundo e dispensa isto.
+   */
+  iconPlate?: string;
   screens: Screen[];
   /** Paleta da identidade do projeto, usada nos covers e fundos das composições */
   theme: {
@@ -52,6 +58,18 @@ export type Project = {
   tags: string[];
   links: ProjectLink[];
   featured: boolean;
+};
+
+/**
+ * Um app que já foi para a loja. Serve ao leque do título na home, que mostra
+ * ícone e nada mais — por isso vale tanto para produto com case escrito aqui
+ * quanto para trabalho que só existe como app publicado.
+ */
+export type ShippedApp = {
+  icon: string;
+  title: string;
+  /** Placa atrás do ícone, para logotipo de fundo transparente. */
+  plate?: string;
 };
 
 export type LabProject = {

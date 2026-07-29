@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Container from '../../components/Container';
+import Headline from '../../components/Headline';
+import Parallax from '../../components/Parallax';
+import Reveal from '../../components/Reveal';
 import { BannerShot, PhoneFrame, Showcase } from '../../components/Shots';
 import ui from '../../lib/i18n';
 import projects from '../../lib/projects';
@@ -64,35 +67,48 @@ export default function ProjectPage({ project, next }: Props) {
         </Link>
         <div className="mt-8 flex items-start gap-5">
           {project.icon && (
-            <Image
-              src={project.icon}
-              alt=""
-              width={64}
-              height={64}
-              priority
-              className="rise mt-2 hidden rounded-2xl ring-1 ring-line sm:block"
-            />
+            // A placa vale aqui pelo mesmo motivo do herói da home: logotipo de
+            // fundo transparente com tinta escura some na página escura.
+            <div
+              className="rise mt-2 hidden h-16 w-16 shrink-0 overflow-hidden rounded-2xl ring-1 ring-line sm:block"
+              style={project.iconPlate ? { background: project.iconPlate } : undefined}
+            >
+              <Image
+                src={project.icon}
+                alt=""
+                width={64}
+                height={64}
+                priority
+                className="h-full w-full"
+              />
+            </div>
           )}
           <div>
-            <h1
-              className="rise font-display text-5xl tracking-tight sm:text-7xl"
-              style={{ animationDelay: '60ms' }}
+            <Headline
+              as="h1"
+              by="words"
+              delay={0.06}
+              className="font-display text-5xl tracking-tight sm:text-7xl"
             >
               {project.title}
-            </h1>
-            <p
-              className="rise mt-4 max-w-3xl font-display text-xl italic leading-relaxed text-muted sm:text-2xl"
-              style={{ animationDelay: '140ms' }}
+            </Headline>
+            <Reveal
+              as="p"
+              delay={0.24}
+              y={16}
+              className="mt-4 max-w-3xl font-display text-xl italic leading-relaxed text-muted sm:text-2xl"
             >
               {project.tagline}
-            </p>
+            </Reveal>
           </div>
         </div>
 
         {/* Meta grid */}
-        <dl
-          className="rise mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4"
-          style={{ animationDelay: '220ms' }}
+        <Reveal
+          as="dl"
+          stagger={0.07}
+          delay={0.32}
+          className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4"
         >
           {(
             [
@@ -109,34 +125,50 @@ export default function ProjectPage({ project, next }: Props) {
               <dd className="mt-1.5 text-sm leading-6 text-ink">{value}</dd>
             </div>
           ))}
-        </dl>
+        </Reveal>
       </section>
 
       {/* Showcase hero visual */}
-      <section
-        className="rise mx-auto mt-14 w-full max-w-wrap px-6"
-        style={{ animationDelay: '300ms' }}
-      >
-        <div className="group overflow-hidden rounded-3xl border border-line">
-          <Showcase project={project} priority />
-        </div>
+      <section className="mx-auto mt-14 w-full max-w-wrap px-6">
+        <Reveal
+          delay={0.4}
+          y={30}
+          className="group overflow-hidden rounded-3xl border border-line"
+        >
+          <Parallax amount={5} scale={1.12}>
+            <Showcase project={project} priority />
+          </Parallax>
+        </Reveal>
       </section>
 
       {/* Narrative */}
       <section className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            <Reveal
+              as="h2"
+              y={14}
+              className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent"
+            >
               {labels.context[locale]}
-            </h2>
-            <p className="mt-5 text-base leading-8 text-ink sm:text-lg sm:leading-9">
+            </Reveal>
+            <Reveal
+              as="p"
+              y={18}
+              delay={0.08}
+              className="mt-5 text-base leading-8 text-ink sm:text-lg sm:leading-9"
+            >
               {project.context}
-            </p>
+            </Reveal>
 
-            <h2 className="mt-16 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            <Reveal
+              as="h2"
+              y={14}
+              className="mt-16 font-mono text-[11px] uppercase tracking-[0.22em] text-accent"
+            >
               {labels.decisions[locale]}
-            </h2>
-            <ol className="mt-6 space-y-8">
+            </Reveal>
+            <Reveal as="ol" stagger={0.09} className="mt-6 space-y-8">
               {project.decisions.map((decision, i) => (
                 <li
                   key={i}
@@ -151,14 +183,23 @@ export default function ProjectPage({ project, next }: Props) {
                   <p className="mt-3 text-sm leading-7 text-muted">{decision.body}</p>
                 </li>
               ))}
-            </ol>
+            </Reveal>
 
-            <h2 className="mt-16 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            <Reveal
+              as="h2"
+              y={14}
+              className="mt-16 font-mono text-[11px] uppercase tracking-[0.22em] text-accent"
+            >
               {labels.outcome[locale]}
-            </h2>
-            <p className="mt-5 text-base leading-8 text-ink sm:text-lg sm:leading-9">
+            </Reveal>
+            <Reveal
+              as="p"
+              y={18}
+              delay={0.08}
+              className="mt-5 text-base leading-8 text-ink sm:text-lg sm:leading-9"
+            >
               {project.outcome}
-            </p>
+            </Reveal>
           </div>
 
           <aside className="lg:col-span-4 lg:col-start-9">
@@ -205,19 +246,22 @@ export default function ProjectPage({ project, next }: Props) {
           <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
             {labels.screens[locale]}
           </h2>
-          <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+          <Reveal
+            stagger={0.06}
+            className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4"
+          >
             {banners.map((screen) => (
               <BannerShot key={screen.src} src={screen.src} alt={screen.alt} sizes="(min-width: 1024px) 17rem, 45vw" />
             ))}
             {raws.map((screen) => (
               <PhoneFrame key={screen.src} src={screen.src} alt={screen.alt} sizes="(min-width: 1024px) 17rem, 45vw" />
             ))}
-          </div>
+          </Reveal>
         </section>
       )}
 
       {/* Next case */}
-      <section className="mx-auto w-full max-w-wrap px-6 py-24 sm:py-32">
+      <Reveal as="section" y={28} className="mx-auto w-full max-w-wrap px-6 py-24 sm:py-32">
         <Link href={`/projects/${next.slug}`} className="group block rounded-3xl border border-line bg-surface p-10 transition-colors hover:border-accent sm:p-14">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
             {labels.nextProject[locale]}
@@ -228,7 +272,7 @@ export default function ProjectPage({ project, next }: Props) {
           </p>
           <p className="mt-3 font-display text-lg italic text-muted">{next.tagline}</p>
         </Link>
-      </section>
+      </Reveal>
     </Container>
   );
 }

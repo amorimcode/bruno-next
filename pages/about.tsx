@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import Container from '../components/Container';
+import Headline from '../components/Headline';
+import Reveal from '../components/Reveal';
 import ui from '../lib/i18n';
 import { pickLocale } from '../lib/types';
 
@@ -20,29 +22,39 @@ export default function About() {
         <div className="grid gap-12 lg:grid-cols-12">
           {/* Story */}
           <div className="lg:col-span-7">
-            <h1 className="rise font-display text-4xl tracking-tight sm:text-6xl">
+            <Headline
+              as="h1"
+              className="font-display text-4xl tracking-tight sm:text-6xl"
+            >
               {about.title[locale]}
-            </h1>
-            <p
-              className="rise mt-5 font-display text-xl italic text-muted sm:text-2xl"
-              style={{ animationDelay: '90ms' }}
+            </Headline>
+            <Reveal
+              as="p"
+              delay={0.24}
+              y={16}
+              className="mt-5 font-display text-xl italic text-muted sm:text-2xl"
             >
               {about.lede[locale]}
-            </p>
-            <div
-              className="rise mt-10 space-y-6 text-base leading-8 text-ink sm:leading-9"
-              style={{ animationDelay: '180ms' }}
+            </Reveal>
+            <Reveal
+              stagger={0.08}
+              delay={0.32}
+              className="mt-10 space-y-6 text-base leading-8 text-ink sm:leading-9"
             >
               {about.story.map((paragraph, i) => (
                 <p key={i}>{paragraph[locale]}</p>
               ))}
-            </div>
+            </Reveal>
 
             {/* Experience */}
-            <h2 className="mt-20 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            <Reveal
+              as="h2"
+              y={14}
+              className="mt-20 font-mono text-[11px] uppercase tracking-[0.22em] text-accent"
+            >
               {ui.sections.experience[locale]}
-            </h2>
-            <ol className="mt-6">
+            </Reveal>
+            <Reveal as="ol" stagger={0.08} className="mt-6">
               {ui.experience.map((job) => (
                 <li
                   key={job.company}
@@ -62,13 +74,17 @@ export default function About() {
                   </div>
                 </li>
               ))}
-            </ol>
+            </Reveal>
 
             {/* Education */}
-            <h2 className="mt-20 font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+            <Reveal
+              as="h2"
+              y={14}
+              className="mt-20 font-mono text-[11px] uppercase tracking-[0.22em] text-accent"
+            >
               {about.education[locale]}
-            </h2>
-            <ul className="mt-6 space-y-6">
+            </Reveal>
+            <Reveal as="ul" stagger={0.08} className="mt-6 space-y-6">
               {about.educationItems.map((item, i) => (
                 <li key={i}>
                   <h3 className="font-display text-lg tracking-tight">
@@ -79,13 +95,16 @@ export default function About() {
                   </p>
                 </li>
               ))}
-            </ul>
+            </Reveal>
           </div>
 
           {/* Sidebar */}
           <aside className="lg:col-span-4 lg:col-start-9">
             <div className="space-y-10 lg:sticky lg:top-24">
-              <div className="rise overflow-hidden rounded-3xl border border-line">
+              <Reveal
+                delay={0.2}
+                className="overflow-hidden rounded-3xl border border-line"
+              >
                 <Image
                   src="/bruno.jpg"
                   alt="Bruno Amorim"
@@ -97,13 +116,13 @@ export default function About() {
                 <p className="border-t border-line bg-surface px-5 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
                   {ui.hero.location[locale]}
                 </p>
-              </div>
+              </Reveal>
 
               <div>
                 <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
                   {about.toolbox[locale]}
                 </h2>
-                <dl className="mt-4 space-y-4">
+                <Reveal as="dl" stagger={0.07} className="mt-4 space-y-4">
                   {about.toolboxGroups.map((group, i) => (
                     <div key={i} className="border-t border-line pt-4">
                       <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">
@@ -114,7 +133,7 @@ export default function About() {
                       </dd>
                     </div>
                   ))}
-                </dl>
+                </Reveal>
               </div>
 
               <div>

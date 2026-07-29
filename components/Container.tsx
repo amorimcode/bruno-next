@@ -7,6 +7,7 @@ import { useTheme } from 'next-themes';
 import ui from '../lib/i18n';
 import { pickLocale } from '../lib/types';
 import Footer from './Footer';
+import ScrollProgress from './ScrollProgress';
 
 function NavItem({
   href,
@@ -165,6 +166,7 @@ export default function Container({ children, ...customMeta }: ContainerProps) {
             <ThemeToggle label={ui.nav.toggleTheme[locale]} />
           </nav>
         </div>
+        <ScrollProgress />
       </header>
 
       <main id="skip" className="flex-1">

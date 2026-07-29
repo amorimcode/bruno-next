@@ -1,8 +1,12 @@
+import { useGSAP } from '@gsap/react';
 import { Environment, Lightformer, RoundedBox } from '@react-three/drei';
 import { Canvas, invalidate, useFrame, useThree } from '@react-three/fiber';
 import { Bloom, EffectComposer, N8AO, SMAA } from '@react-three/postprocessing';
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+
+import { ScrollTrigger } from '../lib/gsap';
+import { cssVar, useDarkMode } from '../lib/theme';
 
 /**
  * Uma unidade de estúdio construída inteiramente por primitivas: nenhum arquivo
@@ -75,13 +79,6 @@ function pxX(x: number) {
 
 function pxY(y: number) {
   return TEX / 2 - toPx(y);
-}
-
-/** Lê uma custom property do tema (o site troca --bg no modo escuro). */
-function cssVar(name: string, fallback: string) {
-  if (typeof window === 'undefined') return fallback;
-  const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  return value || fallback;
 }
 
 /**
@@ -647,7 +644,16 @@ function Screw({ x, y, angle }: { x: number; y: number; angle: number }) {
   );
 }
 
-function Unit({ accent, reduced }: { accent: string; reduced: boolean }) {
+function Unit({
+  accent,
+  reduced,
+  scroll
+}: {
+  accent: string;
+  reduced: boolean;
+  /** Progresso da seção na rolagem, escrito pelo ScrollTrigger. */
+  scroll: React.MutableRefObject<number>;
+}) {
   const { map, normalMap, roughnessMap, metalnessMap } = usePanelMaps();
   const unit = useRef<THREE.Group>(null);
   const [grabbing, setGrabbing] = useState(false);
@@ -705,7 +711,16 @@ function Unit({ accent, reduced }: { accent: string; reduced: boolean }) {
     unit.current.rotation.x = THREE.MathUtils.damp(unit.current.rotation.x, targetX, 3, delta) + (1 - eased) * -0.3;
     unit.current.position.z = (1 - eased) * -2.2;
     unit.current.scale.setScalar(0.94 + eased * 0.06);
-    unit.current.position.y = reduced ? 0 : Math.sin(state.clock.elapsedTime * 0.9) * 0.04;
+
+    // A rolagem inclina a peça no próprio eixo, de um lado ao outro da seção,
+    // como se ela estivesse apoiada em algo que se move junto com a página. O
+    // valor vem do ScrollTrigger por um ref: assim a rolagem não passa pelo
+    // estado do React nem redesenha nada fora do canvas.
+    const roll = (scroll.current - 0.5) * 0.16;
+    unit.current.rotation.z = THREE.MathUtils.damp(unit.current.rotation.z, roll, 4, delta);
+    unit.current.position.y =
+      (reduced ? 0 : Math.sin(state.clock.elapsedTime * 0.9) * 0.04) +
+      (scroll.current - 0.5) * -0.32;
   });
 
   const corner = PLATE / 2 - 0.14;
@@ -811,7 +826,17 @@ function Fit({ children }: { children: React.ReactNode }) {
   return <group scale={scale}>{children}</group>;
 }
 
-function Scene({ dark, accent, reduced }: { dark: boolean; accent: string; reduced: boolean }) {
+function Scene({
+  dark,
+  accent,
+  reduced,
+  scroll
+}: {
+  dark: boolean;
+  accent: string;
+  reduced: boolean;
+  scroll: React.MutableRefObject<number>;
+}) {
   return (
     <>
       <Backdrop dark={dark} />
@@ -843,7 +868,7 @@ function Scene({ dark, accent, reduced }: { dark: boolean; accent: string; reduc
       <directionalLight position={[-4.5, -1.2, 2.5]} intensity={dark ? 0.5 : 0.7} color="#bdd4ff" />
 
       <Fit>
-        <Unit accent={accent} reduced={reduced} />
+        <Unit accent={accent} reduced={reduced} scroll={scroll} />
       </Fit>
 
       {/* Reflexos montados na própria cena: sem HDR de CDN, sem pedido de rede.
@@ -864,27 +889,29 @@ function Scene({ dark, accent, reduced }: { dark: boolean; accent: string; reduc
   );
 }
 
-/** O tema do site troca uma classe na raiz; a cena acompanha sem next-themes. */
-function useDarkMode() {
-  const [dark, setDark] = useState(false);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const sync = () => setDark(root.classList.contains('dark'));
-    sync();
-    const observer = new MutationObserver(sync);
-    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
-  }, []);
-
-  return dark;
-}
-
 export default function Console3D() {
   const dark = useDarkMode();
   const [visible, setVisible] = useState(true);
   const [reduced, setReduced] = useState(false);
   const host = useRef<HTMLDivElement>(null);
+  const scroll = useRef(0.5);
+
+  // Elo entre o GSAP e a cena: o ScrollTrigger só escreve o progresso da seção
+  // num ref, e o loop do R3F decide o que fazer com ele.
+  useGSAP(
+    () => {
+      const trigger = ScrollTrigger.create({
+        trigger: host.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        onUpdate: (self) => {
+          scroll.current = self.progress;
+        }
+      });
+      return () => trigger.kill();
+    },
+    { scope: host }
+  );
 
   // Fora da tela a cena não renderiza: o resto da página rola sem disputar GPU.
   useEffect(() => {
@@ -929,7 +956,7 @@ export default function Console3D() {
         style={{ touchAction: 'pan-y' }}
       >
         <Suspense fallback={null}>
-          <Scene dark={dark} accent={accent} reduced={reduced} />
+          <Scene dark={dark} accent={accent} reduced={reduced} scroll={scroll} />
 
           {/* Oclusão de contato faz as juntas e a base dos botões escurecerem;
               o bloom só alcança o led e o medidor, que passam do branco. */}

@@ -31,6 +31,18 @@ const ui = {
       { value: '3', label: { en: 'platforms: iOS, Android & web', pt: 'plataformas: iOS, Android e web' } }
     ]
   },
+  particles: {
+    eyebrow: { en: 'The loop · GPU particles', pt: 'O ciclo · partículas na GPU' },
+    title: { en: 'How the work actually goes.', pt: 'Como o trabalho acontece.' },
+    lede: {
+      en: 'Four words, seven thousand particles and no image file: each word is drawn in code, turned to dust and carried to the next one. Move the pointer through it, or click to blow it apart.',
+      pt: 'Quatro palavras, sete mil partículas e nenhum arquivo de imagem: cada palavra é desenhada em código, virada pó e levada até a seguinte. Passe o ponteiro por dentro, ou clique para estourar a nuvem.'
+    },
+    words: {
+      en: ['DESIGN', 'BUILD', 'SHIP', 'REPEAT'],
+      pt: ['DESENHAR', 'CONSTRUIR', 'PUBLICAR', 'REPETIR']
+    }
+  },
   playground: {
     eyebrow: { en: 'Real-time 3D · WebGL', pt: '3D em tempo real · WebGL' },
     title: { en: 'Turn the knobs.', pt: 'Gire os botões.' },
