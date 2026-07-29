@@ -3,14 +3,13 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 const Console3D = dynamic(() => import('../components/Console3D'), {
   ssr: false,
   loading: () => null
 });
 
-const Particles3D = dynamic(() => import('../components/Particles3D'), {
+const Loop3D = dynamic(() => import('../components/Loop3D'), {
   ssr: false,
   loading: () => null
 });
@@ -46,8 +45,6 @@ function splitLastWord(sentence: string) {
 export default function Home({ personal, company, apps }: Props) {
   const locale = pickLocale(useRouter().locale);
   const { lead, word } = splitLastWord(ui.hero.titleA[locale]);
-  /** Etapa do ciclo que está formada na nuvem de partículas. */
-  const [step, setStep] = useState(0);
 
   return (
     <Container>
@@ -163,8 +160,7 @@ export default function Home({ personal, company, apps }: Props) {
         </Reveal>
       </section>
 
-      {/* Partículas: as quatro palavras do ofício, desenhadas em código e
-          levadas de uma à outra pelo GSAP */}
+      {/* O ciclo como peça: fita de alumínio com meia volta, palavras gravadas */}
       <section className="relative overflow-hidden border-b border-line">
         <div className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
           <Reveal
@@ -172,43 +168,35 @@ export default function Home({ personal, company, apps }: Props) {
             y={14}
             className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent"
           >
-            {ui.particles.eyebrow[locale]}
+            {ui.loop.eyebrow[locale]}
           </Reveal>
           <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
             <Headline
               onScroll
               className="font-display text-3xl tracking-tight sm:text-5xl"
             >
-              {ui.particles.title[locale]}
+              {ui.loop.title[locale]}
             </Headline>
             <Reveal as="p" y={16} className="max-w-sm text-sm leading-6 text-muted">
-              {ui.particles.lede[locale]}
+              {ui.loop.lede[locale]}
             </Reveal>
           </div>
         </div>
 
-        <div className="relative mx-auto h-[340px] w-full max-w-wrap sm:h-[440px]">
-          <Particles3D words={ui.particles.words[locale]} onStep={setStep} />
+        <div className="relative mx-auto h-[360px] w-full max-w-wrap sm:h-[480px]">
+          <Loop3D words={ui.loop.words[locale]} />
         </div>
 
-        {/* O ciclo escrito por extenso, com a etapa que está formada em
-            destaque. É o que dá contexto a uma palavra solta de poeira — e é
-            também como quem usa leitor de tela ou chega sem WebGL lê a mesma
-            ideia. */}
-        <ol className="mx-auto flex w-full max-w-wrap flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 pb-16 font-mono text-[11px] uppercase tracking-[0.22em] sm:pb-20">
-          {ui.particles.words[locale].map((label, index) => (
-            <li
-              key={label}
-              aria-current={index === step ? 'step' : undefined}
-              className={`flex items-baseline gap-2 transition-colors duration-700 ${
-                index === step ? 'text-accent' : 'text-muted'
-              }`}
-            >
-              <span className="text-[10px] opacity-60">
+        {/* O ciclo também escrito por extenso: é como quem usa leitor de tela ou
+            chega sem WebGL lê a mesma ideia que está gravada na fita. */}
+        <ol className="mx-auto flex w-full max-w-wrap flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 pb-16 font-mono text-[11px] uppercase tracking-[0.22em] text-muted sm:pb-20">
+          {ui.loop.words[locale].map((label, index) => (
+            <li key={label} className="flex items-baseline gap-2">
+              <span className="text-accent">
                 {String(index + 1).padStart(2, '0')}
               </span>
               {label}
-              {index < ui.particles.words[locale].length - 1 && (
+              {index < ui.loop.words[locale].length - 1 && (
                 <span aria-hidden className="ml-6 text-line">
                   →
                 </span>

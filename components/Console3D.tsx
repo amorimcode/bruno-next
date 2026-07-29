@@ -6,6 +6,7 @@ import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 
 import * as THREE from 'three';
 
 import { ScrollTrigger } from '../lib/gsap';
+import { brushedFill, drawTracked, heightToNormal, makeCanvas } from '../lib/machining';
 import { cssVar, useDarkMode } from '../lib/theme';
 
 /**
@@ -97,39 +98,6 @@ function mixHex(a: string, b: string, amount: number) {
       .toString(16)
       .padStart(2, '0');
   return `#${channel(ar, br)}${channel(ag, bg)}${channel(ab, bb)}`;
-}
-
-function makeCanvas(size: number) {
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  return canvas;
-}
-
-/**
- * Texto com espaçamento entre letras. `ctx.letterSpacing` existe no Chrome mas
- * chegou tarde no Safari e não está tipado aqui, então o tracking é aplicado
- * caractere a caractere.
- */
-function drawTracked(
-  ctx: CanvasRenderingContext2D,
-  text: string,
-  x: number,
-  y: number,
-  tracking: number,
-  align: 'center' | 'left' | 'right' = 'center'
-) {
-  const widths = Array.from(text).map((char) => ctx.measureText(char).width);
-  const total = widths.reduce((sum, w) => sum + w, 0) + tracking * (text.length - 1);
-  let cursor = align === 'center' ? x - total / 2 : align === 'right' ? x - total : x;
-
-  const previousAlign = ctx.textAlign;
-  ctx.textAlign = 'left';
-  Array.from(text).forEach((char, index) => {
-    ctx.fillText(char, cursor, y);
-    cursor += widths[index] + tracking;
-  });
-  ctx.textAlign = previousAlign;
 }
 
 const MONO = 'ui-monospace, SFMono-Regular, Menlo, monospace';
@@ -225,39 +193,9 @@ function drawEngraving(
   drawTracked(ctx, 'PWR', pxX(-1.06), pxY(1.28), 4, 'left');
 }
 
-/**
- * Escovado, pixel a pixel. Traçar milhares de riscos com a API de canvas era
- * lento o bastante para travar a montagem da página, e riscos longos viravam
- * borrão. Aqui cada linha é um passeio aleatório curto em x, herdando parte da
- * linha de cima: dá grão fino e risco que atravessa várias linhas.
- */
-function paintBrush(ctx: CanvasRenderingContext2D, base: [number, number, number], contrast: number) {
-  const image = ctx.createImageData(TEX, TEX);
-  const data = image.data;
-  const previous = new Float32Array(TEX).fill(0.5);
-  let walk = 0.5;
-
-  for (let y = 0; y < TEX; y += 1) {
-    for (let x = 0; x < TEX; x += 1) {
-      walk += (Math.random() - walk) * 0.35;
-      const value = previous[x] * 0.72 + walk * 0.28;
-      previous[x] = value;
-
-      const shade = (value - 0.5) * contrast;
-      const i = (y * TEX + x) * 4;
-      data[i] = Math.max(0, Math.min(255, base[0] + shade));
-      data[i + 1] = Math.max(0, Math.min(255, base[1] + shade));
-      data[i + 2] = Math.max(0, Math.min(255, base[2] + shade));
-      data[i + 3] = 255;
-    }
-  }
-
-  ctx.putImageData(image, 0, 0);
-}
-
 /** Cor base do painel: alumínio escovado com sujeirinha. */
 function drawAlbedo(ctx: CanvasRenderingContext2D) {
-  paintBrush(ctx, [198, 193, 181], 22);
+  brushedFill(ctx, TEX, TEX, [198, 193, 181], 22);
 
   for (let i = 0; i < 900; i += 1) {
     ctx.fillStyle = `rgba(90,90,90,${Math.random() * 0.1})`;
@@ -276,7 +214,7 @@ function drawAlbedo(ctx: CanvasRenderingContext2D) {
 function drawHeight(ctx: CanvasRenderingContext2D) {
   // O relevo do escovado fica quase imperceptível de propósito: exagerar aqui
   // produz faixas largas no mapa de normais.
-  paintBrush(ctx, [128, 128, 128], 12);
+  brushedFill(ctx, TEX, TEX, [128, 128, 128], 12);
 
   ctx.filter = 'blur(1.2px)';
   drawEngraving(ctx, '#1e1e1e', '#3c3c3c', 1.15);
@@ -287,7 +225,7 @@ function drawHeight(ctx: CanvasRenderingContext2D) {
 function drawRoughness(ctx: CanvasRenderingContext2D) {
   // É aqui que o escovado aparece de verdade: o risco muda a aspereza, e é
   // isso que alonga o reflexo na direção da escovação.
-  paintBrush(ctx, [62, 62, 62], 38);
+  brushedFill(ctx, TEX, TEX, [62, 62, 62], 38);
 
   drawEngraving(ctx, '#c8c8c8', '#a8a8a8', 1.1);
 }
@@ -301,41 +239,6 @@ function drawMetalness(ctx: CanvasRenderingContext2D) {
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, TEX, TEX);
   drawEngraving(ctx, '#141414', '#4a4a4a', 1.05);
-}
-
-/**
- * Sobel no mapa de altura. Sai num canvas (e não num DataTexture) para herdar o
- * mesmo `flipY` do mapa de cor — assim o relevo não fica invertido.
- */
-function heightToNormal(height: HTMLCanvasElement, strength: number) {
-  const src = height.getContext('2d')!.getImageData(0, 0, TEX, TEX).data;
-  const target = makeCanvas(TEX);
-  const ctx = target.getContext('2d')!;
-  const image = ctx.createImageData(TEX, TEX);
-  const out = image.data;
-
-  const at = (x: number, y: number) => {
-    const cx = x < 0 ? 0 : x > TEX - 1 ? TEX - 1 : x;
-    const cy = y < 0 ? 0 : y > TEX - 1 ? TEX - 1 : y;
-    return src[(cy * TEX + cx) * 4] / 255;
-  };
-
-  for (let y = 0; y < TEX; y += 1) {
-    for (let x = 0; x < TEX; x += 1) {
-      const dx = (at(x + 1, y) - at(x - 1, y)) * strength;
-      const dy = (at(x, y + 1) - at(x, y - 1)) * strength;
-      // A normal aponta contra a inclinação; z fixo em 1 antes de normalizar.
-      const len = Math.sqrt(dx * dx + dy * dy + 1);
-      const i = (y * TEX + x) * 4;
-      out[i] = ((-dx / len) * 0.5 + 0.5) * 255;
-      out[i + 1] = ((-dy / len) * 0.5 + 0.5) * 255;
-      out[i + 2] = (1 / len) * 0.5 * 255 + 127.5;
-      out[i + 3] = 255;
-    }
-  }
-
-  ctx.putImageData(image, 0, 0);
-  return target;
 }
 
 function usePanelMaps() {
