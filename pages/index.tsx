@@ -9,11 +9,6 @@ const Console3D = dynamic(() => import('../components/Console3D'), {
   loading: () => null
 });
 
-const Loop3D = dynamic(() => import('../components/Loop3D'), {
-  ssr: false,
-  loading: () => null
-});
-
 import AppSwarm, { SwarmApp } from '../components/AppSwarm';
 import Container from '../components/Container';
 import Counter from '../components/Counter';
@@ -158,55 +153,6 @@ export default function Home({ personal, company, apps }: Props) {
             </div>
           ))}
         </Reveal>
-      </section>
-
-      {/* O ciclo como peça: fita de alumínio com meia volta, palavras gravadas */}
-      <section className="relative overflow-hidden border-b border-line">
-        <div className="mx-auto w-full max-w-wrap px-6 pt-20 sm:pt-28">
-          <Reveal
-            as="p"
-            y={14}
-            className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent"
-          >
-            {ui.loop.eyebrow[locale]}
-          </Reveal>
-          <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
-            <Headline
-              onScroll
-              className="font-display text-3xl tracking-tight sm:text-5xl"
-            >
-              {ui.loop.title[locale]}
-            </Headline>
-            <Reveal as="p" y={16} className="max-w-sm text-sm leading-6 text-muted">
-              {ui.loop.lede[locale]}
-            </Reveal>
-          </div>
-        </div>
-
-        <div className="relative mx-auto h-[360px] w-full max-w-wrap sm:h-[480px]">
-          <Loop3D words={ui.loop.words[locale]} />
-        </div>
-
-        {/* O ciclo também escrito por extenso: é como quem usa leitor de tela ou
-            chega sem WebGL lê a mesma ideia que está gravada na fita. */}
-        <ol className="mx-auto flex w-full max-w-wrap flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 pb-16 font-mono text-[11px] uppercase tracking-[0.22em] text-muted sm:pb-20">
-          {ui.loop.words[locale].map((label, index) => (
-            <li key={label} className="flex items-baseline gap-2">
-              <span className="text-accent">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              {label}
-              {index < ui.loop.words[locale].length - 1 && (
-                <span aria-hidden className="ml-6 text-line">
-                  →
-                </span>
-              )}
-            </li>
-          ))}
-          <li aria-hidden className="text-line">
-            ↺
-          </li>
-        </ol>
       </section>
 
       {/* Playground 3D: unidade de estúdio com botões que giram de verdade */}

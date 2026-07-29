@@ -31,18 +31,6 @@ const ui = {
       { value: '3', label: { en: 'platforms: iOS, Android & web', pt: 'plataformas: iOS, Android e web' } }
     ]
   },
-  loop: {
-    eyebrow: { en: 'The loop · real-time 3D', pt: 'O ciclo · 3D em tempo real' },
-    title: { en: 'How the work actually goes.', pt: 'Como o trabalho acontece.' },
-    lede: {
-      en: 'Design, build, ship, repeat — engraved into one ribbon of aluminium with a half turn in it, which leaves it with a single face, a single edge and no beginning. Nothing here is a downloaded file: the strip is generated vertex by vertex and the words are cut into the metal, not printed on it. Drag to spin it.',
-      pt: 'Desenhar, construir, publicar, repetir — gravados numa fita de alumínio com meia volta, o que a deixa com uma face só, uma borda só e nenhum começo. Nada aqui é arquivo baixado: a fita é gerada vértice a vértice e as palavras são cavadas no metal, não impressas sobre ele. Arraste para girar.'
-    },
-    words: {
-      en: ['DESIGN', 'BUILD', 'SHIP', 'REPEAT'],
-      pt: ['DESENHAR', 'CONSTRUIR', 'PUBLICAR', 'REPETIR']
-    }
-  },
   playground: {
     eyebrow: { en: 'Real-time 3D · WebGL', pt: '3D em tempo real · WebGL' },
     title: { en: 'Turn the knobs.', pt: 'Gire os botões.' },

@@ -5,7 +5,7 @@ Construído com [Next.js](https://nextjs.org/), TypeScript e [Tailwind CSS](http
 
 ## Páginas
 
-- **Início** — apresentação, links sociais (LinkedIn, GitHub, e-mail), projetos em destaque e as duas cenas WebGL.
+- **Início** — apresentação, links sociais (LinkedIn, GitHub, e-mail), projetos em destaque e a cena WebGL.
 - **Projetos** — projetos mobile e web com imagem, descrição e stack de cada um.
 - **Sobre** — experiência profissional, formação e tecnologias.
 - **Agendar** — página `/schedule`, onde qualquer pessoa reserva um horário direto na minha agenda do Google.
@@ -34,17 +34,15 @@ um, basta o arquivo em `public/projects/shots/` e uma linha em `shippedElsewhere
 SplitText viram máscaras com `overflow: clip` e cortariam qualquer coisa que saísse da
 palavra.
 
-Duas cenas WebGL, ambas sem nenhum arquivo de modelo ou textura:
+A cena WebGL da home é o [`Console3D`](components/Console3D.tsx): a unidade de estúdio
+com botões que giram de verdade, sem nenhum arquivo de modelo ou textura — o painel
+inteiro é desenhado num canvas 2D em tempo de execução, e desse mesmo traçado sai o mapa
+de normais, por isso os rótulos são gravados no metal em vez de impressos. As ferramentas
+que fabricam esse alumínio (escovado, gravação e o Sobel que vira relevo) ficam em
+[`lib/machining.ts`](lib/machining.ts).
 
-- [`Console3D`](components/Console3D.tsx) — a unidade de estúdio com botões que giram de
-  verdade. O painel inteiro é desenhado num canvas 2D em tempo de execução.
-- [`Particles3D`](components/Particles3D.tsx) — as quatro palavras do ofício em sete mil
-  partículas. Cada palavra é rasterizada na fonte do site, os pixels com tinta viram
-  pontos, e o GSAP leva a nuvem de uma palavra à seguinte — a travessia acontece toda no
-  vertex shader.
-
-Nas duas, o ScrollTrigger só escreve o progresso da seção num ref e o loop do R3F decide
-o que fazer com ele: a rolagem não passa pelo estado do React.
+O ScrollTrigger só escreve o progresso da seção num ref e o loop do R3F decide o que
+fazer com ele: a rolagem não passa pelo estado do React.
 
 ## Rodando localmente
 
