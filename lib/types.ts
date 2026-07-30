@@ -68,6 +68,8 @@ export type Project = {
 export type ShippedApp = {
   icon: string;
   title: string;
+  /** Página do produto: o case aqui do site, ou a loja quando não há case. */
+  href: string;
   /** Placa atrás do ícone, para logotipo de fundo transparente. */
   plate?: string;
 };

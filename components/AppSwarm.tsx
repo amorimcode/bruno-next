@@ -1,5 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRef } from 'react';
 
 import { gsap, reducedMotion } from '../lib/gsap';
@@ -7,6 +8,8 @@ import { gsap, reducedMotion } from '../lib/gsap';
 export type SwarmApp = {
   icon: string;
   title: string;
+  /** Página do produto: o case aqui do site, ou a loja quando não há case. */
+  href: string;
   /** Placa atrás do ícone, para logotipo de fundo transparente. */
   plate?: string;
 };
@@ -25,6 +28,11 @@ const TILT = 9;
 const HEADER_GUARD = 74;
 /** Margem que a fileira mantém das bordas da coluna. */
 const SIDE_GUARD = 8;
+/** Folga da ponte de hover em volta da fileira. */
+const BRIDGE_PAD = 8;
+
+/** O que mantém o leque aberto enquanto o ponteiro estiver por cima. */
+const HOT = '[data-apps-anchor], [data-swarm-icon], [data-swarm-bridge]';
 
 type Spot = { x: number; y: number; rotation: number };
 
@@ -52,6 +60,7 @@ export default function AppSwarm({
 }) {
   const host = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
+  const bridge = useRef<HTMLDivElement>(null);
   const spots = useRef<Spot[]>([]);
   const open = useRef(false);
 
@@ -59,7 +68,8 @@ export default function AppSwarm({
     () => {
       const hostEl = host.current;
       const layerEl = layer.current;
-      if (!hostEl || !layerEl) return;
+      const bridgeEl = bridge.current;
+      if (!hostEl || !layerEl || !bridgeEl) return;
 
       const icons = gsap.utils.toArray<HTMLElement>('[data-swarm-icon]', layerEl);
       const floats = gsap.utils.toArray<HTMLElement>('[data-swarm-float]', layerEl);
@@ -145,12 +155,28 @@ export default function AppSwarm({
           };
         });
 
+        // Entre a palavra e a fileira há dezenas de pixels de nada. Como agora
+        // cada ícone é um link, o ponteiro precisa poder subir até lá: esta
+        // ponte invisível cobre o vão para que a subida não conte como saída.
+        const xs = spots.current.map((spot) => spot.x);
+        const top = Math.min(...spots.current.map((spot) => spot.y)) - shelf.icon / 2 - BRIDGE_PAD;
+        const left = Math.min(...xs) - shelf.icon / 2 - BRIDGE_PAD;
+        const right = Math.max(...xs) + shelf.icon / 2 + BRIDGE_PAD;
+        bridgeEl.style.left = `${left}px`;
+        bridgeEl.style.top = `${top}px`;
+        bridgeEl.style.width = `${right - left}px`;
+        bridgeEl.style.height = `${wordBox.height / 2 - top}px`;
+
         return true;
       };
 
       const show = () => {
         if (!place()) return;
         open.current = true;
+        // Só clicável no ar: parados, os ícones ficam empilhados sobre a própria
+        // palavra e roubariam dela o hover que abre o leque.
+        gsap.set(icons, { pointerEvents: 'auto' });
+        if (fine) gsap.set(bridgeEl, { pointerEvents: 'auto' });
         gsap.to(dimmed, { opacity: 0.3, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
         gsap.to(icons, {
           x: (i: number) => spots.current[i].x,
@@ -169,6 +195,9 @@ export default function AppSwarm({
 
       const hide = () => {
         open.current = false;
+        // Desliga o clique já na saída, e não no fim da animação: quem está
+        // voltando para a palavra não pode esbarrar num link em retirada.
+        gsap.set([...icons, bridgeEl], { pointerEvents: 'none' });
         gsap.to(dimmed, { opacity: 1, duration: 0.45, ease: 'power2.out', overwrite: 'auto' });
         gsap.to(icons, {
           x: 0,
@@ -186,12 +215,21 @@ export default function AppSwarm({
       const onWord = (node: EventTarget | null) =>
         node instanceof Element ? node.closest('[data-apps-anchor]') : null;
 
+      /**
+       * A palavra é o gatilho, mas o leque inteiro é zona quente: com os ícones
+       * clicáveis, sair da palavra em direção a eles não pode fechar nada.
+       */
+      const onSwarm = (node: EventTarget | null) =>
+        node instanceof Element ? node.closest(HOT) : null;
+
       const enter = (event: PointerEvent) => {
-        if (onWord(event.target)) show();
+        // Sem o `open`, andar de um ícone para o vizinho rearmaria a animação de
+        // lançamento a cada passo do ponteiro.
+        if (!open.current && onSwarm(event.target)) show();
       };
 
       const leave = (event: PointerEvent) => {
-        if (onWord(event.target) && !onWord(event.relatedTarget)) hide();
+        if (onSwarm(event.target) && !onSwarm(event.relatedTarget)) hide();
       };
 
       const toggle = (event: MouseEvent) => {
@@ -253,14 +291,17 @@ export default function AppSwarm({
     <div ref={host} className="relative">
       {children}
 
-      {/* Decoração: os mesmos produtos estão listados logo abaixo, com nome e
-          case. Daí o aria-hidden e a ausência de link — nada aqui é a única
-          porta para lugar nenhum. */}
+      {/* Atalho, não navegação: cada ícone leva à página do produto, mas os
+          mesmos produtos estão listados logo abaixo, com nome e case. Daí o
+          aria-hidden e o `tabIndex={-1}` — nada aqui é a única porta para lugar
+          nenhum, e ninguém tateia oito links invisíveis pelo teclado. */}
       <div
         ref={layer}
         aria-hidden
         className="pointer-events-none absolute left-0 top-0 z-20 h-0 w-0"
       >
+        <div ref={bridge} data-swarm-bridge className="pointer-events-none absolute" />
+
         {/* O tamanho mora no invólucro, e não na imagem: o `max-width: 100%`
             que o Tailwind põe em toda imagem se resolveria contra um pai sem
             largura e deixaria o ícone com zero pixel. */}
@@ -271,24 +312,65 @@ export default function AppSwarm({
             // Invisível já no HTML do servidor: o estado inicial do GSAP só
             // chega depois da hidratação, e sem isto os seis ícones aparecem
             // empilhados na quina do herói até o script rodar.
-            className="absolute h-11 w-11 opacity-0 sm:h-14 sm:w-14"
+            className="pointer-events-none absolute h-11 w-11 opacity-0 sm:h-14 sm:w-14"
           >
-            <div
-              data-swarm-float
-              className="h-full w-full overflow-hidden rounded-[22%] shadow-xl ring-1 ring-black/10 dark:ring-white/15"
-              style={app.plate ? { background: app.plate } : undefined}
-            >
-              <Image
-                src={app.icon}
-                alt=""
-                width={128}
-                height={128}
-                className="h-full w-full"
-              />
-            </div>
+            <AppLink app={app}>
+              <div
+                data-swarm-float
+                className="h-full w-full overflow-hidden rounded-[22%] shadow-xl ring-1 ring-black/10 dark:ring-white/15"
+                style={app.plate ? { background: app.plate } : undefined}
+              >
+                <Image
+                  src={app.icon}
+                  alt=""
+                  width={128}
+                  height={128}
+                  className="h-full w-full"
+                />
+              </div>
+            </AppLink>
           </div>
         ))}
       </div>
     </div>
+  );
+}
+
+/**
+ * A página do produto: o case daqui quando ele existe — é onde o produto está
+ * contado por inteiro — e a loja quando o app só existe lá, aí em outra aba,
+ * para não tirar ninguém do meio da leitura.
+ */
+function AppLink({
+  app,
+  children
+}: {
+  app: SwarmApp;
+  children: React.ReactNode;
+}) {
+  // O afago do hover mora no link, e não no ícone: o GSAP já é dono do
+  // transform de quem voa e de quem flutua.
+  const className =
+    'block h-full w-full transition-transform duration-200 ease-out hover:scale-110';
+
+  if (/^https?:/.test(app.href)) {
+    return (
+      <a
+        href={app.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        tabIndex={-1}
+        title={app.title}
+        className={className}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={app.href} tabIndex={-1} title={app.title} className={className}>
+      {children}
+    </Link>
   );
 }

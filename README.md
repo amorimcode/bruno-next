@@ -34,6 +34,14 @@ um, basta o arquivo em `public/projects/shots/` e uma linha em `shippedElsewhere
 SplitText viram máscaras com `overflow: clip` e cortariam qualquer coisa que saísse da
 palavra.
 
+Cada ícone no ar é um link para a página do produto: o case daqui quando ele existe, a
+loja quando o app só existe lá. Dois detalhes fazem isso parar de pé. O clique só liga
+enquanto o leque está aberto — parados, os ícones se empilham sobre a própria palavra e
+roubariam dela o hover que abre tudo. E entre a palavra e a fileira existe uma ponte
+invisível, dimensionada junto com o arco, porque sem ela o ponteiro “sairia” do leque no
+vão que separa um do outro. Os links ficam fora da ordem de tabulação: o mesmo produto
+aparece logo abaixo, listado com nome e case.
+
 A cena WebGL da home é o [`Console3D`](components/Console3D.tsx): a unidade de estúdio
 com botões que giram de verdade, sem nenhum arquivo de modelo ou textura — o painel
 inteiro é desenhado num canvas 2D em tempo de execução, e desse mesmo traçado sai o mapa

@@ -100,6 +100,71 @@ const projects: Project[] = [
     featured: true
   },
   {
+    slug: 'maismei',
+    kind: 'company',
+    title: 'MaisMei',
+    tagline: {
+      en: 'Brazilian small-business bureaucracy, solved in one app.',
+      pt: 'A burocracia do MEI resolvida num app.'
+    },
+    company: 'MaisMei',
+    role: {
+      en: 'Front-end Developer — iOS & React Native',
+      pt: 'Desenvolvedor Front-end Pleno — iOS & React Native'
+    },
+    period: { en: 'Apr 2024 – Jan 2025', pt: 'Abr 2024 – Jan 2025' },
+    platforms: ['iOS', 'Android'],
+    summary: {
+      en: 'Financial services for Brazilian micro-entrepreneurs (MEI): company registration, tax slips (DAS/DASN) and business account management. I worked across native iOS (Swift/SwiftUI) and React Native.',
+      pt: 'App de serviços financeiros para microempreendedores: abertura de MEI, guias DAS/DASN e gestão da conta PJ. Atuei unindo desenvolvimento nativo iOS (Swift/SwiftUI) e React Native.'
+    },
+    context: {
+      en: 'Millions of Brazilian micro-entrepreneurs face the same routine: issue a tax slip, declare revenue, keep the company compliant. MaisMei condenses all of it into a single app. I joined the team to evolve the product on both platforms, moving between native iOS code and the React Native base as each feature demanded.',
+      pt: 'Milhões de MEIs brasileiros enfrentam a mesma rotina: emitir guia, declarar faturamento, manter o CNPJ regular. O MaisMei condensa isso num app só. Entrei no time para evoluir o produto nas duas plataformas, transitando entre o código nativo iOS e a base React Native conforme a feature pedia.'
+    },
+    decisions: [
+      {
+        title: {
+          en: 'SwiftUI where the iOS experience deserved to be native',
+          pt: 'SwiftUI onde a experiência iOS pedia ser nativa'
+        },
+        body: {
+          en: 'Not everything should cross the bridge. System-feeling flows — settings screens, Apple ecosystem interactions — got dedicated SwiftUI implementations, while the rest of the product stayed in RN.',
+          pt: 'Nem tudo precisa passar pela bridge. Fluxos com cara de sistema — telas de ajuste, interações com o ecossistema Apple — ganharam implementações SwiftUI dedicadas, mantendo o resto do produto em RN.'
+        }
+      },
+      {
+        title: {
+          en: 'State discipline with MobX in tax-critical flows',
+          pt: 'Disciplina de estado com MobX em fluxo fiscal'
+        },
+        body: {
+          en: 'An issued slip, a submitted declaration, a paid installment: tax states tolerate no ambiguity. I worked the state layer so every document had an explicit lifecycle, from draft to confirmation.',
+          pt: 'Guia emitida, declaração enviada, parcela paga: estados fiscais não toleram ambiguidade. Trabalhei a camada de estado para que cada documento tivesse ciclo de vida explícito, do rascunho à confirmação.'
+        }
+      }
+    ],
+    outcome: {
+      en: 'New features delivered to production for a nationwide base of micro-entrepreneurs, with the app active on both stores.',
+      pt: 'Funcionalidades novas entregues em produção para uma base nacional de microempreendedores, com o app ativo nas duas lojas.'
+    },
+    icon: '/projects/shots/maismei-icon.png',
+    screens: [],
+    theme: {
+      bg: 'linear-gradient(135deg, #3f63de 0%, #2746a8 100%)',
+      fg: '#e2f58b',
+      glow: '#e2f58b'
+    },
+    tags: ['Swift', 'SwiftUI', 'React Native', 'MobX', 'Go'],
+    links: [
+      {
+        label: 'App Store',
+        href: 'https://apps.apple.com/br/app/mais-mei-abrir-mei-dasn-das/id1437671032'
+      }
+    ],
+    featured: false
+  },
+  {
     slug: 'pagol',
     kind: 'company',
     title: 'PaGol',
@@ -207,71 +272,6 @@ const projects: Project[] = [
       { label: 'Website', href: 'https://www.pagol.com.br/' }
     ],
     featured: true
-  },
-  {
-    slug: 'maismei',
-    kind: 'company',
-    title: 'MaisMei',
-    tagline: {
-      en: 'Brazilian small-business bureaucracy, solved in one app.',
-      pt: 'A burocracia do MEI resolvida num app.'
-    },
-    company: 'MaisMei',
-    role: {
-      en: 'Front-end Developer — iOS & React Native',
-      pt: 'Desenvolvedor Front-end Pleno — iOS & React Native'
-    },
-    period: { en: 'Apr 2024 – Jan 2025', pt: 'Abr 2024 – Jan 2025' },
-    platforms: ['iOS', 'Android'],
-    summary: {
-      en: 'Financial services for Brazilian micro-entrepreneurs (MEI): company registration, tax slips (DAS/DASN) and business account management. I worked across native iOS (Swift/SwiftUI) and React Native.',
-      pt: 'App de serviços financeiros para microempreendedores: abertura de MEI, guias DAS/DASN e gestão da conta PJ. Atuei unindo desenvolvimento nativo iOS (Swift/SwiftUI) e React Native.'
-    },
-    context: {
-      en: 'Millions of Brazilian micro-entrepreneurs face the same routine: issue a tax slip, declare revenue, keep the company compliant. MaisMei condenses all of it into a single app. I joined the team to evolve the product on both platforms, moving between native iOS code and the React Native base as each feature demanded.',
-      pt: 'Milhões de MEIs brasileiros enfrentam a mesma rotina: emitir guia, declarar faturamento, manter o CNPJ regular. O MaisMei condensa isso num app só. Entrei no time para evoluir o produto nas duas plataformas, transitando entre o código nativo iOS e a base React Native conforme a feature pedia.'
-    },
-    decisions: [
-      {
-        title: {
-          en: 'SwiftUI where the iOS experience deserved to be native',
-          pt: 'SwiftUI onde a experiência iOS pedia ser nativa'
-        },
-        body: {
-          en: 'Not everything should cross the bridge. System-feeling flows — settings screens, Apple ecosystem interactions — got dedicated SwiftUI implementations, while the rest of the product stayed in RN.',
-          pt: 'Nem tudo precisa passar pela bridge. Fluxos com cara de sistema — telas de ajuste, interações com o ecossistema Apple — ganharam implementações SwiftUI dedicadas, mantendo o resto do produto em RN.'
-        }
-      },
-      {
-        title: {
-          en: 'State discipline with MobX in tax-critical flows',
-          pt: 'Disciplina de estado com MobX em fluxo fiscal'
-        },
-        body: {
-          en: 'An issued slip, a submitted declaration, a paid installment: tax states tolerate no ambiguity. I worked the state layer so every document had an explicit lifecycle, from draft to confirmation.',
-          pt: 'Guia emitida, declaração enviada, parcela paga: estados fiscais não toleram ambiguidade. Trabalhei a camada de estado para que cada documento tivesse ciclo de vida explícito, do rascunho à confirmação.'
-        }
-      }
-    ],
-    outcome: {
-      en: 'New features delivered to production for a nationwide base of micro-entrepreneurs, with the app active on both stores.',
-      pt: 'Funcionalidades novas entregues em produção para uma base nacional de microempreendedores, com o app ativo nas duas lojas.'
-    },
-    icon: '/projects/shots/maismei-icon.png',
-    screens: [],
-    theme: {
-      bg: 'linear-gradient(135deg, #3f63de 0%, #2746a8 100%)',
-      fg: '#e2f58b',
-      glow: '#e2f58b'
-    },
-    tags: ['Swift', 'SwiftUI', 'React Native', 'MobX', 'Go'],
-    links: [
-      {
-        label: 'App Store',
-        href: 'https://apps.apple.com/br/app/mais-mei-abrir-mei-dasn-das/id1437671032'
-      }
-    ],
-    featured: false
   },
   {
     slug: 'bankeiro',
@@ -405,12 +405,42 @@ const projects: Project[] = [
     icon: '/projects/shots/buni-icon.png',
     screens: [
       {
-        src: '/projects/shots/buni-1.png',
+        src: '/projects/shots/buni-1.jpg',
         alt: {
-          en: 'b.Uni — home with balance, Pix and recent transactions',
-          pt: 'b.Uni — home com saldo, Pix e transações recentes'
+          en: 'b.Uni — home with account balance, Pix and day-to-day shortcuts',
+          pt: 'b.Uni — home com saldo em conta, Pix e atalhos do dia a dia'
         },
-        kind: 'raw'
+        kind: 'banner',
+        aspect: '1080/2337'
+      },
+      {
+        src: '/projects/shots/buni-2.jpg',
+        alt: {
+          en: 'b.Uni — Pix hub: transfer, pay, charge and copy-and-paste keys',
+          pt: 'b.Uni — central do Pix: transferir, pagar, cobrar e copia e cola'
+        },
+        kind: 'banner',
+        aspect: '1080/2337'
+      },
+      {
+        src: '/projects/shots/buni-3.jpg',
+        alt: {
+          en: 'b.Uni — shareable transfer receipt with the transaction trail',
+          pt: 'b.Uni — comprovante de transferência compartilhável, com a trilha da transação'
+        },
+        kind: 'banner',
+        aspect: '1080/2337'
+      },
+      {
+        src: '/projects/shots/buni-4.jpg',
+        alt: {
+          en: 'b.Uni — launch campaign art: “the first digital account for Education”',
+          pt: 'b.Uni — arte de lançamento: “a primeira conta digital da Educação”'
+        },
+        kind: 'banner',
+        // Vem recortada no aspecto da grade do case, e não na altura de loja: no
+        // recorte central a primeira linha do título ficava de fora.
+        aspect: '780/1385'
       }
     ],
     theme: {
@@ -419,7 +449,11 @@ const projects: Project[] = [
       glow: '#ffffff'
     },
     tags: ['React Native', 'React', 'TypeScript', 'Redux'],
-    links: [{ label: 'App Store', href: 'https://apps.apple.com/br/app/b-uni/id1598683067' }],
+    // A listagem antiga (id1598683067) saiu do ar; o app vive agora como
+    // “b.Uni Digital”, e é de lá que vêm o ícone e as telas desta página.
+    links: [
+      { label: 'App Store', href: 'https://apps.apple.com/br/app/b-uni-digital/id6739265106' }
+    ],
     featured: true
   },
   {
@@ -813,15 +847,26 @@ export const lab: LabProject[] = [
  * dentro de time de produto, onde o que dá para mostrar é o ícone.
  */
 const shippedElsewhere: ShippedApp[] = [
-  { icon: '/projects/shots/nomad-icon.png', title: 'Nomad' },
+  {
+    icon: '/projects/shots/nomad-icon.png',
+    title: 'Nomad',
+    href: 'https://apps.apple.com/br/app/nomad-conta-digital-em-d%C3%B3lar/id1485257309'
+  },
   // O app da Localiza no Bankeiro — o próprio ícone traz o “powered by bs2”.
-  { icon: '/projects/shots/localiza-icon.png', title: 'Eqip Localiza' }
+  {
+    icon: '/projects/shots/localiza-icon.png',
+    title: 'Eqip Localiza',
+    href: 'https://apps.apple.com/br/app/eqip-localiza/id6743860676'
+  }
 ];
 
 /**
  * O que alimenta o leque de ícones do título na home: primeiro os produtos com
  * case próprio, na ordem em que aparecem na página, depois os demais. Sai daqui
  * e não de `projects` para que um app sem case também caiba.
+ *
+ * Cada ícone leva à página do produto: o case daqui quando ele existe — é onde
+ * o produto está contado por inteiro — e a loja quando o app só existe lá.
  */
 export const shippedApps: ShippedApp[] = [
   ...projects
@@ -829,6 +874,7 @@ export const shippedApps: ShippedApp[] = [
     .map((project) => ({
       icon: project.icon as string,
       title: project.title,
+      href: `/projects/${project.slug}`,
       ...(project.iconPlate ? { plate: project.iconPlate } : {})
     })),
   ...shippedElsewhere
