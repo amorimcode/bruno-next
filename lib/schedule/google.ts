@@ -5,7 +5,7 @@
  *
  * Roda exclusivamente em rota de API. As credenciais nunca chegam ao browser.
  */
-import { CALENDAR_ID, TIMEZONE } from './config';
+import { BUSY_CALENDAR_IDS, CALENDAR_ID, TIMEZONE } from './config';
 
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const CALENDAR_API = 'https://www.googleapis.com/calendar/v3';
@@ -98,7 +98,7 @@ async function googleFetch<T>(path: string, init: RequestInit): Promise<T> {
   return text ? (JSON.parse(text) as T) : ({} as T);
 }
 
-/** Intervalos ocupados na agenda dentro da janela pedida. */
+/** Intervalos ocupados nas agendas de `BUSY_CALENDAR_IDS`, já unidos. */
 export async function getBusyIntervals(
   timeMin: string,
   timeMax: string
@@ -111,18 +111,29 @@ export async function getBusyIntervals(
       timeMin,
       timeMax,
       timeZone: TIMEZONE,
-      items: [{ id: CALENDAR_ID }]
+      items: BUSY_CALENDAR_IDS.map((id) => ({ id }))
     })
   });
 
-  const calendars = data.calendars ?? {};
-  const calendar = calendars[CALENDAR_ID] ?? Object.values(calendars)[0];
+  // O `primary` volta com a chave resolvida no e-mail da conta, então a
+  // resposta é lida pelo que veio, não pelo que foi pedido.
+  const entries = Object.entries(data.calendars ?? {});
 
-  if (calendar?.errors?.length) {
-    throw new Error(`freeBusy retornou erro: ${JSON.stringify(calendar.errors)}`);
+  // Agenda que responde erro (sem acesso, id errado) devolveria ocupação
+  // vazia, e o horário já tomado apareceria livre. Entre derrubar a página e
+  // deixar marcarem por cima, derrubar é o erro barato.
+  const failed = entries.filter(([, calendar]) => calendar.errors?.length);
+  if (failed.length > 0 || entries.length === 0) {
+    throw new Error(
+      `freeBusy retornou erro: ${JSON.stringify(
+        Object.fromEntries(failed.map(([id, calendar]) => [id, calendar.errors]))
+      )}`
+    );
   }
 
-  return calendar?.busy ?? [];
+  // Sobreposição entre agendas não incomoda: quem consome só pergunta se o
+  // bloco encosta em algum intervalo.
+  return entries.flatMap(([, calendar]) => calendar.busy ?? []);
 }
 
 export type BookingInput = {

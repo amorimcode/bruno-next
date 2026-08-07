@@ -69,6 +69,8 @@ A página lê a disponibilidade real da agenda via `freeBusy` e cria o evento co
 
 As regras de horário ficam todas em [`lib/schedule/config.ts`](lib/schedule/config.ts): dias úteis, das 13h às 18h no horário de Brasília, blocos de 30 minutos, 30 dias de horizonte e 2 horas de antecedência mínima. Sexta fecha mais cedo, às 16h, pela exceção em `DAY_END_HOUR_BY_WEEKDAY`.
 
+Compromisso fixo que mora fora do Google, como reunião recorrente na agenda do trabalho, sai da grade por `BLOCKED_RANGES_BY_WEEKDAY` no mesmo arquivo. O recorte acontece em `slotsForDay`, então a rota de agendamento recusa esses horários também, não só a listagem.
+
 ### Configuração
 
 A conta é Gmail pessoal, então não dá para usar service account (isso exige domain-wide delegation, exclusivo do Workspace). O caminho é dar consentimento uma vez e guardar o refresh token.
@@ -87,6 +89,14 @@ node scripts/google-oauth.mjs
 ```
 
 Em produção, as mesmas quatro variáveis precisam existir no projeto da Vercel.
+
+### Compromisso em outra conta
+
+O `freeBusy` só enxerga agenda que a conta do refresh token pode ver. Se seus compromissos pessoais ficam em outro Google, eles não bloqueiam nada aqui e o site oferece horário que já está tomado.
+
+Para juntar as duas: na conta que tem os compromissos, abra *Settings for my calendars → Share with specific people* e adicione o e-mail da conta do refresh token com permissão mínima de **See only free/busy**. Depois liste a agenda em `GOOGLE_BUSY_CALENDAR_IDS` (aceita mais de uma, separadas por vírgula), no `.env.local` e na Vercel.
+
+Elas entram só na leitura de ocupação. O evento continua sendo criado na agenda de `GOOGLE_CALENDAR_ID`.
 
 ### Proteção contra abuso
 

@@ -5,6 +5,7 @@
  * quebra a agenda.
  */
 import {
+  blockedRanges,
   DAY_START_HOUR,
   dayEndHour,
   HORIZON_DAYS,
@@ -133,6 +134,7 @@ export function slotsForDay(dayKey: string): Slot[] {
 
   const [year, month, day] = parseDayKey(dayKey);
   const windowMinutes = (dayEndHour(weekday) - DAY_START_HOUR) * 60;
+  const blocked = blockedRanges(weekday);
   const slots: Slot[] = [];
 
   for (
@@ -140,6 +142,17 @@ export function slotsForDay(dayKey: string): Slot[] {
     offset + SLOT_MINUTES <= windowMinutes;
     offset += SLOT_MINUTES
   ) {
+    // A faixa fixa é recortada aqui, e não só na disponibilidade, para que a
+    // rota de agendamento também recuse esse horário.
+    const wallStart = DAY_START_HOUR * 60 + offset;
+    if (
+      blocked.some(([from, to]) =>
+        overlaps(wallStart, wallStart + SLOT_MINUTES, from, to)
+      )
+    ) {
+      continue;
+    }
+
     // `Date.UTC` normaliza minuto acima de 59, então somar o offset direto
     // no minuto inicial já anda pelas horas da janela.
     const start = wallClockToUtc(year, month, day, DAY_START_HOUR, offset);
