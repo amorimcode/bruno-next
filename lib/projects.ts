@@ -2,6 +2,107 @@ import { LabProject, Project, ShippedApp } from './types';
 
 const projects: Project[] = [
   {
+    slug: 'floattube',
+    kind: 'personal',
+    title: 'FloatTube',
+    tagline: {
+      en: 'A YouTube mini player for the Mac that stays put while your desktops slide.',
+      pt: 'Um mini player do YouTube para Mac que fica parado enquanto os desktops deslizam.'
+    },
+    company: 'FloatTube · own product',
+    role: {
+      en: 'Designer & engineer — macOS app, Chrome extension, icon & landing page',
+      pt: 'Designer & engenheiro — app macOS, extensão do Chrome, ícone & landing page'
+    },
+    period: { en: '2026', pt: '2026' },
+    platforms: ['macOS', 'Chrome'],
+    summary: {
+      en: "Chrome's picture-in-picture window jumps every time you switch desktops on a Mac. FloatTube replaces it: a menu-bar app in Swift and AppKit that plays the video in a floating player living in its own WindowServer Space — so it doesn't move a pixel during the Space animation — plus a Chrome extension that hands the video over when you leave the tab and back when you return.",
+      pt: 'O picture-in-picture do Chrome pula toda vez que você troca de desktop no Mac. O FloatTube resolve isso: um app de barra de menus em Swift e AppKit que toca o vídeo num player flutuante morando num Space próprio do WindowServer — por isso não se mexe nem um pixel durante a animação — e uma extensão do Chrome que entrega o vídeo quando você sai da aba e devolve quando você volta.'
+    },
+    context: {
+      en: "The fix looked like a window flag. It isn't: even a window marked to appear on all desktops still belongs to the user's Spaces, so the WindowServer slides it along with every transition and snaps it back at the end — the glitch you see in Chrome. The only way to keep a window truly still is to take it out of the user's Spaces altogether, which an extension can't do and a regular app window doesn't do by default.",
+      pt: 'A solução parecia uma flag de janela. Não é: mesmo uma janela marcada para aparecer em todos os desktops continua pertencendo aos Spaces do usuário, então o WindowServer a desliza junto em cada transição e a devolve ao lugar no fim — o tranco que se vê no Chrome. O único jeito de manter a janela realmente parada é tirá-la dos Spaces do usuário, algo que uma extensão não consegue e uma janela comum não faz.'
+    },
+    decisions: [
+      {
+        title: {
+          en: 'A private Space above the desktops',
+          pt: 'Um Space privado acima dos desktops'
+        },
+        body: {
+          en: "The player window lives in a Space created through SkyLight's private API, at an absolute level above the user's desktops and below the lock screen. Checking the window's Space membership in the WindowServer itself showed that the all-desktops flag re-added it to every incoming Space — the ghost that slid in with the new desktop — so the app drops that flag while the player is pinned. If the symbols ever disappear, it detects that and falls back to a regular floating window.",
+          pt: 'A janela do player mora num Space criado pela API privada do SkyLight, num nível absoluto acima dos desktops do usuário e abaixo da tela de bloqueio. Conferir os Spaces da janela no próprio WindowServer mostrou que a flag de todos os desktops a recolocava em cada Space que entrava — o fantasma que chegava deslizando com o desktop novo — então o app remove essa flag enquanto o player está fixado. Se os símbolos sumirem, ele detecta e volta a uma janela flutuante comum.'
+        }
+      },
+      {
+        title: {
+          en: 'Native Liquid Glass controls over the YouTube embed',
+          pt: 'Controles nativos em Liquid Glass sobre o player do YouTube'
+        },
+        body: {
+          en: "YouTube's redesigned embed spreads its controls across the whole video, which fought with dragging the window around. I hid them — player API with controls off, plus CSS injected into the cross-origin iframe through a WKUserScript — and drew native NSGlassEffectView controls instead, driving playback through the IFrame API. The window drags from anywhere, resizes from wide edge zones or a pinch, and eases between two sizes; during ads, clicks pass straight through so Skip still works.",
+          pt: 'O player incorporado do YouTube, redesenhado, espalha controles pelo vídeo inteiro, o que brigava com arrastar a janela. Escondi esses controles — API do player sem controles, mais CSS injetado no iframe de outra origem por um WKUserScript — e desenhei controles nativos com NSGlassEffectView, comandando o vídeo pela IFrame API. A janela arrasta de qualquer ponto, redimensiona por bordas largas ou pinça e anima entre dois tamanhos; durante anúncios, os cliques passam direto para o Pular continuar funcionando.'
+        }
+      },
+      {
+        title: {
+          en: 'Tab handoff over a local WebSocket',
+          pt: 'Troca de aba por um WebSocket local'
+        },
+        body: {
+          en: "A Manifest V3 extension pauses the tab when you leave it and sends the video id, second, speed and volume to the app over 127.0.0.1; coming back returns the exact second to the tab. The app rejects any connection whose Origin isn't a browser extension, and the service worker keeps the socket alive only while a video is floating.",
+          pt: 'Uma extensão Manifest V3 pausa a aba quando você sai dela e manda para o app, por 127.0.0.1, o id do vídeo, o segundo, a velocidade e o volume; ao voltar, o segundo exato retorna à aba. O app recusa qualquer conexão cujo Origin não seja uma extensão do navegador, e o service worker só mantém o socket vivo enquanto há vídeo no player.'
+        }
+      }
+    ],
+    outcome: {
+      en: "Open source on GitHub with a universal Apple Silicon + Intel build, the Chrome extension, a Liquid Glass icon built in Icon Composer's format and a landing page on Vercel with a live side-by-side demo of the Space switch.",
+      pt: 'Código aberto no GitHub com build universal para Apple Silicon e Intel, a extensão do Chrome, ícone Liquid Glass no formato do Icon Composer e uma landing page na Vercel com a demonstração lado a lado da troca de Space.'
+    },
+    icon: '/projects/shots/floattube-icon.png',
+    screens: [
+      {
+        src: '/projects/shots/floattube-1.png',
+        alt: {
+          en: 'FloatTube — the floating player over Chrome, with the tab showing the video moved out',
+          pt: 'FloatTube — o player flutuante sobre o Chrome, com a aba mostrando que o vídeo saiu dela'
+        },
+        kind: 'banner',
+        aspect: '1600/1000'
+      },
+      {
+        src: '/projects/shots/floattube-2.png',
+        alt: {
+          en: 'FloatTube — native Liquid Glass playback controls',
+          pt: 'FloatTube — controles nativos em Liquid Glass'
+        },
+        kind: 'banner',
+        aspect: '1280/720'
+      },
+      {
+        src: '/projects/shots/floattube-3.png',
+        alt: {
+          en: 'Mid Space switch: Chrome picture-in-picture slides along, FloatTube stays put',
+          pt: 'No meio da troca de Space: o picture-in-picture do Chrome desliza junto, o FloatTube fica parado'
+        },
+        kind: 'banner',
+        aspect: '1600/640'
+      }
+    ],
+    theme: {
+      bg: 'linear-gradient(140deg, #231c5e 0%, #873d86 55%, #ff7652 100%)',
+      fg: '#fff4e8',
+      glow: '#ffc37b'
+    },
+    tags: ['Swift', 'AppKit', 'WebKit', 'SkyLight', 'Chrome Extension', 'JavaScript'],
+    links: [
+      { label: 'Website', href: 'https://floattube.vercel.app' },
+      { label: 'GitHub', href: 'https://github.com/amorimcode/floattube' }
+    ],
+    featured: true
+  },
+  {
     slug: 'dont-idle',
     kind: 'personal',
     title: "Don't Idle",
