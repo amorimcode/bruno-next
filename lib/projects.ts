@@ -457,15 +457,15 @@ const projects: Project[] = [
       en: 'Senior Software Engineer — Mobile & Web',
       pt: 'Senior Software Engineer — Mobile & Web'
     },
-    period: { en: 'Jan 2025 – Present', pt: 'Jan 2025 – Atual' },
+    period: { en: 'Jan 2025 – Aug 2026', pt: 'Jan 2025 – Ago 2026' },
     platforms: ['iOS', 'Android', 'Web'],
     summary: {
-      en: 'A digital bank focused on university students. I am the engineer responsible for both ends of the product: the React Native app and the React internet banking.',
-      pt: 'Banco digital focado em estudantes. Sou o engenheiro responsável pelas duas pontas do produto: o app em React Native e o internet banking em React.'
+      en: 'A digital bank focused on university students. I was the engineer responsible for both ends of the product: the React Native app and the React internet banking.',
+      pt: 'Banco digital focado em estudantes. Fui o engenheiro responsável pelas duas pontas do produto: o app em React Native e o internet banking em React.'
     },
     context: {
-      en: 'University students have a financial life of their own: allowance, internship pay, first account, first card. b.Uni serves them with a digital account, Pix, transfers and cashback. I own both platforms — which means the same person who decides how a flow behaves in the app decides how it translates to the web.',
-      pt: 'Estudante universitário tem vida financeira própria: mesada, estágio, primeira conta, primeiro cartão. O b.Uni atende esse público com conta digital, Pix, transferências e cashback. Atuo como responsável pelas plataformas — o que significa que a mesma pessoa que decide o comportamento de um fluxo no app decide como ele se traduz na web.'
+      en: 'University students have a financial life of their own: allowance, internship pay, first account, first card. b.Uni serves them with a digital account, Pix, transfers and cashback. I owned both platforms — which meant the same person who decided how a flow behaved in the app decided how it translated to the web.',
+      pt: 'Estudante universitário tem vida financeira própria: mesada, estágio, primeira conta, primeiro cartão. O b.Uni atende esse público com conta digital, Pix, transferências e cashback. Atuei como responsável pelas plataformas — o que significava que a mesma pessoa que decidia o comportamento de um fluxo no app decidia como ele se traduzia na web.'
     },
     decisions: [
       {
@@ -474,8 +474,8 @@ const projects: Project[] = [
           pt: 'App e web como um produto só'
         },
         body: {
-          en: 'I keep deliberate parity between the RN app and the React internet banking: same API contracts, same state modeling, same UI language. Moving from phone to desktop never means relearning the bank.',
-          pt: 'Mantenho paridade deliberada entre o app RN e o internet banking React: mesmos contratos de API, mesma modelagem de estado, mesma linguagem de UI. Quem migra do celular para o desktop não precisa reaprender o banco.'
+          en: 'I kept deliberate parity between the RN app and the React internet banking: same API contracts, same state modeling, same UI language. Moving from phone to desktop never means relearning the bank.',
+          pt: 'Mantive paridade deliberada entre o app RN e o internet banking React: mesmos contratos de API, mesma modelagem de estado, mesma linguagem de UI. Quem migra do celular para o desktop não precisa reaprender o banco.'
         }
       },
       {

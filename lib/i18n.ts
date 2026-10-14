@@ -20,8 +20,8 @@ const ui = {
     titleEm: { en: 'that live in people’s pockets', pt: 'que moram no bolso das pessoas' },
     titleB: { en: '.', pt: '.' },
     lede: {
-      en: 'I’m Bruno Amorim, a software engineer from Campinas, Brazil. Over the last five years I’ve shipped products end to end: an airline’s digital account, a white-label platform behind 40+ banks, a student bank — and, after hours, my own products: igreja.studio, a white-label for churches, and QWIP, a SaaS for gas stations, designed and built entirely by me.',
-      pt: 'Sou Bruno Amorim, engenheiro de software em Campinas. Nos últimos cinco anos coloquei produtos no ar de ponta a ponta: a conta digital de uma companhia aérea, um white-label por trás de 40+ bancos, o banco dos universitários — e, fora do expediente, meus próprios produtos: o igreja.studio, white-label para igrejas, e o QWIP, SaaS para postos de combustíveis, desenhados e construídos inteiramente por mim.'
+      en: 'I’m Bruno Amorim, a software engineer from Campinas, Brazil, currently on the front-end team at OpenXpace AI. Over the last five years I’ve shipped products end to end: an airline’s digital account, a white-label platform behind 40+ banks, a student bank — and, after hours, my own products: igreja.studio, a white-label for churches, and QWIP, a SaaS for gas stations, designed and built entirely by me.',
+      pt: 'Sou Bruno Amorim, engenheiro de software em Campinas, hoje no time de front-end da OpenXpace AI. Nos últimos cinco anos coloquei produtos no ar de ponta a ponta: a conta digital de uma companhia aérea, um white-label por trás de 40+ bancos, o banco dos universitários — e, fora do expediente, meus próprios produtos: o igreja.studio, white-label para igrejas, e o QWIP, SaaS para postos de combustíveis, desenhados e construídos inteiramente por mim.'
     },
     location: { en: 'Campinas — SP · Brazil', pt: 'Campinas — SP · Brasil' },
     stats: [
@@ -94,9 +94,18 @@ const ui = {
   ],
   experience: [
     {
+      company: 'OpenXpace AI',
+      role: { en: 'Front-end Engineer', pt: 'Front-end Engineer' },
+      period: { en: 'Aug 2026 – Present', pt: 'Ago 2026 – Atual' },
+      summary: {
+        en: 'Web (Next.js) and mobile apps of an AI-powered commercial real estate marketplace that connects tenants, brokers and landlords in the US.',
+        pt: 'Web (Next.js) e app mobile de um marketplace de imóveis comerciais com IA, que conecta inquilinos, corretores e proprietários nos EUA.'
+      }
+    },
+    {
       company: 'B.uni',
       role: { en: 'Senior Software Engineer', pt: 'Senior Software Engineer' },
-      period: { en: 'Jan 2025 – Present', pt: 'Jan 2025 – Atual' },
+      period: { en: 'Jan 2025 – Aug 2026', pt: 'Jan 2025 – Ago 2026' },
       summary: {
         en: 'Mobile (React Native) and web (React) platforms of a student-focused digital bank.',
         pt: 'Plataformas mobile (React Native) e web (React) de um banco digital focado em estudantes.'
@@ -167,8 +176,8 @@ const ui = {
         pt: 'Comecei em 2021 mantendo o software que gerenciava parques eólicos. De lá pra cá meu caminho foi uma linha reta pela fintech brasileira: na MB Labs me tornei o responsável técnico de front-end do Bankeiro, plataforma white-label por trás de 40+ apps bancários — incluindo o PaGol, conta digital da Gol, onde trabalhei na costura entre Swift/UIKit e React Native.'
       },
       {
-        en: 'After that came MaisMei — native iOS and React Native serving micro-entrepreneurs — and today I’m the senior engineer responsible for both the app and the internet banking of b.Uni, a digital bank for university students.',
-        pt: 'Depois veio o MaisMei — iOS nativo e React Native servindo microempreendedores — e hoje sou o engenheiro sênior responsável pelo app e pelo internet banking do b.Uni, banco digital para universitários.'
+        en: 'After that came MaisMei — native iOS and React Native serving micro-entrepreneurs — and b.Uni, a digital bank for university students, where I was the senior engineer responsible for both the app and the internet banking. Today I’m a front-end engineer at OpenXpace AI, a US startup building an AI-powered marketplace for commercial real estate: I work on the Next.js web platform and the mobile app that put tenants, brokers and landlords in the same place.',
+        pt: 'Depois vieram o MaisMei — iOS nativo e React Native servindo microempreendedores — e o b.Uni, banco digital para universitários, onde fui o engenheiro sênior responsável pelo app e pelo internet banking. Hoje sou engenheiro front-end na OpenXpace AI, startup americana que constrói um marketplace de imóveis comerciais com IA: trabalho na plataforma web em Next.js e no app mobile que colocam inquilinos, corretores e proprietários no mesmo lugar.'
       },
       {
         en: 'In parallel, I run the products that best show how I think: igreja.studio, my white-label platform for churches — whose flagship, IEQ MVA, I took from requirements to both stores — and QWIP, my financial SaaS for gas stations. No handoffs, no one to blame: every choice in them is mine.',
