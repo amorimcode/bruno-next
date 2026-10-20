@@ -251,7 +251,15 @@ export default function ProjectPage({ project, next }: Props) {
             className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4"
           >
             {banners.map((screen) => (
-              <BannerShot key={screen.src} src={screen.src} alt={screen.alt} sizes="(min-width: 1024px) 17rem, 45vw" />
+              <BannerShot
+                key={screen.src}
+                src={screen.src}
+                alt={screen.alt}
+                // A grade recorta todas no mesmo formato; o print largo fica com o dele.
+                aspect={screen.wide ? screen.aspect : undefined}
+                sizes={screen.wide ? '(min-width: 1024px) 36rem, 90vw' : '(min-width: 1024px) 17rem, 45vw'}
+                className={screen.wide ? 'col-span-2' : undefined}
+              />
             ))}
             {raws.map((screen) => (
               <PhoneFrame key={screen.src} src={screen.src} alt={screen.alt} sizes="(min-width: 1024px) 17rem, 45vw" />

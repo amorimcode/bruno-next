@@ -18,6 +18,8 @@ export type Screen = {
   kind: 'raw' | 'banner';
   /** Proporção da imagem, ex. '1080/2337'. Default: '392/696'. */
   aspect?: string;
+  /** Ocupa duas colunas na galeria — um print largo no meio de telas de celular. */
+  wide?: boolean;
 };
 
 export type ProjectLink = {
@@ -93,7 +95,7 @@ export type LocalizedProject = Omit<
   context: string;
   decisions: { title: string; body: string }[];
   outcome: string;
-  screens: { src: string; alt: string; kind: 'raw' | 'banner'; aspect?: string }[];
+  screens: { src: string; alt: string; kind: 'raw' | 'banner'; aspect?: string; wide?: boolean }[];
 };
 
 export function pickLocale(value: string | undefined): Locale {

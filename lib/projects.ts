@@ -2,6 +2,146 @@ import { LabProject, Project, ShippedApp } from './types';
 
 const projects: Project[] = [
   {
+    slug: 'fisiomais',
+    kind: 'personal',
+    title: 'Fisio+',
+    tagline: {
+      en: "A physical therapist's whole day in one app — with AI that tidies the notes and never makes anything up.",
+      pt: 'O dia inteiro do fisioterapeuta num app só — com uma IA que organiza a nota e nunca inventa nada.'
+    },
+    company: 'Fisio+ · own product',
+    role: {
+      en: 'Founder & engineer — iOS, Apple Watch, Android, backend, website, design & stores',
+      pt: 'Fundador & engenheiro — iOS, Apple Watch, Android, backend, site, design e lojas'
+    },
+    period: { en: '2026 – Present', pt: '2026 – Atual' },
+    platforms: ['iOS', 'watchOS', 'Android', 'Web'],
+    summary: {
+      en: "My own app for physical therapists: schedule, patient records, clinical notes, receipts and offline clinical tools, shared by a clinic's whole team. An Expo app that leans hard on native UI — with widgets, Live Activities and an Apple Watch app — on top of a NestJS API with Postgres, and AI in two places: on the device for clinical notes, in the cloud for an assistant that runs the schedule.",
+      pt: 'Meu app para fisioterapeutas: agenda, prontuário, evoluções, recibos e ferramentas clínicas offline, compartilhados pela equipe inteira do consultório. Um app Expo que aposta pesado em UI nativa — com widgets, Live Activities e app do Apple Watch — sobre uma API NestJS com Postgres, e IA em dois lugares: no aparelho para as evoluções, na nuvem para um assistente que mexe na agenda.'
+    },
+    context: {
+      en: "A physical therapist's day is split between a calendar, WhatsApp, a notebook for clinical notes and a word processor for receipts — and the notes usually get written at night, from memory. Fisio+ puts the day on one screen (who's next, who confirmed, which slots are free) and keeps everything that happens in a session attached to the patient. The hard part is trust: it's clinical data, often shared by a team, and any AI in the loop has to make the therapist faster without ever putting words in their mouth.",
+      pt: 'O dia do fisioterapeuta fica espalhado entre uma agenda, o WhatsApp, um caderno para as evoluções e um editor de texto para os recibos — e a evolução costuma ser escrita à noite, de memória. O Fisio+ põe o dia numa tela só (quem é o próximo, quem confirmou, quais horários estão livres) e mantém tudo o que acontece numa sessão ligado ao paciente. A parte difícil é a confiança: é dado clínico, muitas vezes de uma equipe, e qualquer IA no meio precisa deixar o fisioterapeuta mais rápido sem nunca botar palavras na boca dele.'
+    },
+    decisions: [
+      {
+        title: {
+          en: 'On-device AI that rewrites, never invents',
+          pt: 'IA no aparelho que reescreve, nunca inventa'
+        },
+        body: {
+          en: "Clinical notes never leave the phone. Two engines sit behind one interface built on the Vercel AI SDK — Apple Foundation Models on iPhones with Apple Intelligence, or Llama 3.2 1B through llama.rn, downloaded once on demand — and screens only ever import that interface. The prompts share one set of guardrails: the model may only reorganize what the therapist typed, as free text or SOAP, never add findings, measurements, diagnoses or treatments. The result is always a draft with Undo, reviewed before it's saved.",
+          pt: 'A evolução nunca sai do celular. Dois motores ficam atrás de uma interface única construída sobre o Vercel AI SDK — Apple Foundation Models nos iPhones com Apple Intelligence, ou o Llama 3.2 1B pelo llama.rn, baixado uma vez sob demanda — e as telas só importam essa interface. Os prompts herdam as mesmas travas: o modelo só pode reorganizar o que o fisioterapeuta escreveu, em texto corrido ou SOAP, nunca acrescentar achados, medidas, diagnósticos ou condutas. O resultado é sempre um rascunho com Desfazer, revisado antes de salvar.'
+        }
+      },
+      {
+        title: {
+          en: 'An assistant whose every change can be undone',
+          pt: 'Um assistente em que toda mudança tem volta'
+        },
+        body: {
+          en: "Ask in plain Portuguese and the assistant reschedules a patient, creates a package of sessions or imports patients and time slots from a note or spreadsheet. It runs in the cloud — Gemini 2.5 Flash through the Vercel AI Gateway, with a fallback model — but it only proposes: changes come back as a list to confirm. On the server, every write lands in an Activity log with before-and-after snapshots, tagged by the channel that made it, and anything the assistant or an import did can be undone for 24 hours — unless a receipt or a note now depends on it.",
+          pt: 'Peça em português e o assistente remarca um paciente, cria um pacote de sessões ou importa pacientes e horários de uma nota ou planilha. Ele roda na nuvem — Gemini 2.5 Flash pelo Vercel AI Gateway, com um modelo de reserva — mas só propõe: as mudanças voltam como uma lista para confirmar. No servidor, cada escrita vai para um log de Atividade com o antes e o depois, marcada pelo canal que a fez, e tudo o que o assistente ou uma importação fez pode ser desfeito por 24 horas — a não ser que um recibo ou uma evolução já dependa daquilo.'
+        }
+      },
+      {
+        title: {
+          en: 'Native first, even from React',
+          pt: 'Nativo primeiro, mesmo vindo do React'
+        },
+        body: {
+          en: "@expo/ui renders real SwiftUI and Jetpack Compose — grouped forms, sheets, menus, pickers — and header buttons go through the native toolbar so iOS 26's Liquid Glass wraps them where it should. Outside the app, the schedule shows up where the therapist already looks: home and lock screen widgets, Live Activities, an Apple Watch app and Siri. CarPlay has no template category for a clinical schedule, so it arrives through what the system carries on its own — the Live Activity's small banner and a borderless widget.",
+          pt: 'O @expo/ui renderiza SwiftUI e Jetpack Compose de verdade — formulários agrupados, sheets, menus, pickers — e os botões do header passam pela toolbar nativa para o Liquid Glass do iOS 26 envolvê-los no lugar certo. Fora do app, a agenda aparece onde o fisioterapeuta já olha: widgets na tela inicial e bloqueada, Live Activities, app do Apple Watch e a Siri. O CarPlay não tem categoria de template que sirva a uma agenda clínica, então ela chega pelo que o sistema leva sozinho — o banner pequeno da Live Activity e um widget sem fundo.'
+        }
+      },
+      {
+        title: {
+          en: 'Permissions the server enforces, not screens the app hides',
+          pt: 'Permissão que o servidor garante, não tela que o app esconde'
+        },
+        body: {
+          en: "A clinic is shared by admins, therapists and reception, and the NestJS API (Neon Postgres through Drizzle, on Vercel) checks every rule: reception only sees the schedules it manages, never clinical notes, and sees prices only when allowed. Patients can be shared between clinics, each side choosing what it shows. Version 2 changed the data model under people already using the app, so the server still answers older builds in the v1 contract until they update.",
+          pt: 'Um consultório é dividido entre admins, fisioterapeutas e recepção, e a API NestJS (Neon Postgres com Drizzle, na Vercel) confere cada regra: a recepção só vê as agendas que gerencia, nunca as evoluções, e só vê valores quando tem permissão. Pacientes podem ser compartilhados entre consultórios, cada lado escolhendo o que mostra. A versão 2 mudou o modelo de dados debaixo de quem já usava o app, então o servidor continua respondendo os builds antigos no contrato v1 até eles atualizarem.'
+        }
+      },
+      {
+        title: {
+          en: 'A website that tells the story as you scroll',
+          pt: 'Um site que conta a história enquanto você rola'
+        },
+        body: {
+          en: "fisiomais.app is a Next.js site with Tailwind, and its opening is pinned to the scroll: the headline lifts away with a blur, the iPhone rises off a treatment table into the center, the photo washes out and the mascot jumps in beside the phone — and with reduced motion or no JavaScript it's simply a still hero. The same domain does the plumbing: clinic invite links that open straight in the app through universal links, and the privacy, support and account-deletion pages both stores require.",
+          pt: 'O fisiomais.app é um site em Next.js com Tailwind, e a abertura é presa à rolagem: o título sai subindo com desfoque, o iPhone levanta de uma maca até o centro, a foto clareia e o mascote pula ao lado do celular — e, com movimento reduzido ou sem JavaScript, fica só um hero parado. O mesmo domínio faz o encanamento: links de convite do consultório que abrem direto no app por universal links, e as páginas de privacidade, suporte e exclusão de conta que as duas lojas exigem.'
+        }
+      }
+    ],
+    outcome: {
+      en: 'Live on the App Store with a monthly Pro subscription through RevenueCat, Sign in with Apple and in-app account deletion — version 2, a full redesign with a new identity and mascot, approved in October 2026. The Android build is on its way to Google Play, and the landing page is at fisiomais.app.',
+      pt: 'No ar na App Store com assinatura mensal Pro pela RevenueCat, Sign in with Apple e exclusão de conta no próprio app — a versão 2, um redesign completo com identidade e mascote novos, aprovada em outubro de 2026. O build de Android está a caminho do Google Play, e a landing page fica em fisiomais.app.'
+    },
+    icon: '/projects/shots/fisiomais-icon.png',
+    screens: [
+      {
+        src: '/projects/shots/fisiomais-1.png',
+        alt: {
+          en: 'Fisio+ — your whole day at a glance: next patient, confirmations and free slots',
+          pt: 'Fisio+ — seu dia inteiro, num relance: próximo paciente, confirmações e horários livres'
+        },
+        kind: 'banner',
+        aspect: '780/1695'
+      },
+      {
+        src: '/projects/shots/fisiomais-2.png',
+        alt: {
+          en: 'Fisio+ — write your way, the on-device AI turns the note into SOAP',
+          pt: 'Fisio+ — escreva do seu jeito, a IA no aparelho transforma a nota em SOAP'
+        },
+        kind: 'banner',
+        aspect: '780/1695'
+      },
+      {
+        src: '/projects/shots/fisiomais-3.png',
+        alt: {
+          en: 'Fisio+ — the assistant proposes schedule changes for you to confirm',
+          pt: 'Fisio+ — o assistente propõe mudanças na agenda para você confirmar'
+        },
+        kind: 'banner',
+        aspect: '780/1695'
+      },
+      {
+        src: '/projects/shots/fisiomais-4.png',
+        alt: {
+          en: 'Fisio+ — the next patient on widgets, Live Activities and Apple Watch',
+          pt: 'Fisio+ — o próximo paciente em widgets, Live Activities e Apple Watch'
+        },
+        kind: 'banner',
+        aspect: '780/1695'
+      },
+      {
+        src: '/projects/shots/fisiomais-5.jpg',
+        alt: {
+          en: 'fisiomais.app — the website hero: “The physical therapist’s schedule, with AI”',
+          pt: 'fisiomais.app — o hero do site: “A agenda do fisioterapeuta, com IA”'
+        },
+        kind: 'banner',
+        aspect: '1600/1000',
+        wide: true
+      }
+    ],
+    theme: {
+      bg: 'linear-gradient(135deg, #072a31 0%, #0b3a43 45%, #2c8a9c 100%)',
+      fg: '#ffffff',
+      glow: '#ff7a66'
+    },
+    tags: ['Expo', 'React Native', 'SwiftUI', 'WidgetKit', 'On-device AI', 'NestJS', 'PostgreSQL', 'Next.js', 'TypeScript'],
+    links: [
+      { label: 'App Store', href: 'https://apps.apple.com/br/app/fisio/id6787105042' },
+      { label: 'Website', href: 'https://fisiomais.app' }
+    ],
+    featured: true
+  },
+  {
     slug: 'floattube',
     kind: 'personal',
     title: 'FloatTube',
